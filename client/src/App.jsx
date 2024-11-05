@@ -3,7 +3,7 @@ const App = () => {
   return (
     <>
       <div className="text-[4rem] ">
-        Hello, world
+        Hello, world!
       </div> 
     </>
   )
