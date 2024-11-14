@@ -3,8 +3,8 @@ import close from "../assets/close.svg";
 
 import { Button } from "flowbite-react";
 import {useState} from "react"
-import { Link } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
+
 import { FaMoon} from "react-icons/fa"
 
 
@@ -19,82 +19,83 @@ const Header = () => {
   return (
     <>
     
-      <div className="border-b-2 flex justify-between items-center px-[20px] py-[5px] sm:py-[15px] ">
+      <div className="border-b-2 fixed w-full z-100 bg-white  ">
+        <div className="flex justify-between max-w-[1300px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
+        
         <div>
-          <Link
+          <NavLink
             to="/"
-            className="whitespace-nowrap self-center text-sm sm:text-xl font-semibold dark:text-white">
-            <span className=" px-2 py-1 bg-gradient-to-r from-blue-500 to-gray-400 text-white rounded-lg ">
+            className="whitespace-nowrap  text-center self-center text-sm sm:text-xl font-semibold dark:text-white">
+            <span className=" px-2 py-1 bg-gradient-to-r from-[blue] to-[gray] text-white rounded-lg ">
               Paul&#39;s
             </span>
             Blog
-          </Link>
+          </NavLink>
         </div>
-        <div>
-        {/* search bar */}
+      
+        <div className="hidden md:flex gap-x-[25px] font-[400] text-xl text-center ">
+          <NavLink  to="/" smooth={true} offset={0} duration={500} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+            <div className=" ">Home</div>
+          </NavLink> 
+
+          <NavLink to="/about" smooth={true} offset={-150} duration={600} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+            <div className=" ">About</div>
+          </NavLink>
+
+          <NavLink to="/projects" smooth={true} offset={-120} duration={700} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+            <div className=" ">Projects</div>
+          </NavLink>
         </div>
-        <div className="flex md:hidden ">
-          <div>
+        <div className=" cursor-pointer hidden md:flex h-7 w-10 bg-black text-white rounded-lg items-center justify-center  ">
+          <FaMoon />
+        </div>
+     
+   
+        <div className=" flex ">
+   
+          <div className="flex md:hidden mr-[15px]  ">
             {!visible ? (
-              <img className="max-w-[30px]" src={menu} onClick={toggle} />
+              <img className="max-w-[30px] cursor-pointer" src={menu} onClick={toggle} />
             ) : (
-              <div className="absolute top-[30px]  ">
+              <>
+             
+              <div className="absolute text-center text-lg h-[70vh] w-screen top-0 left-0 bg-[gray] text-white opacity-80 pt-[50px]  ">
                 <div>
                   <img
                     onClick={toggle}
-                    className="max-w-[20px] "
+                    className=" mx-auto cursor-pointer"
                     src={close}
                   />
                 </div>
-                <Link to="/" smooth={true} offset={-170} duration={500}>
-                  <div onClick={toggle} className=" ">Home</div>
-                </Link>
+                <NavLink to="/" smooth={true} offset={-170} duration={500}>
+                  <div onClick={toggle} className="mt-[20px] ">Home</div>
+                </NavLink>
 
-                <Link to="/about" smooth={true} offset={-300} duration={500}>
-                  <div onClick={toggle} className=" ">About </div>
-                </Link>
+                <NavLink to="/about" smooth={true} offset={-300} duration={500}>
+                  <div onClick={toggle} className="mt-[30px] ">About </div>
+                </NavLink>
                 
-                <Link to="/projects" smooth={true} offset={-270} duration={500}>
-                  <div onClick={toggle} className=" ">Projects</div>
-                </Link>
+                <NavLink to="/projects" smooth={true} offset={-270} duration={500}>
+                  <div onClick={toggle} className="mt-[30px] ">Projects</div>
+                </NavLink>
 
               </div>
+         
+              </>
             )}
           </div>
-        </div>
-        <div className="hidden md:flex ">
-          <Link to="/" smooth={true} offset={0} duration={500}>
-            <div className=" ">Home</div>
-          </Link> 
-
-          <Link to="/about" smooth={true} offset={-150} duration={600}>
-            <div className=" ">About</div>
-          </Link>
-
-          <Link to="/projects" smooth={true} offset={-120} duration={700}>
-            <div className=" ">Projects</div>
-          </Link>
-        </div>
-
-        <div>
-          <button className=" flex lg:hidden active:bg-blue-500 bg-gray-400 items-center justify-center w-10 h-7 rounded-lg text-white ">
-            <AiOutlineSearch />
-          </button>
-        </div>
-        <div className=" cursor-pointer hidden sm:flex h-7 w-10 bg-gray-500 text-white rounded-lg items-center justify-center  ">
-          <FaMoon />
-        </div>
-        <div>
+          <div>
         
-          <Link to="/sign-in ">
-          <Button className="bg-blue-500 py-[8px] rounded-lg px-[12px] font-[500] cursor-pointer">
+          <NavLink to="/sign-in ">
+          <Button className="bg-[blue] py-[8px] rounded-lg px-[12px] font-[500] cursor-pointer">
             Sign In
           </Button>
-          </Link>
+          </NavLink>
         </div>
-   
         
-     
+        </div>
+        
+        </div>
       </div>
     </>
   );
