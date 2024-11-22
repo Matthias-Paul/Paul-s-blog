@@ -25,6 +25,18 @@ app.use("/api/user", userRoutes)
 app.use("/api/auth", authRoutes)
 
 
+
+// Middleware
+
+app.use((err, req, res, next)=>{
+
+
+
+})
+
+
+
+
 // Start Server 
 app.listen(PORT, () => {
   console.log("App is running on port", PORT);
