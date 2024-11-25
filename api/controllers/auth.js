@@ -1,30 +1,37 @@
-import User from "../model/user.model.js"
-import bcryptjs from "bcryptjs"
-export const signup = async (req, res)=>{
-  const { username, email, password }  = req.body;
+import User from "../model/user.model.js";
+import bcryptjs from "bcryptjs";
 
-if (!username || !email || !password || username==="" || email ==="" || password ==="" ){
-   return res.status(400).json({ message: "All fields are required" });
-}
+export const signup = async (req, res, next) => {
+  const { username, email, password } = req.body;
 
-const hashPassword = bcryptjs.hashSync(password, 10)
+  // Validate input fields
+  if (!username || !email || !password || username.trim() === "" || email.trim() === "" || password.trim() === "") {
+    return res.status(400).json({ success: false, message: "All fields are required." });
+  }
 
-const newUser = new User({
-    username,
-    email,
-    password: hashPassword
-}) 
- 
-try {
-  
- await newUser.save()
- res.send("Signup Successful");
+  try {
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: "Email is already in use." });
+    }
 
-} catch (error) {
-  console.log("error:",error.message)
-  res.status(500).json({message:error.message})
-}
+    // Hash the password
+    const hashPassword = await bcryptjs.hash(password, 10);
 
-}
+    // Create new user
+    const newUser = new User({
+      username,
+      email,
+      password: hashPassword,
+    });
 
+    // Save the user
+    await newUser.save();
 
+    res.status(201).json({ success: true, message: "Signup successful!" });
+  } catch (error) {
+    console.error("Error during signup:", error.message);
+    next(error); // Pass error to the global error handler
+  }
+};
