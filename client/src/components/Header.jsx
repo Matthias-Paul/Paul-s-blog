@@ -59,7 +59,7 @@ const Header = () => {
             ) : (
               <>
              
-              <div className="absolute text-center text-lg h-[70vh] w-screen top-0 left-0 bg-[gray] text-white opacity-80 pt-[50px]  ">
+              <div className="absolute text-center text-lg h-screen w-screen top-0 left-0 bg-[gray] text-white opacity-80 pt-[20%]  ">
                 <div>
                   <img
                     onClick={toggle}
@@ -87,7 +87,7 @@ const Header = () => {
           <div>
         
           <NavLink to="/sign-in ">
-          <Button className="bg-[blue] py-[8px] rounded-lg px-[12px] font-[500] cursor-pointer">
+          <Button className="bg-[blue] py-[8px] border-[2px] border-[blue] hover:bg-transparent hover:text-[blue] rounded-lg px-[12px] font-[500] cursor-pointer">
             Sign In
           </Button>
           </NavLink>

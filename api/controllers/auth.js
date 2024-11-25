@@ -1,12 +1,14 @@
 import User from "../model/user.model.js";
 import bcryptjs from "bcryptjs";
+import { errorHandler } from "../utils/error.js"
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   // Validate input fields
   if (!username || !email || !password || username.trim() === "" || email.trim() === "" || password.trim() === "") {
-    return res.status(400).json({ success: false, message: "All fields are required." });
+   next(errorHandler(400, "All fields are required"))
+  
   }
 
   try {
