@@ -32,16 +32,14 @@ const SignUp = () => {
       if (res.ok) {
         setMessage({ type: "success", text: "Signup successful!" });
         setTimeout(() => navigate("/sign-in"), 2000); // Redirect after 2 seconds
-      } else if (
-        data.message &&
-        data.message.includes("ENOTFOUND") // Adjust to match your error message
-      ) {
+      } else if ( data.message && data.message.includes("ENOTFOUND")) {
         setMessage({ type: "error", text: "Signup failed, check your internet connection!" });
       } else {
         setMessage({ type: "error", text: data.message || "Signup failed!" });
       }
+
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       setMessage({
         type: "error",
         text: "An unexpected error occurred. Please try again.",
