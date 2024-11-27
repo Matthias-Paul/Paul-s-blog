@@ -37,3 +37,28 @@ export const signup = async (req, res, next) => {
     next(error); // Pass error to the global error handler
   }
 };
+
+export const signin = async (req, res, next)=>{
+    
+  const { email, password } = req.body;
+  // Validate input fields
+  if (!email || !password || email.trim() === "" || password.trim() === "") {
+   next(errorHandler(400, "All fields are required"))
+  }
+
+  try {
+    const validUser = await User.findOne({ email });
+    if(!validUser ) {
+      next(errorHandler(400, "User not found"))
+    }
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if(!validPassword ) {
+      next(errorHandler(400, "Invalid password"))
+    }
+
+
+  } catch (error) {
+    next(error)
+  }
+
+}

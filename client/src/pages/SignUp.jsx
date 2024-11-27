@@ -34,7 +34,7 @@ const SignUp = () => {
         setTimeout(() => navigate("/sign-in"), 2000); // Redirect after 2 seconds
       } else if ( data.message && data.message.includes("ENOTFOUND")) { 
         setMessage({ type: "error", text: "Signup failed, check your internet connection!" });
-      } else {
+      } else { 
         setMessage({ type: "error", text: data.message || "Signup failed!" });
       }
 
