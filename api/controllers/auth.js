@@ -34,7 +34,7 @@ export const signup = async (req, res, next) => {
 
     res.status(201).json({ success: true, message: "Signup successful!" });
   } catch (error) {
-    console.error("Error during signup:", error.message)
+    console.error("Error during signup:", error.message);
     next(error); // Pass error to the global error handler;
   }
 };
