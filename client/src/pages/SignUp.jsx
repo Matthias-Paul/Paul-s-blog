@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import OAuth from "../components/OAuth"
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -57,9 +58,7 @@ const SignUp = () => {
           <div className="m-auto">
             <div>
               <NavLink
-                to="/"
-                className="whitespace-nowrap text-3xl font-bold dark:text-white"
-              >
+                className="whitespace-nowrap text-3xl font-bold dark:text-white">
                 <span className="px-2 py-1 bg-gradient-to-r from-[blue] to-[gray] text-white rounded-lg">
                   Paul&#39;s
                 </span>{" "}
@@ -71,8 +70,9 @@ const SignUp = () => {
             </div>
           </div>
 
+
           {/* Right Content */}
-          <div className="md:mt-0 mt-5 md:text-lg">
+          <div className="md:mt-0 pt-[40px] md:text-lg">
             <form onSubmit={handleSubmission}>
               <div className="flex flex-col">
                 <label htmlFor="username">Your Username</label>
@@ -114,21 +114,23 @@ const SignUp = () => {
                 type="submit"
                 disabled={loading}
                 className={`w-full md:w-[370px] p-[10px] text-lg rounded-lg font-[500] text-white mt-[30px] cursor-pointer ${
-                  loading ? "bg-gray-400" : "bg-[blue] hover:bg-gray-600"
+                  loading ? "bg-[gray]" : "bg-[blue] hover:bg-[gray]"
                 }`}
               >
                 {loading ? "Signing Up..." : "Sign Up"}
               </button>
 
+             
+               <OAuth/>    {/* google OAuth button   */}  
+
               {message && (
                 <div
                   className={`mt-[10px] text-left text-lg ${
-                    message.type === "success" ? "text-green-500" : "text-red-500"
-                  }`}
-                >
+                    message.type === "success" ? "text-green-500" : "text-red-500"}`}>
                   {message.text}
                 </div>
               )}
+           
 
               <div className="mt-[5px] text-[15px]">
                 <span>Have an account?</span>

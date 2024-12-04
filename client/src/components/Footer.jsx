@@ -6,8 +6,8 @@ const Footer = () => {
  
     <>
       <div className="w-full border text-white bg-black " >
-        <div className="md:p-[70px] p-[30px] max-w-[1000px] mt-[30px] m-auto ">
-            <div className="m-auto  ">
+        <div className="md:p-[70px] p-[30px] max-w-[1000px] mt-[30px] m-auto">
+            <div className="m-auto">
               <NavLink
                 className="whitespace-nowrap text-xl font-bold dark:text-white"
               >

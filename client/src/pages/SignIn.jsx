@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice.js";
+import OAuth from "../components/OAuth"
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ const SignIn = () => {
     <div className="min-h-screen pt-20 flex items-center p-5 sm:p-8">
       <div className="md:flex justify-center m-auto md:space-x-[50px]">
         <div className="m-auto">
-          <NavLink to="/" className="whitespace-nowrap text-3xl font-bold dark:text-white">
+          <NavLink className="whitespace-nowrap text-3xl font-bold dark:text-white">
             <span className="px-2 py-1 bg-gradient-to-r from-[blue] to-[gray] text-white rounded-lg">
               Paul&#39;s
             </span>{" "}
@@ -88,11 +89,13 @@ const SignIn = () => {
               type="submit"
               disabled={loading}
               className={`w-full md:w-[370px] p-[10px] text-lg rounded-lg font-[500] text-white mt-[30px] cursor-pointer ${
-                loading ? "bg-gray-400" : "bg-[blue] hover:bg-gray-600"
+                loading ? "bg-[gray]" : "bg-[blue] hover:bg-[gray]"
               }`}
             >
               {loading ? "Signing In..." : "Sign In"}
             </button>
+
+              <OAuth/>    {/* google OAuth button   */}
 
             {/* Display success or error messages */}
             {(localMessage || message) && (
