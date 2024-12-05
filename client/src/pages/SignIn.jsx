@@ -38,7 +38,9 @@ const SignIn = () => {
         setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds
       } else if (data.message && data.message.includes("ENOTFOUND")) {
         dispatch(signInFailure("Sign-in failed, check your internet connection!"));
-      } else {
+      } else if (data.message && data.message.includes("Operation")) {
+        dispatch(signInFailure("Sign-in failed, check your internet connection!"));
+      }else {
         dispatch(signInFailure(data.message || "Sign-in failed!"));
       }
     } catch (error) {

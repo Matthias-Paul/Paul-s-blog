@@ -2,7 +2,7 @@
 const Home = () => {
   return (
     <>
-      <div className="pt-[90px] ">
+      <div className="pt-[290px] ">
         
         Home
 

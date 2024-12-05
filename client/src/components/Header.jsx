@@ -1,20 +1,27 @@
 import menu from "../assets/menu.svg";
 import close from "../assets/close.svg";
+import image from "../assets/download.png"
 
-import { Button } from "flowbite-react";
+import { Button} from "flowbite-react";
 import {useState} from "react"
 import { NavLink } from "react-router-dom";
-
+import {useSelector } from "react-redux"
 import { FaMoon} from "react-icons/fa"
 
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
-
+  const [profileMenu, setProfileMenu] = useState(false);
+const { currentUser } = useSelector(state => state.user)
   const toggle = () => {
     setVisible(!visible);
   };
   
+  const toggleProfile = () => {
+    setProfileMenu(!profileMenu);
+  };
+  
+
 
   return (
     <>
@@ -84,13 +91,37 @@ const Header = () => {
               </>
             )}
           </div>
-          <div>
-        
-          <NavLink to="/sign-in ">
-          <Button className="bg-[blue] py-[8px] border-[2px] border-[blue] hover:bg-transparent hover:text-[blue] rounded-lg px-[12px] font-[500] cursor-pointer">
-            Sign In
-          </Button>
-          </NavLink>
+        <div>
+        { currentUser? (
+          <div onClick={toggleProfile} className="w-9 h-9 cursor-pointer ">
+          <img src={currentUser.googlePhotoURL || image} />
+          
+          </div>
+        ) : (
+            <NavLink to="/sign-in ">
+            <Button className="bg-[blue] py-[8px] border-[2px] border-[blue] hover:bg-transparent hover:text-[blue] rounded-lg px-[12px] font-[500] cursor-pointer">
+              Sign In
+            </Button>
+            </NavLink>
+        ) }
+        <div>
+        {
+          profileMenu? (
+           <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-100 sm:top-[85px] shadow-md rounded-md text-start  ">
+           <div> { currentUser.username}</div>
+            <div className=" truncate max-w-[180px] mb-[17px] " > @{ currentUser.email}</div>
+            <div onClick={toggleProfile}>
+              <NavLink to="/dashboard?tab=profile ">
+               Dashboard
+            </NavLink>
+            </div>
+            <div className="mt-[7px] cursor-pointer">Sign Out</div>  
+           </div>
+          ):(
+           ""
+          )
+        }
+        </div>
         </div>
         
         </div>
