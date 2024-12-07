@@ -5,14 +5,17 @@ import image from "../assets/download.png"
 import { Button} from "flowbite-react";
 import {useState} from "react"
 import { NavLink } from "react-router-dom";
-import {useSelector } from "react-redux"
-import { FaMoon} from "react-icons/fa"
-
+import {useSelector, useDispatch } from "react-redux"
+import { FaMoon, FaSun } from "react-icons/fa"
+import { toggleTheme } from "../redux/theme/themeSlice.js"
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [profileMenu, setProfileMenu] = useState(false);
-const { currentUser } = useSelector(state => state.user)
+  const { currentUser } = useSelector(state => state.user)
+  const { theme } = useSelector(state => state.theme)
+
   const toggle = () => {
     setVisible(!visible);
   };
@@ -21,12 +24,14 @@ const { currentUser } = useSelector(state => state.user)
     setProfileMenu(!profileMenu);
   };
   
-
+const themeMode =()=>{
+     dispatch(toggleTheme())
+}
 
   return (
     <>
     
-      <div className="border-b-2 fixed w-full z-100 bg-white  ">
+      <div className="border-b-2 fixed w-full z-[100] bg-white  ">
         <div className="flex justify-between max-w-[1300px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
         
         <div>
@@ -53,8 +58,9 @@ const { currentUser } = useSelector(state => state.user)
             <div className=" ">Projects</div>
           </NavLink>
         </div>
-        <div className=" cursor-pointer hidden md:flex h-7 w-10 bg-black text-white rounded-lg items-center justify-center  ">
-          <FaMoon />
+        <div className=" cursor-pointer hidden md:flex h-7 w-10 bg-black text-white rounded-lg items-center justify-center  "
+        onClick={themeMode}>
+          {theme === "light"? <FaSun/> : <FaMoon /> }
         </div>
      
    
@@ -93,7 +99,7 @@ const { currentUser } = useSelector(state => state.user)
           </div>
         <div>
         { currentUser? (
-          <div onClick={toggleProfile} className="w-9 h-9 cursor-pointer ">
+          <div onClick={toggleProfile} className="w-9 h-9 rounded-[50%] cursor-pointer ">
           <img src={currentUser.googlePhotoURL || image} />
           
           </div>
@@ -107,7 +113,7 @@ const { currentUser } = useSelector(state => state.user)
         <div>
         {
           profileMenu? (
-           <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-100 sm:top-[85px] shadow-md rounded-md text-start  ">
+           <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-[100] sm:top-[85px] shadow-md rounded-md text-start  ">
            <div> { currentUser.username}</div>
             <div className=" truncate max-w-[180px] mb-[17px] " > @{ currentUser.email}</div>
             <div onClick={toggleProfile}>
