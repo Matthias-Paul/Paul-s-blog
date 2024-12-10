@@ -32,7 +32,7 @@ const themeMode =()=>{
     <>
     
       <div className="border-b-2 fixed w-full z-[100] bg-white  ">
-        <div className="flex justify-between max-w-[1300px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
+        <div className="flex justify-between max-w-[1400px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
         
         <div>
           <NavLink
@@ -58,7 +58,7 @@ const themeMode =()=>{
             <div className=" ">Projects</div>
           </NavLink>
         </div>
-        <div className=" cursor-pointer hidden md:flex h-7 w-10 bg-black text-white rounded-lg items-center justify-center  "
+        <div className=" cursor-pointer  flex md:h-7 md:w-10 md:bg-black text-black md:text-white rounded-lg items-center justify-center  "
         onClick={themeMode}>
           {theme === "light"? <FaSun/> : <FaMoon /> }
         </div>
@@ -72,7 +72,7 @@ const themeMode =()=>{
             ) : (
               <>
              
-              <div className="absolute text-center text-lg h-screen w-screen top-0 left-0 bg-[gray] text-white opacity-80 pt-[20%]  ">
+              <div className="absolute text-center text-lg h-screen w-screen z-[100] top-0 left-0 bg-[gray] text-white opacity-80 pt-[20%]  ">
                 <div>
                   <img
                     onClick={toggle}
