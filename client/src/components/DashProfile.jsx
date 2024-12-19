@@ -56,7 +56,7 @@ const DashProfile = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormData({username, email, password})
+    setFormData({username, email, password, profileImage})
     if(Object.keys(formData).length ===0){
       return;
     }
