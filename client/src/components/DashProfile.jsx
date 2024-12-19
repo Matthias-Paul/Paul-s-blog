@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
-
+import { useDispatch } from "react-redux"
+import { updateStart, updateSuccess, updateFailure } from "../redux/user/userSlice.js"
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
 
@@ -11,9 +12,12 @@ const DashProfile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageURL, setProfileImageURL] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [formData, setFormData] = useState({});
+
 
   const filePickerRef = useRef();
-
+  const dispatch = useDispatch()
+   
   useEffect(() => {
     if (profileImage) {
       const uploadImage = async () => {
@@ -30,6 +34,7 @@ const DashProfile = () => {
           });
           const result = await res.json();
           setProfileImageURL(result.secure_url);
+          setFormData({...formData, profilePicture: profileImageURL})
         } catch (error) {
           console.error("Image upload failed:", error);
         } finally {
@@ -38,21 +43,48 @@ const DashProfile = () => {
       };
       uploadImage();
     }
-  }, [profileImage]);
+  }, [profileImage, formData, profileImageURL ]);
 
   const handleProfileImage = (e) => {
     const file = e.target.files[0];
     if (file) {
       setProfileImage(file);
       setProfileImageURL(URL.createObjectURL(file));
+      
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle profile update
-    console.log("Updated user info:", { username, email, password });
-  };
+    setFormData({username, email, password})
+    if(Object.keys(formData).length ===0){
+      return;
+    }
+    
+    try {
+      dispatch(updateStart())
+      const response = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`, {
+        method:"PUT",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify(formData)
+      }) 
+      const data = response.json();
+      console.log(formData)
+
+      if(!response.ok){
+        dispatch(updateFailure(data.message))
+        return;
+      }else{
+        dispatch(updateSuccess(data))
+
+      }
+
+    } catch (error) {
+      dispatch(updateFailure(error.message))
+    }
+  }; 
 
   return (
     <div> 
@@ -67,8 +99,7 @@ const DashProfile = () => {
           ref={filePickerRef}
         />
         <div
-          className="flex justify-center "
-        >
+          className="flex justify-center pb-[20px]  ">
         
           <img
             onClick={() => filePickerRef.current.click()}
@@ -106,7 +137,7 @@ const DashProfile = () => {
             className="w-[320px] sm:w-[370px] text-black rounded-lg border border-gray-300 mt-[6px]"
           />
         </div>
-
+ 
         <button
           type="submit"
           className="w-full md:w-[370px] p-[10px] text-lg rounded-lg font-[500] text-white mt-[30px] cursor-pointer bg-[blue] hover:bg-[gray]"
