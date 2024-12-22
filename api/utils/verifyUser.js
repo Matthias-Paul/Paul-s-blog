@@ -3,8 +3,14 @@ import { errorHandler } from "./error.js";
 
 export const verifyToken = (req, res, next) => {
   try {
-    // Ensure cookies are present
-    const token = req.cookies?.access_token;
+    // Safely access cookies
+    const token = req.cookies && req.cookies["access-token"];
+    console.log("Cookies:", req.cookies);
+    console.log("Access Token:", token);
+    console.log("Raw Cookies:", req.headers.cookie);
+    console.log("Parsed Cookies:", req.cookies);
+ 
+
     if (!token) {
       return next(errorHandler(401, "Access token is missing. Unauthorized"));
     }
@@ -14,12 +20,13 @@ export const verifyToken = (req, res, next) => {
       if (err) {
         return next(errorHandler(403, "Invalid or expired token. Unauthorized"));
       }
-
-      // Attach user information to the request
+      
+      // Attach user information to the request object
       req.user = user;
       next();
     });
   } catch (error) {
+    console.error("Error in verifyToken middleware:", error);
     next(errorHandler(500, "An internal server error occurred"));
   }
 };

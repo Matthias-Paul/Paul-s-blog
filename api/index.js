@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.route.js"
 import cors from "cors"
 import cookieParser from "cookie-parser" 
 
+
 dotenv.config();
 
 const PORT = process.env.PORT 
@@ -14,7 +15,14 @@ const MONGO = process.env.MONGO
 const app = express();
 
 app.use(cookieParser())
-app.use(cors());
+
+app.use(cors({
+  origin: "http://localhost:5173", // Frontend origin
+  credentials: true, // Allow credentials (cookies);
+}));
+
+
+
 
 // Middleware
 app.use(express.json());
@@ -39,7 +47,7 @@ app.use((err, req, res, next)=>{
  res.status(statusCode).json({
   success:false,
   statusCode,
-  message
+  message,
  })
 })
 

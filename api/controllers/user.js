@@ -2,39 +2,69 @@ import bcryptjs from "bcryptjs"
 import { errorHandler } from "../utils/error.js"
 import User from "../model/user.model.js"
 
+
+
+
 export const  test = (req, res)=>{
     res.send("API Call");
 }
-export const  updateUser = async (req, res, next)=>{
-     if(req.user.id !== req.params.userId){
-        return next(errorHandler(403, "You are not allowed to update"))
-     }
-     if(req.body.password){
-         if(req.body.password.length < 6){
-            return next(errorHandler(400, "Password must be at least 6 characters"))
-         }
-         req.body.password = bcryptjs.hashSync(req.body.password, 10)
-     }
-     if(req.body.username){
-        if(req.body.username.length < 5 || req.body.username.length > 20 ){
-           return next(errorHandler(400, "Username must be between 5 and 20 characters"))
+
+
+export const updateUser = async (req, res, next) => {
+   
+    try {
+        console.log(req.user)
+       
+    
+        // Check if the user has permission to update
+        if (req.user.id !== req.params.userId) {
+
+            return next(errorHandler(403, "You are not allowed to update this user"));
         }
-        if(req.body.username.includes(" ")){
-            return next(errorHandler(400, "Username must not include a space"))
+
+        // Validate password, if provided
+        if (req.body.password) {
+            if (req.body.password.length < 6) {
+                return next(errorHandler(400, "Password must be at least 6 characters long"));
+            }
+            req.body.password = bcryptjs.hashSync(req.body.password, 10); // Hash the password
         }
-    }  
-        try {
-            const updatedUser = await User.findByIdAndUpdate(req.params.userId, {
-                $set:{
-                    username:req.body.username,
-                    email:req.body.email,
-                    profilePicture:req.body.profilePicture,
-                    password:req.body.password,
+
+        // Validate username, if provided
+        if (req.body.username) {
+            const username = req.body.username.trim();
+            if (username.length < 5 || username.length > 20) {
+                return next(errorHandler(400, "Username must be between 5 and 20 characters"));
+            }
+            if (/\s/.test(username)) {
+                return next(errorHandler(400, "Username must not contain spaces"));
+            }
+            req.body.username = username; // Trim whitespace
+        }
+
+        // Update user data
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.userId,
+            {
+                $set: {
+                    username: req.body.username,
+                    email: req.body.email,
+                    profilePicture: req.body.profilePicture,
+                    ...(req.body.password && { password: req.body.password }), // Only include password if updated
                 },
-            },{new:true})
-            const {password, ...rest} = updatedUser._doc;
-            res.status(200).json(rest);
-        } catch (error) {
-            next(error);
+            },
+            { new: true, runValidators: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return next(errorHandler(404, "User not found"));
         }
+
+        // Exclude the password from the response
+        const { password, ...rest } = updatedUser._doc;
+
+        res.status(200).json(rest);
+    } catch (error) {
+        next(error); // Pass the error to the error handler middleware
     }
+};

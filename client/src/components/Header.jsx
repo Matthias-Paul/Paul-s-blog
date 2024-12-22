@@ -15,7 +15,7 @@ const Header = () => {
   const [profileMenu, setProfileMenu] = useState(false);
   const { currentUser } = useSelector(state => state.user)
   const { theme } = useSelector(state => state.theme)
-
+   
   const toggle = () => {
     setVisible(!visible);
   };
@@ -100,7 +100,7 @@ const themeMode =()=>{
         <div>
         { currentUser? (
           <div onClick={toggleProfile} className="w-9 h-9 rounded-[50%] cursor-pointer ">
-          <img src={image} />
+          <img src={currentUser.profilePicture || image} />
           
           </div>
         ) : (
@@ -116,11 +116,11 @@ const themeMode =()=>{
            <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-[100] sm:top-[85px] shadow-md rounded-md text-start  ">
            <div> { currentUser.username}</div>
             <div className=" truncate max-w-[180px] mb-[17px] " > @{ currentUser.email}</div>
+            <NavLink to="/dashboard?tab=profile ">
             <div onClick={toggleProfile}>
-              <NavLink to="/dashboard?tab=profile ">
                Dashboard
-            </NavLink>
             </div>
+            </NavLink>
             <div className="mt-[7px] cursor-pointer">Sign Out</div>  
            </div>
           ):(
