@@ -14,7 +14,6 @@ const MONGO = process.env.MONGO
 
 const app = express();
 
-app.use(cookieParser())
 
 app.use(cors({
   origin: "http://localhost:5173", // Frontend origin
@@ -26,6 +25,7 @@ app.use(cors({
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser())
 
 // Database Connection
 mongoose

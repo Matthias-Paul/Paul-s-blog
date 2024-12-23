@@ -100,7 +100,7 @@ const themeMode =()=>{
         <div>
         { currentUser? (
           <div onClick={toggleProfile} className="w-9 h-9 rounded-[50%] cursor-pointer ">
-          <img src={currentUser.profilePicture || image} />
+          <img src={ image} />
           
           </div>
         ) : (

@@ -4,7 +4,7 @@ import { errorHandler } from "./error.js";
 export const verifyToken = (req, res, next) => {
   try {
     // Safely access cookies
-    const token = req.cookies && req.cookies["access-token"];
+    const token = req.cookies && req.cookies["access_token"];
     console.log("Cookies:", req.cookies);
     console.log("Access Token:", token);
     console.log("Raw Cookies:", req.headers.cookie);

@@ -73,8 +73,9 @@ const DashProfile = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "cookie": "access-token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDg2NWQyNDY3NWJiNjYyMzI0YzdmMSIsImlhdCI6MTczNDQzNzk4N30.H8A_GWHwq-3SO7BCD4q7wbiooCD8wwaseIbBi-3J6zM; access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDg2NWQyNDY3NWJiNjYyMzI0YzdmMSIsImlhdCI6MTczNDczMDgzNn0.9v3BpEjo_JxPYjSB-6O9XiCEUHklJ8_ah1Kaq62lQK0",
+           "Cookie": currentUser.access_cookie, 
         },
+        credentials: "include",
         body: JSON.stringify(updatedFormData),
       });
   
@@ -83,12 +84,13 @@ const DashProfile = () => {
       console.log(data);
   
       if (!res.ok) {
-        dispatch(updateFailure(data))
-      }else {
-              dispatch(updateSuccess(data));
-             console.log("User updated successfully:", data);
+        dispatch(updateFailure(data.message));
+        console.error("Update failed:", data.message);
+        return;
       }
   
+      dispatch(updateSuccess(data));
+      console.log("User updated successfully:", data);
     } catch (error) {
       dispatch(updateFailure(error.message));
       console.error("An error occurred while updating user:", error);

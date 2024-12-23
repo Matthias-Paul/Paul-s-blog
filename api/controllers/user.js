@@ -14,7 +14,6 @@ export const updateUser = async (req, res, next) => {
    
     try {
         console.log(req.user)
-       
     
         // Check if the user has permission to update
         if (req.user.id !== req.params.userId) {
