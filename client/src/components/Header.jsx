@@ -114,7 +114,7 @@ const themeMode =()=>{
         {
           profileMenu? (
            <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-[100] sm:top-[85px] shadow-md rounded-md text-start  ">
-           <div> { currentUser.user.username}</div>
+           <div className=" truncate max-w-[180px] mb-[7px] "> { currentUser.user.username}</div>
             <div className=" truncate max-w-[180px] mb-[17px] " > @{ currentUser.user.email}</div>
             <NavLink to="/dashboard?tab=profile ">
             <div onClick={toggleProfile}>
