@@ -83,14 +83,11 @@ export const signin = async (req, res, next) => {
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
       })
       .json({
-        success: true,
-        message: "Signin successful!",
-        token, // Include token in the response body
-        user: rest, // Include user data excluding password
+        user:rest,
+        token,
       });
   } catch (error) {
     console.error("Signin Error:", error.message);
@@ -131,7 +128,10 @@ export const google = async (req, res, next) => {
       res
         .status(201)
         .cookie("access_token", token, { httpOnly: true })
-        .json(rest);
+        .json({
+          user:rest,
+          token,
+        });
     }
     console.log(token)
   } catch (error) {

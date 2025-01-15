@@ -11,6 +11,8 @@ import ThemeProvider from "./components/ThemeProvider.jsx"
 import PrivateRoute from "./components/PrivateRoute.jsx"
 
 const App = () => {
+
+  
   return (
     <>
       <BrowserRouter>

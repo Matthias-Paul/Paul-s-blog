@@ -5,12 +5,12 @@ import { updateStart, updateSuccess, updateFailure } from "../redux/user/userSli
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
-
-  const [username, setUsername] = useState(currentUser.username || "");
-  const [email, setEmail] = useState(currentUser.email || "");
+ console.log(currentUser)
+  const [username, setUsername] = useState(currentUser.user.username);
+  const [email, setEmail] = useState(currentUser.user.email);
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [profileImageURL, setProfileImageURL] = useState(currentUser.profilePicture || "");
+  const [profileImageURL, setProfileImageURL] = useState(currentUser.user.profilePicture || " " );
   const [isUploading, setIsUploading] = useState(false);
 
   const filePickerRef = useRef();
@@ -74,7 +74,7 @@ const DashProfile = () => {
     try {
       dispatch(updateStart());
 
-      const res = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`http://localhost:5000/api/user/update/${currentUser.user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +115,7 @@ const DashProfile = () => {
             <img
               onClick={() => filePickerRef.current.click()}
               className="w-[120px] h-[120px] md:w-[160px] cursor-pointer md:h-[160px] object-cover rounded-full border-8"
-              src={profileImageURL || image}
+              src={image || profileImageURL}
               alt="Profile"
             />
           </div>

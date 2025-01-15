@@ -36,6 +36,7 @@ const SignIn = () => {
         dispatch(signInSuccess(data));
         console.log(data);
         localStorage.setItem("access_token", data.token);
+        console.log(data.token)
         setLocalMessage("Sign in successful!");
         setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds
       } else if (data.message) {
