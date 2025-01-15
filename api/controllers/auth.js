@@ -1,22 +1,25 @@
 import User from "../model/user.model.js";
 import bcryptjs from "bcryptjs";
-import { errorHandler } from "../utils/error.js"
-import jwt from "jsonwebtoken"
+import { errorHandler } from "../utils/error.js";
+import jwt from "jsonwebtoken";
 
+// SIGNUP FUNCTION
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   // Validate input fields
   if (!username || !email || !password || username.trim() === "" || email.trim() === "" || password.trim() === "") {
-   next(errorHandler(400, "All fields are required"))
-  
+    return next(errorHandler(400, "All fields are required"));
   }
 
   try {
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ success: false, message: "Email is already in use." });
+      return res.status(400).json({
+        success: false,
+        message: "Email is already in use.",
+      });
     }
 
     // Hash the password
@@ -32,44 +35,68 @@ export const signup = async (req, res, next) => {
     // Save the user
     await newUser.save();
 
-    res.status(201).json({ success: true, message: "Signup successful!" });
+    res.status(201).json({
+      success: true,
+      message: "Signup successful!",
+    });
   } catch (error) {
     console.error("Error during signup:", error.message);
-    next(error); // Pass error to the global error handler;
+    next(error);
   }
 };
 
-export const signin = async (req, res, next)=>{
-    
+// SIGNIN FUNCTION
+export const signin = async (req, res, next) => {
   const { email, password } = req.body;
+
   // Validate input fields
   if (!email || !password || email.trim() === "" || password.trim() === "") {
-   next(errorHandler(400, "All fields are required"))
+    return next(errorHandler(400, "All fields are required"));
   }
 
   try {
+    // Check if user exists
     const validUser = await User.findOne({ email });
-    if(!validUser ) {
-     return next(errorHandler(400, "User not found"));
+    if (!validUser) {
+      return next(errorHandler(400, "User not found"));
     }
+
+    // Validate password
     const validPassword = bcryptjs.compareSync(password, validUser.password);
-    if(!validPassword ) {
-      return  next(errorHandler(400, "Invalid password"));
+    if (!validPassword) {
+      return next(errorHandler(400, "Invalid password"));
     }
 
-    const token = jwt.sign({id: validUser._id}, process.env.JWT_SECRET);
+    // Generate Token
+    const token = jwt.sign(
+      { id: validUser._id }, // Include user ID
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
+    console.log("Generated Token:", token);
+
+    // Send Token in Response and Cookie
     const { password: pass, ...rest } = validUser._doc;
-     res.status(200).cookie("access_token", token, {
-      httpOnly:true
-     }).json(rest)
-     console.log(token);
+
+    res
+      .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
+      .json({
+        success: true,
+        message: "Signin successful!",
+        token, // Include token in the response body
+        user: rest, // Include user data excluding password
+      });
   } catch (error) {
+    console.error("Signin Error:", error.message);
     next(error);
   }
-
-}
-
+};
 
 export const google = async (req, res, next) => {
   
@@ -93,7 +120,7 @@ export const google = async (req, res, next) => {
         username: name.toLowerCase().split(" ").join("") + Math.random().toString().slice(-4),
         email,
         password: hashPassword,
-        profilePicture: googlePhotoURL,
+        profilePicture: googlePhotoURL,  
       });
      
       await newUser.save();

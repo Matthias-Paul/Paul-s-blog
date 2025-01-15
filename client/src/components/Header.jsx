@@ -46,15 +46,15 @@ const themeMode =()=>{
         </div>
       
         <div className="hidden md:flex gap-x-[25px] font-[400] text-xl text-center ">
-          <NavLink  to="/" smooth={true} offset={0} duration={500} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+          <NavLink  to="/" offset={0} duration={500} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div className=" ">Home</div>
           </NavLink> 
 
-          <NavLink to="/about" smooth={true} offset={-150} duration={600} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+          <NavLink to="/about"  offset={-150} duration={600} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div className=" ">About</div>
           </NavLink>
 
-          <NavLink to="/projects" smooth={true} offset={-120} duration={700} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+          <NavLink to="/projects"  offset={-120} duration={700} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div className=" ">Projects</div>
           </NavLink>
         </div>
@@ -80,15 +80,15 @@ const themeMode =()=>{
                     src={close}
                   />
                 </div>
-                <NavLink to="/" smooth={true} offset={-170} duration={500}>
+                <NavLink to="/"  offset={-170} duration={500}>
                   <div onClick={toggle} className="mt-[20px] ">Home</div>
                 </NavLink>
 
-                <NavLink to="/about" smooth={true} offset={-300} duration={500}>
+                <NavLink to="/about"  offset={-300} duration={500}>
                   <div onClick={toggle} className="mt-[30px] ">About </div>
                 </NavLink>
                 
-                <NavLink to="/projects" smooth={true} offset={-270} duration={500}>
+                <NavLink to="/projects"  offset={-270} duration={500}>
                   <div onClick={toggle} className="mt-[30px] ">Projects</div>
                 </NavLink>
 

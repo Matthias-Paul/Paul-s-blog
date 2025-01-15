@@ -6,11 +6,11 @@ import { updateStart, updateSuccess, updateFailure } from "../redux/user/userSli
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
 
-  const [username, setUsername] = useState(currentUser.username);
-  const [email, setEmail] = useState(currentUser.email);
+  const [username, setUsername] = useState(currentUser.username || "");
+  const [email, setEmail] = useState(currentUser.email || "");
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [profileImageURL, setProfileImageURL] = useState(null);
+  const [profileImageURL, setProfileImageURL] = useState(currentUser.profilePicture || "");
   const [isUploading, setIsUploading] = useState(false);
 
   const filePickerRef = useRef();
@@ -30,10 +30,15 @@ const DashProfile = () => {
             method: "POST",
             body: data,
           });
+
+          if (!res.ok) {
+            throw new Error("Image upload failed. Please try again.");
+          }
+
           const result = await res.json();
           setProfileImageURL(result.secure_url);
         } catch (error) {
-          console.error("Image upload failed:", error);
+          console.error(error.message);
         } finally {
           setIsUploading(false);
         }
@@ -46,57 +51,53 @@ const DashProfile = () => {
     const file = e.target.files[0];
     if (file) {
       setProfileImage(file);
-      setProfileImageURL(URL.createObjectURL(file));
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
 
+    const token = localStorage.getItem("access_token"); // Correct method for token retrieval
 
-    const updatedFormData = {
-      username,
-      email,
-      ...(password && { password }), // Only include password if it's provided
-      ...(profileImageURL && { profilePicture: profileImageURL }), // Only include profilePicture if it's available
-    };
-  
-    if(Object.keys(updatedFormData).length === 0){
+    if (!token) {
+      console.error("No access token found. Please log in.");
       return;
     }
 
+    const updatedFormData = {
+      username: username.trim(),
+      email: email.trim(),
+      ...(password && { password }), // Only include password if provided
+      ...(profileImageURL && { profilePicture: profileImageURL }), // Include profile picture if available
+    };
+
     try {
       dispatch(updateStart());
-  
-      const res = await fetch("http://localhost:5000/api/user/update/" + currentUser._id, {
+
+      const res = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-           "Cookie": currentUser.access_cookie, 
+          Authorization: `Bearer ${token}`, // Send token in Authorization header
         },
-        credentials: "include",
         body: JSON.stringify(updatedFormData),
       });
-  
+
       const data = await res.json();
-      console.log(updatedFormData);
-      console.log(data);
-  
+
       if (!res.ok) {
-        dispatch(updateFailure(data.message));
         console.error("Update failed:", data.message);
+        dispatch(updateFailure(data.message || "An error occurred"));
         return;
       }
-  
+
       dispatch(updateSuccess(data));
       console.log("User updated successfully:", data);
     } catch (error) {
-      dispatch(updateFailure(error.message));
       console.error("An error occurred while updating user:", error);
+      dispatch(updateFailure(error.message || "An unexpected error occurred"));
     }
   };
-  
 
   return (
     <div>

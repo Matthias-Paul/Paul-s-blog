@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice.js";
-import OAuth from "../components/OAuth"
+import OAuth from "../components/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const SignIn = () => {
   const [localMessage, setLocalMessage] = useState(null); // Local message state
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error: message } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -33,18 +33,24 @@ const SignIn = () => {
       const data = await res.json();
 
       if (res.ok) {
-        dispatch(signInSuccess(data)); 
+        dispatch(signInSuccess(data));
+        console.log(data);
+        localStorage.setItem("access_token", data.token);
         setLocalMessage("Sign in successful!");
         setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds
-      } else if (data.message && data.message.includes("ENOTFOUND")) {
-        dispatch(signInFailure("Sign-in failed, check your internet connection!"));
-      } else if (data.message && data.message.includes("Operation")) {
-        dispatch(signInFailure("Sign-in failed, check your internet connection!"));
-      }else {
-        dispatch(signInFailure(data.message || "Sign-in failed!"));
+      } else if (data.message) {
+        // Handle specific error messages
+        if (data.message.includes("ENOTFOUND") || data.message.includes("Operation")) {
+          dispatch(signInFailure("Sign-in failed. Check your internet connection!"));
+        } else {
+          dispatch(signInFailure(data.message));
+        }
+      } else {
+        dispatch(signInFailure("Sign-in failed!"));
       }
     } catch (error) {
       dispatch(signInFailure("An unexpected error occurred. Please try again."));
+      console.log(error)
     }
   };
 
@@ -100,9 +106,9 @@ const SignIn = () => {
               <OAuth/>    {/* google OAuth button   */}
 
             {/* Display success or error messages */}
-            {(localMessage || message) && (
+            {(localMessage ) && (
               <div className={`mt-[10px] text-left text-lg ${localMessage ? "text-green-500" : "text-red-500"}`}>
-                {localMessage || message}
+                {localMessage }
               </div>
             )}
 

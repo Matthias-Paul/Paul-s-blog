@@ -3,30 +3,28 @@ import { errorHandler } from "./error.js";
 
 export const verifyToken = (req, res, next) => {
   try {
-    // Safely access cookies
-    const token = req.cookies && req.cookies["access_token"];
-    console.log("Cookies:", req.cookies);
-    console.log("Access Token:", token);
-    console.log("Raw Cookies:", req.headers.cookie);
-    console.log("Parsed Cookies:", req.cookies);
- 
+    // Retrieve token from Authorization header
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1]; // "Bearer <token>"
 
     if (!token) {
       return next(errorHandler(401, "Access token is missing. Unauthorized"));
     }
 
-    // Verify token
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    // Verify the token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+        console.error("Token verification error:", err.message);
         return next(errorHandler(403, "Invalid or expired token. Unauthorized"));
       }
-      
-      // Attach user information to the request object
-      req.user = user;
-      next();
+
+      console.log("Decoded Token:", decoded); // Debugging - Ensure `id` is present
+      req.user = decoded; // Attach the decoded payload to the request
+
+      next(); // Continue to the next middleware or route
     });
   } catch (error) {
-    console.error("Error in verifyToken middleware:", error);
-    next(errorHandler(500, "An internal server error occurred"));
+    console.error("Token verification failed:", error.message);
+    next(errorHandler(500, "An internal server error occurred."));
   }
 };
