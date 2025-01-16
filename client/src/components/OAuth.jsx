@@ -18,8 +18,8 @@ const OAuth = () => {
       const resultsFromGoogle = await signInWithPopup(auth, provider);
 
       const googlePhotoURL = resultsFromGoogle.user.photoURL;
-      console.log("Google Photo URL:", googlePhotoURL); // Ensure the URL is correct
 
+      // Send user details to the backend
       const res = await fetch("http://localhost:5000/api/auth/google", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,9 +31,15 @@ const OAuth = () => {
       });
 
       const data = await res.json();
+
       if (res.ok) {
+        // Store the token from the backend
+        localStorage.setItem("access_token", data.token);
+
+        // Update Redux state with user data
         dispatch(signInSuccess(data));
         navigate("/");
+
         console.log("User Data from Backend:", data);
       } else {
         console.error("Backend Error:", data.message);
@@ -44,18 +50,16 @@ const OAuth = () => {
   };
 
   return (
-    <>
-      <div>
-        <button
-          onClick={handleClick}
-          type="button"
-          className="w-full md:w-[370px] p-[9px] m-auto font-[500] hover:bg-[gray] bg-[blue] text-white text-lg rounded-lg mt-[20px] cursor-pointer"
-        >
-          <AiFillGoogleCircle className="w-7 h-7 inline" />
-          <span> Continue with Google </span>
-        </button>
-      </div>
-    </>
+    <div>
+      <button
+        onClick={handleClick}
+        type="button"
+        className="w-full md:w-[370px] p-[9px] m-auto font-[500] hover:bg-[gray] bg-[blue] text-white text-lg rounded-lg mt-[20px] cursor-pointer"
+      >
+        <AiFillGoogleCircle className="w-7 h-7 inline" />
+        <span> Continue with Google </span>
+      </button>
+    </div>
   );
 };
 

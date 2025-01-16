@@ -1,6 +1,6 @@
 import menu from "../assets/menu.svg";
 import close from "../assets/close.svg";
-import image from "../assets/download.png"
+import image from "../assets/download.png";
 
 import { Button} from "flowbite-react";
 import {useState} from "react"
@@ -99,8 +99,8 @@ const themeMode =()=>{
           </div>
         <div>
         { currentUser? (
-          <div onClick={toggleProfile} className="w-9 h-9 rounded-[50%] cursor-pointer ">
-          <img src={image} />
+          <div onClick={toggleProfile} >
+          <img className="w-9 h-9 rounded-[50%] object-cover cursor-pointer " src={currentUser.user.profilePicture || image } />
           
           </div>
         ) : (

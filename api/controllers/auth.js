@@ -74,7 +74,7 @@ export const signin = async (req, res, next) => {
       { expiresIn: "7d" }
     );
 
-    console.log("Generated Token:", token);
+    
 
     // Send Token in Response and Cookie
     const { password: pass, ...rest } = validUser._doc;
@@ -107,7 +107,11 @@ export const google = async (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password, ...rest } = user._doc;
       
-      res.status(200).cookie("access_token", token, { httpOnly: true }).json(rest);
+      res.status(200).cookie("access_token", token, { httpOnly: true }).json({
+        token,
+        user:rest,
+       
+      });
     } else {
       // New user, create account and generate token
       const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
@@ -129,11 +133,12 @@ export const google = async (req, res, next) => {
         .status(201)
         .cookie("access_token", token, { httpOnly: true })
         .json({
-          user:rest,
           token,
-        });
-    }
-    console.log(token)
+          user:rest,
+         
+        });       
+    }      
+
   } catch (error) {
     next(error);
   }

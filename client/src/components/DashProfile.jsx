@@ -10,8 +10,9 @@ const DashProfile = () => {
   const [email, setEmail] = useState(currentUser.user.email);
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [profileImageURL, setProfileImageURL] = useState(currentUser.user.profilePicture || " " );
+  const [profileImageURL, setProfileImageURL] = useState(currentUser.user.profilePicture);
   const [isUploading, setIsUploading] = useState(false);
+  const [update, setUpdate] = useState(null);
 
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -23,20 +24,21 @@ const DashProfile = () => {
         data.append("file", profileImage);
         data.append("upload_preset", "cloudinary_backend");
         data.append("cloud_name", "drkxtuaeg");
-
+  
         try {
           setIsUploading(true);
           const res = await fetch("https://api.cloudinary.com/v1_1/drkxtuaeg/image/upload", {
             method: "POST",
             body: data,
           });
-
+  
           if (!res.ok) {
             throw new Error("Image upload failed. Please try again.");
           }
-
+  
           const result = await res.json();
-          setProfileImageURL(result.secure_url);
+          setProfileImageURL(result.secure_url); // Save uploaded image URL
+          console.log("Uploaded Image URL:", result.secure_url);
         } catch (error) {
           console.error(error.message);
         } finally {
@@ -46,6 +48,7 @@ const DashProfile = () => {
       uploadImage();
     }
   }, [profileImage]);
+  
 
   const handleProfileImage = (e) => {
     const file = e.target.files[0];
@@ -57,7 +60,7 @@ const DashProfile = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("access_token"); // Correct method for token retrieval
+    const token = localStorage.getItem("access_token"); 
 
     if (!token) {
       console.error("No access token found. Please log in.");
@@ -73,7 +76,7 @@ const DashProfile = () => {
 
     try {
       dispatch(updateStart());
-
+      setUpdate(null)
       const res = await fetch(`http://localhost:5000/api/user/update/${currentUser.user._id}`, {
         method: "PUT",
         headers: {
@@ -87,15 +90,18 @@ const DashProfile = () => {
 
       if (!res.ok) {
         console.error("Update failed:", data.message);
+        setUpdate(`${data.message}` || "An error occurred")
         dispatch(updateFailure(data.message || "An error occurred"));
         return;
       }
 
       dispatch(updateSuccess(data));
+      setUpdate("User Updated Successfully")
       console.log("User updated successfully:", data);
     } catch (error) {
       console.error("An error occurred while updating user:", error);
       dispatch(updateFailure(error.message || "An unexpected error occurred"));
+      setUpdate(`${error.message}` || "An unexpected error occurred ")
     }
   };
 
@@ -111,13 +117,15 @@ const DashProfile = () => {
             onChange={handleProfileImage}
             ref={filePickerRef}
           />
-          <div className="flex justify-center pb-[20px]">
-            <img
-              onClick={() => filePickerRef.current.click()}
-              className="w-[120px] h-[120px] md:w-[160px] cursor-pointer md:h-[160px] object-cover rounded-full border-8"
-              src={image || profileImageURL}
-              alt="Profile"
-            />
+          <div className="flex justify-center  pb-[20px]">
+          {
+            isUploading? <div className="w-[120px] flex text-[16px] items-center justify-center h-[120px] md:w-[160px] cursor-pointer md:h-[160px]  rounded-full border-8"> Uploading... </div> :  <img
+            onClick={() => filePickerRef.current.click()}
+            className="w-[120px] h-[120px] md:w-[160px] cursor-pointer md:h-[160px] object-cover rounded-full border-8"
+            src={ profileImageURL || image}
+            alt="Profile"
+          />
+          }
           </div>
 
           <div className="flex flex-col mt-[12px]">
@@ -156,6 +164,7 @@ const DashProfile = () => {
             Update
           </button>
         </form>
+        <div      className="w-[320px] py-[10px] text-black sm:w-[370px] text-start " > {update} </div>
       </div>
       <div className="text-red-500 flex justify-between mt-[12px] mb-[25px] text-[15px]">
         <div className="cursor-pointer">Delete Account</div>

@@ -28,7 +28,7 @@ export const updateUser = async (req, res, next) => {
       req.body.password = bcryptjs.hashSync(req.body.password, 10); // Hash the password
     }
 
-    // Validate username, if provided
+    // Validate username, if provided  
     if (req.body.username) {
       const username = req.body.username.trim();
       if (username.length < 5 || username.length > 20) {
