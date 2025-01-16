@@ -96,7 +96,7 @@ const DashProfile = () => {
       }
 
       dispatch(updateSuccess(data));
-      setUpdate("User Updated Successfully")
+      setUpdate("User Profile Updated Successfully")
       console.log("User updated successfully:", data);
     } catch (error) {
       console.error("An error occurred while updating user:", error);
