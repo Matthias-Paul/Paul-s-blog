@@ -87,7 +87,7 @@ const DashProfile = () => {
       dispatch(updateStart()); // Indicate the update process has started
       setUpdate(null); // Clear previous update messages
     
-      const res = await fetch(`http://localhost:5000/api/user/update/${currentUser.user._id}`, {
+      const res = await fetch(`https://paul-s-blog.onrender.com/api/user/update/${currentUser.user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
