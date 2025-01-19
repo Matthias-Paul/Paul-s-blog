@@ -3,7 +3,7 @@
 const Projects = () => {
   return (
     <>
-      <div>
+      <div className="pt-[70px]">
         Projects
       </div>
     </>

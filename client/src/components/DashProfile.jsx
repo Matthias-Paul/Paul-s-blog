@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
 import { updateStart, updateSuccess, updateFailure } from "../redux/user/userSlice.js";
+import close from "../assets/close.svg";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -13,9 +14,17 @@ const DashProfile = () => {
   const [profileImageURL, setProfileImageURL] = useState(currentUser.user.profilePicture);
   const [isUploading, setIsUploading] = useState(false);
   const [update, setUpdate] = useState(null);
+  const [showModel, setShowModel] = useState(false);
 
   const filePickerRef = useRef();
   const dispatch = useDispatch();
+
+  const openModel = () =>{
+    setShowModel(true)
+  }
+  const closeModel = () =>{
+    setShowModel(false)
+  }
 
   useEffect(() => {
     if (profileImage) {
@@ -75,39 +84,81 @@ const DashProfile = () => {
     };
 
     try {
-      dispatch(updateStart());
-      setUpdate(null)
+      dispatch(updateStart()); // Indicate the update process has started
+      setUpdate(null); // Clear previous update messages
+    
       const res = await fetch(`http://localhost:5000/api/user/update/${currentUser.user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Send token in Authorization header
+          Authorization: `Bearer ${token}`, // Include the access token in the Authorization header
         },
-        body: JSON.stringify(updatedFormData),
+        body: JSON.stringify(updatedFormData), // Send updated user data
       });
-
-      const data = await res.json();
-
+    
+      const data = await res.json(); // Parse the response JSON
+    
+      // Check if the response indicates a failure
       if (!res.ok) {
         console.error("Update failed:", data.message);
-        setUpdate(`${data.message}` || "An error occurred")
+    
+        // Handle specific error messages
+        if (data.message) {
+          if (data.message.includes("ENOTFOUND") || data.message.includes("Operation")) {
+            setUpdate("Update failed. Check your internet connection!");
+          } else {
+            setUpdate(data.message || "An error occurred");
+          }
+        } else {
+          setUpdate("An error occurred while updating user.");
+        }
+    
         dispatch(updateFailure(data.message || "An error occurred"));
         return;
       }
-
-      dispatch(updateSuccess(data));
-      setUpdate("User Profile Updated Successfully")
+    
+      // If the update is successful
+      dispatch(updateSuccess(data)); // Dispatch success action
+      setUpdate("User Profile Updated Successfully"); // Display success message
       console.log("User updated successfully:", data);
     } catch (error) {
       console.error("An error occurred while updating user:", error);
+    
+      // Handle unexpected errors
+      setUpdate(error.message || "An unexpected error occurred");
       dispatch(updateFailure(error.message || "An unexpected error occurred"));
-      setUpdate(`${error.message}` || "An unexpected error occurred ")
     }
+    
   };
+
+    const handleDeleteUser = async ()=>{
+      setShowModel(false)
+
+
+    }
 
   return (
     <div>
-      <div className="text-center flex flex-col items-center">
+      <div className="text-center relative flex flex-col items-center">
+        {showModel && (
+          <div className="absolute  drop-shadow-sm p-[15px] mt-[50%] text-white rounded-lg w-full bg-[gray]">
+           <div onClick={closeModel} className="float-right w-[25px] cursor-pointer "> <img className="w-full" src={close} /> </div> 
+         <div className="font-[500]  m-auto mt-[35px] px-[20px] text-[18px] max-w-[360px]  "> Are you sure you want to delete your account? </div> 
+           <div className="my-[18px] ">
+           <button
+           onClick={handleDeleteUser}
+            className=" p-[8px] text-md rounded-lg  text-white mt-[13px] cursor-pointer bg-red-700 hover:bg-red-900"
+          >
+           Yes, i&#39;m sure
+          </button>
+          <button
+           onClick={closeModel}
+            className=" p-[8px] ml-[15px] text-md rounded-lg  text-black cursor-pointer bg-white ">
+           No, cancel
+          </button>
+            </div> 
+           </div>
+        )}
         <h1 className="font-[500] text-[30px] md:text-[40px] py-[20px]">Profile</h1>
         <form onSubmit={handleFormSubmit}>
           <input
@@ -134,7 +185,7 @@ const DashProfile = () => {
               type="text"
               placeholder="Username"
               value={username}
-              className="w-[320px] text-black sm:w-[370px] rounded-lg border border-gray-300 mt-[6px]"
+              className="w-[320px] text-black sm:w-[370px] lg:w-[550px] lg:p-[11px] rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
             />
           </div>
 
@@ -144,7 +195,7 @@ const DashProfile = () => {
               type="email"
               placeholder="Email"
               value={email}
-              className="w-[320px] sm:w-[370px] text-black rounded-lg border border-gray-300 mt-[6px]"
+              className="w-[320px] sm:w-[370px]  lg:w-[550px] lg:p-[11px] text-black rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
             />
           </div>
 
@@ -153,21 +204,28 @@ const DashProfile = () => {
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Password"
-              className="w-[320px] sm:w-[370px] text-black rounded-lg border border-gray-300 mt-[6px]"
+              className="w-[320px] sm:w-[370px]  lg:w-[550px] lg:p-[11px] text-black rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full md:w-[370px] p-[10px] text-lg rounded-lg font-[500] text-white mt-[30px] cursor-pointer bg-[blue] hover:bg-[gray]"
+            className="w-full md:w-[370px] p-[10px]  lg:w-[550px] lg:p-[11px] text-lg rounded-lg font-[500] text-white mt-[30px] cursor-pointer bg-[blue] hover:bg-[gray]"
           >
             Update
           </button>
         </form>
-        <div      className="w-[320px] py-[10px] text-black sm:w-[370px] text-start " > {update} </div>
+
+        
+        {update 
+        && (
+          <div  className="w-[320px] py-[10px] text-[14px]  lg:w-[550px] lg:p-[11px] bg-gray-100 border text-red-400 mt-[15px] w-full md:w-[370px] p-[5px]  rounded-lg font-[500] sm:w-[370px] text-start " > {update} </div>
+
+        )}
+     
       </div>
       <div className="text-red-500 flex justify-between mt-[12px] mb-[25px] text-[15px]">
-        <div className="cursor-pointer">Delete Account</div>
+        <div onClick={openModel} className="cursor-pointer">Delete Account</div>
         <div className="cursor-pointer">Sign Out</div>
       </div>
     </div>

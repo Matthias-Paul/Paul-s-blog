@@ -1,6 +1,6 @@
 import menu from "../assets/menu.svg";
 import close from "../assets/close.svg";
-import image from "../assets/download.png";
+
 
 import { Button} from "flowbite-react";
 import {useState} from "react"
@@ -8,20 +8,21 @@ import { NavLink } from "react-router-dom";
 import {useSelector, useDispatch } from "react-redux"
 import { FaMoon, FaSun } from "react-icons/fa"
 import { toggleTheme } from "../redux/theme/themeSlice.js"
-
+import { toggleUser} from "../redux/user/userSlice.js";
 const Header = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [profileMenu, setProfileMenu] = useState(false);
-  const { currentUser} = useSelector(state => state.user)
+  const { currentUser, visibleUser} = useSelector(state => state.user)
   const { theme } = useSelector(state => state.theme)
    
   const toggle = () => {
     setVisible(!visible);
   };
+
+
   
   const toggleProfile = () => {
-    setProfileMenu(!profileMenu);
+   dispatch(toggleUser())
   };
   
 const themeMode =()=>{
@@ -31,8 +32,8 @@ const themeMode =()=>{
   return (
     <>
     
-      <div className="border-b-2 fixed w-full z-[100] bg-white  ">
-        <div className="flex justify-between max-w-[1400px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
+      <div className=" fixed w-full z-[100] bg-white  ">
+        <div  className="flex border-b-2 justify-between max-w-[1400px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
         
         <div>
           <NavLink
@@ -46,16 +47,16 @@ const themeMode =()=>{
         </div>
       
         <div className="hidden md:flex gap-x-[25px] font-[400] text-xl text-center ">
-          <NavLink  to="/" offset={0} duration={500} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
-            <div className=" ">Home</div>
+          <NavLink  to="/" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+            <div >Home</div>
           </NavLink> 
 
-          <NavLink to="/about"  offset={-150} duration={600} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
-            <div className=" ">About</div>
+          <NavLink to="/about"   className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+            <div >About</div>
           </NavLink>
 
-          <NavLink to="/projects"  offset={-120} duration={700} className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
-            <div className=" ">Projects</div>
+          <NavLink to="/projects" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+            <div>Projects</div>
           </NavLink>
         </div>
         <div className=" cursor-pointer  flex md:h-7 md:w-10 md:bg-black text-black md:text-white rounded-lg items-center justify-center  "
@@ -80,15 +81,15 @@ const themeMode =()=>{
                     src={close}
                   />
                 </div>
-                <NavLink to="/"  offset={-170} duration={500}>
+                <NavLink to="/" >
                   <div onClick={toggle} className="mt-[20px] ">Home</div>
                 </NavLink>
 
-                <NavLink to="/about"  offset={-300} duration={500}>
+                <NavLink to="/about"  >
                   <div onClick={toggle} className="mt-[30px] ">About </div>
                 </NavLink>
                 
-                <NavLink to="/projects"  offset={-270} duration={500}>
+                <NavLink to="/projects">
                   <div onClick={toggle} className="mt-[30px] ">Projects</div>
                 </NavLink>
 
@@ -100,7 +101,7 @@ const themeMode =()=>{
         <div>
         { currentUser? (
           <div onClick={toggleProfile} >
-          <img className="w-9 h-9 rounded-[50%] object-cover cursor-pointer " src={currentUser.user.profilePicture || image } />
+          <img className="w-9 h-9 rounded-[50%] object-cover cursor-pointer " src={currentUser.user.profilePicture } />
           
           </div>
         ) : (
@@ -112,7 +113,7 @@ const themeMode =()=>{
         ) }
         <div>
         {
-          profileMenu? (
+          visibleUser? (
            <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-[100] sm:top-[85px] shadow-md rounded-md text-start  ">
            <div className=" truncate max-w-[180px] mb-[7px] "> { currentUser.user.username}</div>
             <div className=" truncate max-w-[180px] mb-[17px] " > @{ currentUser.user.email}</div>

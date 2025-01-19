@@ -4,12 +4,19 @@ const initialState = {
   currentUser: null,
   error: null,
   loading: false,
+  visibleUser: false,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    toggleUser:(state)=>{
+      state.visibleUser = !state.visibleUser;
+    },
+    toggleUserExit:(state)=>{
+      state.visibleUser = false
+    },
     signInStart: (state) => {
       state.loading = true;
       state.error = null;
@@ -40,6 +47,8 @@ const userSlice = createSlice({
 });
 // destructuring declaration
 export const {
+  toggleUser,
+  toggleUserExit,
   signInStart,
   signInSuccess,
   signInFailure,

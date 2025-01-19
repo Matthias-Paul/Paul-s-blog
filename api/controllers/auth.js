@@ -101,7 +101,7 @@ export const google = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ email });
-    
+      
     if (user) {
       // Existing user, sign in and generate token
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
@@ -124,7 +124,7 @@ export const google = async (req, res, next) => {
         profilePicture: googlePhotoURL,  
       });
      
-      await newUser.save();
+      await newUser.save();  
       
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password, ...rest } = newUser._doc;

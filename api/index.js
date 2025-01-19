@@ -28,11 +28,11 @@ app.use(express.json());
 app.use(cookieParser())
 
 // Database Connection
-mongoose
+mongoose  
   .connect(MONGO)
   .then(() => console.log("MongoDB is connected"))
-  .catch((err) => console.error("MongoDB connection error:", err.message));
-
+  .catch((err) => console.error("MongoDB connection error:", err.message));   
+        
 // Routes
 app.use("/api/user", userRoutes)
 app.use("/api/auth", authRoutes)
