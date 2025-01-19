@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
-import { updateStart, updateSuccess, updateFailure } from "../redux/user/userSlice.js";
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess } from "../redux/user/userSlice.js";
 import close from "../assets/close.svg";
 
 const DashProfile = () => {
@@ -134,6 +134,11 @@ const DashProfile = () => {
     const handleDeleteUser = async ()=>{
       setShowModel(false)
 
+      try{
+
+      }catch(error){
+
+      }
 
     }
 
