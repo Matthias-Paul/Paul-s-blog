@@ -70,17 +70,35 @@ export const updateUser = async (req, res, next) => {
 };
 
 
-export const deleteUser = async (req, res)=>{
- 
-       // Check if the user has permission to delete
-       if (req.user.id !== req.params.userId) {
-        return next(errorHandler(403, "You are not allowed to delete this account"));
-      }  
+export const deleteUser = async (req, res, next) => {
+  try {
+    if (req.user.id !== req.params.userId) {
+      return next(errorHandler(403, "You are not allowed to delete this account"));
+    }
 
-     try {  
-        await User.findByIdAndDelete(req.params.userId);
-        res.status(204).send("User has been deleted");
-      } catch (err) {
-        return next(errorHandler(500, "Failed to delete account"));
-      }
-}
+    await User.findByIdAndDelete(req.params.userId);
+    
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    next(errorHandler(500, "Failed to delete account"));
+  }
+};
+
+export const signOut = async (req, res, next) => {
+  try {
+    // Clear the cookie (ensure the path matches how the cookie was set)
+    res
+      .clearCookie("access_token", {
+        httpOnly: true,
+        sameSite: "strict",
+      })
+      .status(200)
+      .json({ message: "User signed out successfully!" });
+  } catch (error) {
+  
+    console.error("Error during sign-out:", error.message);
+
+    // Pass the error to the error handling middleware
+    next(error);
+  }
+};

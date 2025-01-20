@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
-import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess } from "../redux/user/userSlice.js";
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutSuccess } from "../redux/user/userSlice.js";
 import close from "../assets/close.svg";
 
 const DashProfile = () => {
@@ -14,6 +14,7 @@ const DashProfile = () => {
   const [profileImageURL, setProfileImageURL] = useState(currentUser.user.profilePicture);
   const [isUploading, setIsUploading] = useState(false);
   const [update, setUpdate] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [showModel, setShowModel] = useState(false);
 
   const filePickerRef = useRef();
@@ -86,7 +87,7 @@ const DashProfile = () => {
     try {
       dispatch(updateStart()); // Indicate the update process has started
       setUpdate(null); // Clear previous update messages
-    
+      setIsUpdating(true)
       const res = await fetch(`https://paul-s-blog.onrender.com/api/user/update/${currentUser.user._id}`, {
         method: "PUT",
         headers: {
@@ -121,6 +122,7 @@ const DashProfile = () => {
       dispatch(updateSuccess(data)); // Dispatch success action
       setUpdate("User Profile Updated Successfully"); // Display success message
       console.log("User updated successfully:", data);
+      setIsUpdating(false)
     } catch (error) {
       console.error("An error occurred while updating user:", error);
     
@@ -130,18 +132,70 @@ const DashProfile = () => {
     }
     
   };
-
-    const handleDeleteUser = async ()=>{
-      setShowModel(false)
-
-      try{
-
-      }catch(error){
-
+  const handleDeleteUser = async () => {
+    setShowModel(false);
+  
+    try {
+      dispatch(deleteUserStart());
+      const token = localStorage.getItem("access_token");
+  
+      const res = await fetch(`https://paul-s-blog.onrender.com/api/user/delete/${currentUser.user._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      // Check if the response has a JSON body
+      const data = res.headers.get("Content-Type")?.includes("application/json")
+        ? await res.json()
+        : { message: "No content returned from the server" };
+  
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message || "An error occurred"));
+        setUpdate(data.message || "An error occurred");
+      } else {
+        dispatch(deleteUserSuccess(data));
+  
+        // Clear user data from localStorage and state
+        localStorage.removeItem("access_token");
+        dispatch(deleteUserSuccess());
+        setUpdate(data.message || "User deleted successfully!");
       }
-
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+      setUpdate("An error occurred");
+      console.error(error.message);
     }
+  };
+  
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/user/signOut", {
+        method: "POST",
+        credentials: "include",
+      });
+  
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Sign-out failed:", errorData.message);
+        setUpdate(errorData.message)
+      } else {
+        console.log("Sign-out successful!");
 
+        localStorage.removeItem("access_token");
+        dispatch(signOutSuccess());
+        setUpdate("Sign-out successful!")
+      }
+    } catch (error) {
+      console.error("Error during sign-out:", error.message);
+      setUpdate("Sign-out failed!")
+    }
+  };
+  
+  
   return (
     <div>
       <div className="text-center relative flex flex-col items-center">
@@ -217,7 +271,7 @@ const DashProfile = () => {
             type="submit"
             className="w-full md:w-[370px] p-[10px]  lg:w-[550px] lg:p-[11px] text-lg rounded-lg font-[500] text-white mt-[30px] cursor-pointer bg-[blue] hover:bg-[gray]"
           >
-            Update
+            {isUpdating? "Updating...": "Update"}
           </button>
         </form>
 
@@ -227,11 +281,13 @@ const DashProfile = () => {
           <div  className="w-[320px] py-[10px] text-[14px]  lg:w-[550px] lg:p-[11px] bg-gray-100 border text-red-400 mt-[15px] w-full md:w-[370px] p-[5px]  rounded-lg font-[500] sm:w-[370px] text-start " > {update} </div>
 
         )}
+        
+
      
       </div>
       <div className="text-red-500 flex justify-between mt-[12px] mb-[25px] text-[15px]">
         <div onClick={openModel} className="cursor-pointer">Delete Account</div>
-        <div className="cursor-pointer">Sign Out</div>
+        <div onClick={handleSignout} className="cursor-pointer">Sign Out</div>
       </div>
     </div>
   );
