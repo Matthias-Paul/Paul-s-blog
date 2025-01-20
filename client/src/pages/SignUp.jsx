@@ -46,7 +46,7 @@ const SignUp = () => {
       console.error(error.message);
       setMessage({
         type: "error",
-        text: "An unexpected error occurred. Please try again.",
+        text: "Unable to connect to the server, please check your internet connection!",
       });
     } finally {
       setLoading(false);
@@ -128,7 +128,7 @@ const SignUp = () => {
 
               {message && (
                 <div
-                  className={`mt-[10px] text-left text-lg ${
+                  className={`mt-[10px] max-w-[370px] text-left text-lg ${
                     message.type === "success" ? "text-green-500" : "text-red-500"}`}>
                   {message.text}
                 </div>

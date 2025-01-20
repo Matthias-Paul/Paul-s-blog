@@ -36,21 +36,24 @@ const SignIn = () => {
         dispatch(signInSuccess(data));
         console.log(data);
         localStorage.setItem("access_token", data.token);
-        console.log(data.token)
         setLocalMessage("Sign in successful!");
         setTimeout(() => navigate("/"), 2000); // Redirect after 2 seconds
       } else if (data.message) {
         // Handle specific error messages
         if (data.message.includes("ENOTFOUND") || data.message.includes("Operation")) {
           dispatch(signInFailure("Sign-in failed. Check your internet connection!"));
+          setLocalMessage("Sign-in failed. Check your internet connection!");
         } else {
           dispatch(signInFailure(data.message));
+          setLocalMessage(data.message);
         }
       } else {
         dispatch(signInFailure("Sign-in failed!"));
+        setLocalMessage("Sign-in failed!");
       }
     } catch (error) {
-      dispatch(signInFailure("An unexpected error occurred. Please try again."));
+      dispatch(signInFailure("Unable to connect to the server, please check your internet connection!"))
+      setLocalMessage("Unable to connect to the server, please check your internet connection!");
       console.log(error)
     }
   };
@@ -108,7 +111,7 @@ const SignIn = () => {
 
             {/* Display success or error messages */}
             {(localMessage ) && (
-              <div className={`mt-[10px] text-left text-lg ${localMessage ? "text-green-500" : "text-red-500"}`}>
+              <div className={`mt-[10px] max-w-[370px] text-left text-lg ${localMessage ? "text-green-500" : "text-red-500"}`}>
                 {localMessage }
               </div>
             )}

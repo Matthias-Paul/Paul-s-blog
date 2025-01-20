@@ -84,21 +84,3 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
-export const signOut = async (req, res, next) => {
-  try {
-    // Clear the cookie (ensure the path matches how the cookie was set)
-    res
-      .clearCookie("access_token", {
-        httpOnly: true,
-        sameSite: "strict",
-      })
-      .status(200)
-      .json({ message: "User signed out successfully!" });
-  } catch (error) {
-  
-    console.error("Error during sign-out:", error.message);
-
-    // Pass the error to the error handling middleware
-    next(error);
-  }
-};

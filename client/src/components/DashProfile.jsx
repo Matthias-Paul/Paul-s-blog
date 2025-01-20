@@ -171,28 +171,13 @@ const DashProfile = () => {
     }
   };
   
-  const handleSignout = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/user/signOut", {
-        method: "POST",
-        credentials: "include",
-      });
-  
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.error("Sign-out failed:", errorData.message);
-        setUpdate(errorData.message)
-      } else {
-        console.log("Sign-out successful!");
+  const handleSignout = () => {
 
-        localStorage.removeItem("access_token");
-        dispatch(signOutSuccess());
-        setUpdate("Sign-out successful!")
-      }
-    } catch (error) {
-      console.error("Error during sign-out:", error.message);
-      setUpdate("Sign-out failed!")
-    }
+    localStorage.removeItem("access_token");
+    dispatch(signOutSuccess());
+    setUpdate("Sign-out successful!")
+    console.log("Sign-out successful! ")
+    
   };
   
   

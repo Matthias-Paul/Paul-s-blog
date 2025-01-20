@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import {useSelector, useDispatch } from "react-redux"
 import { FaMoon, FaSun } from "react-icons/fa"
 import { toggleTheme } from "../redux/theme/themeSlice.js"
-import { toggleUser} from "../redux/user/userSlice.js";
+import { toggleUser, signOutSuccess, toggleUserExit} from "../redux/user/userSlice.js";
 const Header = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -28,6 +28,15 @@ const Header = () => {
 const themeMode =()=>{
      dispatch(toggleTheme())
 }
+
+const handleSignout = () => {
+
+  localStorage.removeItem("access_token");
+  dispatch(signOutSuccess());
+  console.log("Sign-out successful! ")
+  dispatch(toggleUserExit());
+};
+
 
   return (
     <>
@@ -101,7 +110,7 @@ const themeMode =()=>{
         <div>
         { currentUser? (
           <div onClick={toggleProfile} >
-          <img className="w-9 h-9 rounded-[50%] object-cover cursor-pointer " src={currentUser.user.profilePicture } />
+          <img className="w-9 h-9 rounded-[50%] object-cover cursor-pointer " src={currentUser? currentUser.user.profilePicture:"" } />
           
           </div>
         ) : (
@@ -115,14 +124,14 @@ const themeMode =()=>{
         {
           visibleUser? (
            <div className="absolute right-[5%] p-[20px] top-[65px] bg-white z-[100] sm:top-[85px] shadow-md rounded-md text-start  ">
-           <div className=" truncate max-w-[180px] mb-[7px] "> { currentUser.user.username}</div>
-            <div className=" truncate max-w-[180px] mb-[17px] " > @{ currentUser.user.email}</div>
+           <div className=" truncate max-w-[180px] mb-[7px] "> {currentUser? currentUser.user.username:""}</div>
+            <div className=" truncate max-w-[180px] mb-[17px] " > @{currentUser? currentUser.user.email:""}</div>
             <NavLink to="/dashboard?tab=profile ">
             <div onClick={toggleProfile}>
                Dashboard
             </div>
             </NavLink>
-            <div className="mt-[7px] cursor-pointer">Sign Out</div>  
+            <div onClick={handleSignout} className="mt-[7px] cursor-pointer">Sign Out</div>  
            </div>
           ):(
            ""

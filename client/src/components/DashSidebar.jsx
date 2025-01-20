@@ -2,10 +2,14 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { HiUser, HiArrowSmRight } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signOutSuccess } from "../redux/user/userSlice.js";
+
 
 const DashSidebar = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -14,6 +18,16 @@ const DashSidebar = () => {
       setTab(tabFromURL);
     }
   }, [location.search]);
+
+  
+  const handleSignout = () => {
+
+    localStorage.removeItem("access_token");
+    dispatch(signOutSuccess());
+  
+    console.log("Sign-out successful! ")
+    
+  };
 
   return (
     <div className="grid space-y-[12px]  p-[20px]">
@@ -34,7 +48,7 @@ const DashSidebar = () => {
       </NavLink>
       <div className="flex items-center gap-x-[5px] hover:bg-[gray] cursor-pointer hover:text-white p-[10px] rounded-lg">
         <HiArrowSmRight />
-        <h2>Sign Out</h2>
+        <h2 onClick={handleSignout} >Sign Out</h2>
       </div>
     </div>
   );

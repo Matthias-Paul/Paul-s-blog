@@ -69,7 +69,7 @@ export const signin = async (req, res, next) => {
 
     // Generate Token
     const token = jwt.sign(
-      { id: validUser._id }, // Include user ID
+      { id: validUser._id,  }, // Include user ID
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
