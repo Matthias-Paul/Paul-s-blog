@@ -102,13 +102,15 @@ const DashProfile = () => {
       // Check if the response indicates a failure
       if (!res.ok) {
         console.error("Update failed:", data.message);
-    
+        setIsUpdating(false)
         // Handle specific error messages
         if (data.message) {
           if (data.message.includes("ENOTFOUND") || data.message.includes("Operation")) {
             setUpdate("Update failed. Check your internet connection!");
+        
           } else {
             setUpdate(data.message || "An error occurred");
+            
           }
         } else {
           setUpdate("An error occurred while updating user.");
@@ -120,12 +122,13 @@ const DashProfile = () => {
     
       // If the update is successful
       dispatch(updateSuccess(data)); // Dispatch success action
+      setIsUpdating(false)
       setUpdate("User Profile Updated Successfully"); // Display success message
       console.log("User updated successfully:", data);
-      setIsUpdating(false)
+      
     } catch (error) {
       console.error("An error occurred while updating user:", error);
-    
+      setIsUpdating(true)
       // Handle unexpected errors
       setUpdate(error.message || "An unexpected error occurred");
       dispatch(updateFailure(error.message || "An unexpected error occurred"));
@@ -177,7 +180,7 @@ const DashProfile = () => {
     dispatch(signOutSuccess());
     setUpdate("Sign-out successful!")
     console.log("Sign-out successful! ")
-    
+
   };
   
   
