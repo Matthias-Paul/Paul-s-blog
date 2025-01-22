@@ -41,8 +41,8 @@ const handleSignout = () => {
   return (
     <>
     
-      <div className=" fixed w-full z-[100] bg-white  ">
-        <div  className="flex border-b-2 justify-between max-w-[1400px] m-auto  items-center px-[20px] py-[5px] sm:py-[15px] ">
+      <div className=" fixed border-b-2  w-full z-[100] bg-white px-[20px] lg:px-[30px]   ">
+        <div  className="flex justify-between max-w-[1400px] m-auto  items-center py-[5px] sm:py-[15px] ">
         
         <div>
           <NavLink

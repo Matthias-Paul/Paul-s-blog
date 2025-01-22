@@ -30,7 +30,7 @@ const DashSidebar = () => {
   };
 
   return (
-    <div className="grid space-y-[12px]  p-[20px]">
+    <div className="grid space-y-[12px] px-[20px] lg:p-[30px]">
       <NavLink to="/dashboard?tab=profile">
         <div
           className={`flex justify-between p-[10px] rounded-lg ${

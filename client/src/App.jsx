@@ -9,8 +9,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ThemeProvider from "./components/ThemeProvider.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
-
-
+import PrivateRouteForAdmin from "./components/PrivateRouteForAdmin.jsx";
+import CreatePost from "./pages/CreatePost";
 const App = () => {
 
   return (
@@ -28,6 +28,9 @@ const App = () => {
               {/* PrivateRoute will wrap restricted routes */}
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
+              <Route element={<PrivateRouteForAdmin/>} >
+              <Route path="/create-post" element={<CreatePost />} />
               </Route>
               <Route path="/projects" element={<Projects />} />
             </Routes>

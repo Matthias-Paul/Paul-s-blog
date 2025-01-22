@@ -21,8 +21,8 @@ const userShema = new mongoose.Schema({
         default:"https://res.cloudinary.com/drkxtuaeg/image/upload/v1735897100/Image_4_jb0cpq.png",
     },
     isAdmin:{
-     type:Boolean,
-     default:false,
+        type:Boolean,
+        default:false,
     },  
 
 },{timestamps: true}

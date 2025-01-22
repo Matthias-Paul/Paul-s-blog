@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
 import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutSuccess } from "../redux/user/userSlice.js";
 import close from "../assets/close.svg";
+import { NavLink } from "react-router-dom";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -262,7 +263,15 @@ const DashProfile = () => {
             {isUpdating? "Updating...": "Update"}
           </button>
         </form>
-
+         {
+          currentUser.user.isAdmin && (
+            <NavLink to="/create-post">
+           <button className="w-[320px] sm:w-[370px]  lg:w-[550px] p-[10px]  lg:w-[550px] lg:p-[11px] text-lg rounded-lg font-[500] text-white mt-[12px] bg-[blue] cursor-pointer  hover:bg-[gray]">
+              Create a post
+          </button>
+            </NavLink>  
+          )
+         }
         
         {update 
         && (
