@@ -6,7 +6,7 @@ const Footer = () => {
  
     <>
       <div className="w-full border-t-[0.5px] text-white bg-black " >
-        <div className="md:p-[70px] p-[30px] max-w-[1400px] mt-[30px] m-auto">
+        <div className="md:p-[70px] p-[30px] max-w-[1400px] mb-[-30px] mt-[30px] m-auto">
             <div className="m-auto">
               <NavLink
                 className="whitespace-nowrap text-xl font-bold dark:text-white"
@@ -40,7 +40,7 @@ const Footer = () => {
 
                
             </div>
-            <div className="text-md mt-[40px] mb-[-20px] md:mb-[-55px] text-center " >
+            <div className="text-md mt-[40px] mb-[-10] md:mb-[-35px] text-center " >
                    &#169; {year} Paul&#39;s Blog
                 </div>
         </div>

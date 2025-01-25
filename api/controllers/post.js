@@ -9,7 +9,11 @@ export const createPost = async (req, res, next) => {
    
   // Check for title and content in the request body
   if (!req.body || !req.body.title || !req.body.content) {
-    return next(errorHandler(400, "Please provide title and content"));
+    return next(errorHandler(400, "Please provide a title and a content"));
+  }
+
+  if (req.body.content.length < 30) {
+    return next(errorHandler(400, "Content must be more than 30 characters"));;
   }
 
   // Generate unique slug
@@ -18,13 +22,14 @@ export const createPost = async (req, res, next) => {
     .join("-")
     .toLowerCase()
     .replace(/[^a-zA-Z0-9-]/g, "")}`;
-    
+    const uniqueSlug = `${slug}-${Date.now()}`;
+
   const newPost = new Post({
     ...req.body,
     userId: req.user.id,
     userEmail: req.user.userEmail,
     username: req.user.username,
-    slug,
+    slug: uniqueSlug,
   });  
 
   try {

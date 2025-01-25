@@ -3,19 +3,15 @@ import mongoose from "mongoose"
 const postSchema = new mongoose.Schema({
    userId:{
         type:String,
-        unique:true,
    },
    userEmail:{
         type:String,
-        unique:true,
-},
+    },
    username:{
         type:String,
-        unique:true,
    },
    title:{
         type:String,
-        unique:true,
         required:[true, "Title is required"],
    },
    content:{
