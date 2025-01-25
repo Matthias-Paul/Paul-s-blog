@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 
 import DashSidebar from "../components/DashSidebar.jsx"
 import DashProfile from "../components/DashProfile.jsx"
+import DashPosts from "../components/DashPosts.jsx"
 
 const Dashboard = () => {
   const location = useLocation();
@@ -25,8 +26,11 @@ const Dashboard = () => {
       <div className=" md:w-[20rem]  shadow-md border md:border-[0px] md:border-r-[0.5px] ">
           <DashSidebar />
         </div>
-        <div className=" mt-6 px-[20px] flex flex-col items-center w-full ">
+        <div className=" mt-6 flex flex-col items-center w-full ">
+
           { tab ==="profile" && <DashProfile />}
+
+          { tab ==="posts" && <DashPosts />}
         </div>
       </div>
       </div>
