@@ -31,7 +31,7 @@ const DashSidebar = () => {
   };
 
   return (
-    <div className="grid space-y-[15px] px-[20px] py-[15px] lg:p-[30px]">
+    <div className="grid space-y-[15px] max-w-[400px] m-auto  py-[15px] p-[20px]">
       <NavLink to="/dashboard?tab=profile">
         <div
           className={`flex justify-between p-[10px] border border-[gray] rounded-lg ${
@@ -42,7 +42,7 @@ const DashSidebar = () => {
             <HiUser />
             <h2>Profile</h2>
           </div>
-          <div className="flex items-end rounded-lg px-[11px] py-[2px] bg-[blue] text-white">
+          <div className="flex items-end  rounded-lg px-[11px] py-[2px] bg-[blue] text-white">
             { currentUser.user.isAdmin? "Admin": "User"}
           </div>
         </div>
