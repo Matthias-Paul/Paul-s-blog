@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Table } from "flowbite-react"
 import { NavLink } from "react-router-dom"
 
+
 function DashPosts() {
 
   const { currentUser} = useSelector(state => state.user)
@@ -35,7 +36,7 @@ function DashPosts() {
         <div className=" h-screen px-[20px] m-auto " >
          {
          currentUser.user.isAdmin && userPosts.length > 0 ? (
-           <div className="table-auto  overflow-x-scroll scrollbar scrollbar-tract-[gray] ">
+           <div className="table-auto  overflow-x-auto w-full scrollbar scrollbar-thumb-[blue]  ">
          
           <Table hoverable className="shadow-md  m-auto " >
            <Table.Head >
