@@ -41,7 +41,7 @@ const handleSignout = () => {
   return (
     <>
     
-      <div className=" fixed border-b-2  w-full z-[100] bg-white px-[20px]   ">
+      <div className=" fixed border-b-2  w-full z-[100] bg-white px-[12px] sm:px-[20px]   ">
         <div  className="flex justify-between max-w-[1400px] m-auto  items-center py-[5px] sm:py-[15px] ">
         
         <div>

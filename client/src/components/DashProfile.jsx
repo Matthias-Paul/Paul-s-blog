@@ -187,7 +187,7 @@ const DashProfile = () => {
   
   return (
     <div>
-      <div className="text-center relative flex flex-col items-center">
+      <div className="text-center md:ml-[280px] relative flex flex-col  items-center">
         {showModel && (
           <div className="absolute  drop-shadow-sm p-[15px] mt-[50%] text-white rounded-lg w-full bg-[gray]">
            <div onClick={closeModel} className="float-right w-[25px] cursor-pointer "> <img className="w-full" src={close} /> </div> 
@@ -208,7 +208,7 @@ const DashProfile = () => {
            </div>
         )}
         <h1 className="font-[500] text-[30px] md:text-[40px] py-[20px]">Profile</h1>
-        <form onSubmit={handleFormSubmit}>
+        <form  onSubmit={handleFormSubmit}>
           <input
             className="hidden"
             type="file"
@@ -233,7 +233,7 @@ const DashProfile = () => {
               type="text"
               placeholder="Username"
               value={username}
-              className="w-[320px] text-black sm:w-[370px] lg:w-[550px] lg:p-[11px] rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
+              className="w-[320px] sm:w-[370px]  lg:w-[550px]  lg:p-[11px] rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
             />
           </div>
 
@@ -283,7 +283,7 @@ const DashProfile = () => {
      
       </div>
       <div className="text-red-500 flex justify-between mt-[12px] mb-[25px] text-[15px]">
-        <div onClick={openModel} className="cursor-pointer">Delete Account</div>
+        <div onClick={openModel} className="md:ml-[280px] cursor-pointer">Delete Account</div>
         <div onClick={handleSignout} className="cursor-pointer">Sign Out</div>
       </div>
     </div>

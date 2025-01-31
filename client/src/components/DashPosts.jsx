@@ -32,27 +32,29 @@ function DashPosts() {
   return (
 
     <>
-      <div className="w-full  m-auto  pb-[50px] ">
-        <div className=" h-screen px-[20px] m-auto " >
+      <div className="w-full   m-auto  pb-[50px] ">
+        <div className=" md:ml-[320px] h-screen px-[12px] sm:px-[20px] m-auto " >
          {
          currentUser.user.isAdmin && userPosts.length > 0 ? (
-           <div className="table-auto  overflow-x-auto w-full scrollbar scrollbar-thumb-[blue]  ">
+           <div className=" sm:p-[20px] rounded-[5px]  md:mx-auto overflow-x-scroll  mt-[10px]  scrollbar scrollbar-thumb-[gray]  ">
          
-          <Table hoverable className="shadow-md  m-auto " >
-           <Table.Head >
-            <Table.HeadCell>  <div className="ml-[10px] "> Date Updated </div> </Table.HeadCell>
+          <Table hoverable className=" w-[930px] m-auto table-auto  " >
+           <Table.Head className="" >
+          
+            <Table.HeadCell>  <div className=" "> Date Updated </div> </Table.HeadCell>
             <Table.HeadCell> Post Image</Table.HeadCell>
             <Table.HeadCell> Post Title </Table.HeadCell>
             <Table.HeadCell> Category </Table.HeadCell>
             <Table.HeadCell> Delete </Table.HeadCell>
             <Table.HeadCell> <span> Edit </span> </Table.HeadCell>
+           
            </Table.Head> 
 
            {
             userPosts.map((post) =>(
                   <Table.Body  key={post._id}>
                   <Table.Row >  
-                    <Table.Cell> <div className="ml-[10px] "> {new Date(post.updatedAt).toLocaleDateString()}</div> </Table.Cell>
+                    <Table.Cell> <div className=""> {new Date(post.updatedAt).toLocaleDateString()}</div> </Table.Cell>
                     <Table.Cell> 
                       <NavLink to={`/post/${post.slug}`}>
                         <img  src={post.image} alt={post.title} className=" my-[15px] max-w-[75px] rounded-[5px] bg-[gray] " />

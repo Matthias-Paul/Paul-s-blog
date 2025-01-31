@@ -23,7 +23,7 @@ const Dashboard = () => {
     <>
     <div className="m-auto  max-w-[1400px] " >
       <div className=" pt-[46px]  mx-auto sm:pt-[67px] min-h-screen  flex flex-col md:flex-row">
-      <div className=" md:w-[20rem]  shadow-md border md:border-[0px] md:border-r-[0.5px] ">
+      <div className=" md:max-w-[18rem] h-full  md:fixed shadow-md border md:border-[0px] md:border-r-[0.5px] ">
           <DashSidebar />
         </div>
         <div className=" mt-6 flex flex-col items-center w-full ">

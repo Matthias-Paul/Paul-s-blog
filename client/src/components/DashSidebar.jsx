@@ -31,14 +31,14 @@ const DashSidebar = () => {
   };
 
   return (
-    <div className="grid space-y-[15px] max-w-[400px] m-auto  py-[15px] p-[20px]">
+    <div className="grid space-y-[15px]  max-w-[400px] md:w-[280px] m-auto  py-[15px] p-[12px] sm:p-[20px]">
       <NavLink to="/dashboard?tab=profile">
         <div
-          className={`flex justify-between p-[10px] border border-[gray] rounded-lg ${
+          className={`flex justify-between  p-[10px] border border-[gray] rounded-lg ${
             tab === "profile" ? "bg-[gray] text-white" : "hover:bg-[blue] hover:text-white"
           }`}
         >
-          <div className="flex items-center gap-x-[5px]">
+          <div className="flex w-full items-center gap-x-[5px]">
             <HiUser />
             <h2>Profile</h2>
           </div>
