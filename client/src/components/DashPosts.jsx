@@ -97,7 +97,7 @@ const [showMore, setShowMore] = useState(true)
              {
             showMore && (
               <div>
-                <button className="bg-[blue]  " > Show more </button>
+                <button className="bg-[blue] p-[10px] rounded-lg text-white cursor-pointer rounded-lg " > Show more </button>
               </div>
             )
           }
