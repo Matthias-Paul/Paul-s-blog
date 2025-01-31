@@ -41,6 +41,7 @@ const [showMore, setShowMore] = useState(true)
         <div className=" md:ml-[260px]  px-[12px] sm:px-[20px] mx-auto " >
          {
          currentUser.user.isAdmin && userPosts.length > 0 ? (
+          <>
            <div className=" sm:p-[20px] rounded-[5px] md:mx-auto overflow-x-scroll  mt-[10px]  scrollbar scrollbar-thumb-[gray]  ">
           <Table className=" w-[1027px] static mx-auto table-auto bg-transparent dark:bg-transparent " >
            <Table.Head >
@@ -91,16 +92,16 @@ const [showMore, setShowMore] = useState(true)
             ))
            }
           </Table>
-        
+         
              </div>
-
-{
-  showMore && (
-    <div>
-      <button className="bg-[blue] p-[10px] rounded-lg text-white cursor-pointer m-auto " > Show more </button>
-    </div>
-  )
-}
+             {
+            showMore && (
+              <div>
+                <button className="bg-[blue]  " > Show more </button>
+              </div>
+            )
+          }
+             </>
          ): (
           <div className="m-auto px-[12px] sm:px-[20px] text-xl "> You have no post yet!</div>
          )
