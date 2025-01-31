@@ -187,7 +187,7 @@ const DashProfile = () => {
   
   return (
     <div>
-      <div className="text-center md:ml-[280px] relative flex flex-col  items-center">
+      <div className="text-center  md:ml-[280px] relative flex flex-col  items-center">
         {showModel && (
           <div className="absolute  drop-shadow-sm p-[15px] mt-[50%] text-white rounded-lg w-full bg-[gray]">
            <div onClick={closeModel} className="float-right w-[25px] cursor-pointer "> <img className="w-full" src={close} /> </div> 
