@@ -115,7 +115,7 @@ const handleSignout = () => {
           </div>
         ) : (
             <NavLink to="/sign-in ">
-            <Button className="bg-[blue] py-[8px] border-[2px] border-[blue] hover:bg-transparent hover:text-[blue] rounded-lg px-[12px] font-[500] cursor-pointer">
+            <Button className="bg-[blue] py-[8px] border-[2px] border-[blue] hover:bg-transparent hover:text-[blue] rounded-lg px-[12px] sm-[20px] font-[500] cursor-pointer">
               Sign In
             </Button>
             </NavLink>

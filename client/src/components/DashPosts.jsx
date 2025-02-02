@@ -25,8 +25,8 @@ function DashPosts() {
     useInfiniteQuery({
       queryKey: ['posts', currentUser.user._id],
       queryFn: fetchPosts,
-      getNextPageParam: (lastPage) => {
-        // Calculate the next page based on the current page
+      getNextPageParam: (lastPage, allPages) => {
+        
         return lastPage.posts.length === 9 ? (lastPage.posts.length / 9) : undefined;
       },
       enabled: currentUser.user.isAdmin, // Fetch only if user is an admin
@@ -44,8 +44,8 @@ function DashPosts() {
 
   return (
     <>
-      <div className="w-full mx-auto pb-[50px]">
-        <div className="md:ml-[280px] px-[12px] md:px-[20px] mx-auto">
+      <div className="w-full mx-auto  px-[12px] md:px-[20px] pb-[50px]">
+        <div className="md:ml-[280px] mx-auto">
           {currentUser.user.isAdmin && posts.length > 0 ? (
             <>
               <div className="sm:p-[20px] md:mt-[-3px] rounded-[5px] md:shadow-md dark:border md:mx-auto overflow-x-scroll mt-[10px] scrollbar scrollbar-thumb-[gray]">
