@@ -24,6 +24,7 @@ const DashProfile = () => {
   const openModel = () =>{
     setShowModel(true)
   }
+  
   const closeModel = () =>{
     setShowModel(false)
   }
