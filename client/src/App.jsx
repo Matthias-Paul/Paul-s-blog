@@ -11,6 +11,8 @@ import ThemeProvider from "./components/ThemeProvider.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import PrivateRouteForAdmin from "./components/PrivateRouteForAdmin.jsx";
 import CreatePost from "./pages/CreatePost";
+import UpdatePosts from "./pages/UpdatePosts";
+
 const App = () => {
 
   return (
@@ -31,6 +33,7 @@ const App = () => {
               </Route>
               <Route element={<PrivateRouteForAdmin/>} >
               <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/edit-post/:postId" element={<UpdatePosts />} />
               </Route>
               <Route path="/projects" element={<Projects />} />
             </Routes>

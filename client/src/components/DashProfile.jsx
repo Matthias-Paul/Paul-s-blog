@@ -189,25 +189,37 @@ const DashProfile = () => {
   return (
     <div>
       <div className="text-center  md:ml-[280px] relative flex flex-col  items-center">
-        {showModel && (
-          <div className="absolute  drop-shadow-sm p-[15px] mt-[50%] text-white rounded-lg w-full bg-[gray]">
-           <div onClick={closeModel} className="float-right w-[25px] cursor-pointer "> <img className="w-full" src={close} /> </div> 
-         <div className="font-[500]  m-auto mt-[35px] px-[20px] text-[18px] max-w-[360px]  "> Are you sure you want to delete your account? </div> 
-           <div className="my-[18px] ">
-           <button
-           onClick={handleDeleteUser}
-            className=" p-[8px] text-md rounded-lg  text-white mt-[13px] cursor-pointer bg-red-700 hover:bg-red-900"
-          >
-           Yes, i&#39;m sure
-          </button>
-          <button
-           onClick={closeModel}
-            className=" p-[8px] ml-[15px] text-md rounded-lg  text-black cursor-pointer bg-white ">
-           No, cancel
-          </button>
-            </div> 
-           </div>
-        )}
+      {showModel && (
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+              <div className="relative w-full max-w-md p-6 bg-gray-800 text-white rounded-lg shadow-lg">
+                <button
+                  onClick={closeModel}
+                  className="absolute top-2 right-2 text-white hover:text-gray-400 focus:outline-none"
+                >
+                  <img className="w-6 h-6" src={close} alt="Close" />
+                </button>
+                <div className="text-center mt-4">
+                  <h3 className="text-lg font-semibold mb-4">
+                    Are you sure you want to delete this account?
+                  </h3>
+                  <div className="flex justify-center space-x-4 mt-4">
+                    <button
+                      onClick={handleDeleteUser}
+                      className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none"
+                    >
+                      Yes, I'm sure
+                    </button>
+                    <button
+                      onClick={closeModel}
+                      className="px-4 py-2 text-sm font-medium text-gray-800 bg-white rounded-lg hover:bg-gray-200 focus:outline-none"
+                    >
+                      No, cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         <h1 className="font-[500] text-[30px] md:text-[40px] py-[20px]">Profile</h1>
         <form  onSubmit={handleFormSubmit}>
           <input

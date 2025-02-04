@@ -179,29 +179,33 @@ function DashPosts() {
           )}
 
           {showModel && (
-            <div className="absolute max-w-[350px] flex flex-col items-end top-[20%] left-[5%] sm:left-[20%] drop-shadow-sm p-[15px] text-white rounded-lg bg-[gray]">
-              <div
-                onClick={closeModel}
-                className="w-[25px] cursor-pointer"
-              >
-                <img className="w-full" src={close} />
-              </div>
-              <div className="font-[500] m-auto mt-[35px] px-[20px] text-center text-[18px] max-w-[360px]">
-                Are you sure you want to delete your post?
-              </div>
-              <div className="my-[18px] items-center mx-auto">
-                <button
-                  onClick={handleDeletePost}
-                  className="p-[8px] text-md rounded-lg text-white mt-[13px] cursor-pointer bg-red-700 hover:bg-red-900"
-                >
-                  Yes, I'm sure
-                </button>
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+              <div className="relative w-full max-w-md p-6 bg-gray-800 text-white rounded-lg shadow-lg">
                 <button
                   onClick={closeModel}
-                  className="p-[8px] ml-[15px] text-md rounded-lg text-black cursor-pointer bg-white"
+                  className="absolute top-2 right-2 text-white hover:text-gray-400 focus:outline-none"
                 >
-                  No, cancel
+                  <img className="w-6 h-6" src={close} alt="Close" />
                 </button>
+                <div className="text-center mt-4">
+                  <h3 className="text-lg font-semibold mb-4">
+                    Are you sure you want to delete your post?
+                  </h3>
+                  <div className="flex justify-center space-x-4 mt-4">
+                    <button
+                      onClick={handleDeletePost}
+                      className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none"
+                    >
+                      Yes, I'm sure
+                    </button>
+                    <button
+                      onClick={closeModel}
+                      className="px-4 py-2 text-sm font-medium text-gray-800 bg-white rounded-lg hover:bg-gray-200 focus:outline-none"
+                    >
+                      No, cancel
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -209,6 +213,7 @@ function DashPosts() {
       </div>
     </>
   );
+
 }
 
 export default DashPosts;
