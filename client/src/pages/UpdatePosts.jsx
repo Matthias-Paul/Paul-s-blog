@@ -109,24 +109,14 @@ function UpdatePosts() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsPublishing(true);
-
+    
         const token = localStorage.getItem("access_token");
-
-        // Log formDataRef for debugging
-        console.log("formDataRef:", formDataRef.current);
-        console.log("currentUser:", currentUser);
-
-        if (!formDataRef.current._id || !currentUser?.user?._id) {
-            setPublishMessage("Invalid post or user information.");
-            setIsPublishing(false);
-            return;
-        }
-
+    
         try {
             const res = await fetch(
                 `https://paul-s-blog.onrender.com/api/post/edit-post/${formDataRef.current._id}/${currentUser.user._id}`,
                 {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
@@ -134,18 +124,19 @@ function UpdatePosts() {
                     body: JSON.stringify(formDataRef.current),
                 }
             );
-
-            const data = await res.json();
-            console.log(data)
+    
+            const data = res.headers.get("Content-Type")?.includes("application/json")
+            ? await res.json()
+            : { message: "No content returned from the server" };
+      
             if (!res.ok) {
                 setPublishMessage(data.message || "Failed to update the post.");
                 setIsPublishing(false);
                 return;
             }
-
+    
             setPublishMessage(data.message || "Post updated successfully!");
             setIsPublishing(false);
-            console.log(data)
             navigate(`/post/${data.updatedPost.slug}`);
         } catch (error) {
             console.error("Error updating post:", error);
@@ -153,6 +144,7 @@ function UpdatePosts() {
             setIsPublishing(false);
         }
     };
+    
 
     return (
         <div className={`w-full m-auto px-[12px] sm:px-[20px] ${uploadImageURL === "" ? "pb-[350px]" : "pb-[750px]"}`}>

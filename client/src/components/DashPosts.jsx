@@ -73,8 +73,10 @@ function DashPosts() {
         }
       );
 
-      const data = await res.json();
-
+      const data = res.headers.get("Content-Type")?.includes("application/json")
+        ? await res.json()
+        : { message: "No content returned from the server" };
+  
       if (!res.ok) {
         console.log(data.message);
       } else {
