@@ -46,8 +46,8 @@ function DashPosts() {
   } = useInfiniteQuery({
     queryKey: ['posts', currentUser.user._id],
     queryFn: fetchPosts,
-    getNextPageParam: (lastPage) =>
-      lastPage.posts.length === 9 ? lastPage.posts.length / 9 : undefined,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.posts.length === 9 ? allPages.length : undefined,
     enabled: !!currentUser?.user?.isAdmin, // Ensure this is a boolean
   });
 
@@ -64,7 +64,7 @@ function DashPosts() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/post/delete-post/${postIdToDelete}/${currentUser.user._id}`,
+        `https://paul-s-blog.onrender.com/api/post/delete-post/${postIdToDelete}/${currentUser.user._id}`,
         {
           method: "DELETE",
           headers: {
@@ -179,8 +179,8 @@ function DashPosts() {
           )}
 
           {showModel && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-              <div className="relative w-full max-w-md p-6 bg-gray-800 text-white rounded-lg shadow-lg">
+            <div className="fixed px-[12px] sm:px-[20px] inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+              <div className="relative w-full max-w-[350px] p-6 bg-gray-800 text-white rounded-lg shadow-lg">
                 <button
                   onClick={closeModel}
                   className="absolute top-2 right-2 text-white hover:text-gray-400 focus:outline-none"

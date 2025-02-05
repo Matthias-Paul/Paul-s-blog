@@ -190,8 +190,8 @@ const DashProfile = () => {
     <div>
       <div className="text-center  md:ml-[280px] relative flex flex-col  items-center">
       {showModel && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-              <div className="relative w-full max-w-md p-6 bg-gray-800 text-white rounded-lg shadow-lg">
+            <div className="fixed px-[12px] sm:px-[20px] inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+              <div className="relative w-full max-w-[350px] p-6 bg-gray-800 text-white rounded-lg shadow-lg">
                 <button
                   onClick={closeModel}
                   className="absolute top-2 right-2 text-white hover:text-gray-400 focus:outline-none"
