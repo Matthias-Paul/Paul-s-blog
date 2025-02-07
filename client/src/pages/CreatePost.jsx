@@ -110,7 +110,7 @@ function CreatePost() {
           <h1 className="text-center font-[600] text-[24px] sm:text-[30px] my-[25px] " > Create a post </h1>
           <form onSubmit={handleSubmit} className="flex flex-col m-auto max-w-[800px] " >
              <div className="  flex flex-col sm:flex-row justify-between   ">
-                 <input onChange={(e)=> setFormData({...formData, title: e.target.value})} className="drop-shadow-md border-none rounded-lg flex-1 "  id="title" type="text" placeholder="Title" />
+                 <input onChange={(e)=> setFormData({...formData, title: e.target.value})} className="drop-shadow-md text-black border-none rounded-lg flex-1 "  id="title" type="text" placeholder="Title" />
                  <select onChange={(e)=> setFormData({...formData, category:e.target.value})} className="drop-shadow-md text-black cursor-pointer border-none rounded-lg sm:ml-[15px] my-[20px] sm:my-[0px]  ">
                     <option value="uncategorized">Select a  category</option>
                     <option value="health">Health</option>

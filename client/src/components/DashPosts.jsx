@@ -63,8 +63,7 @@ function DashPosts() {
     const token = localStorage.getItem("access_token");
 
     try {
-      const res = await fetch(
-        `https://paul-s-blog.onrender.com/api/post/delete-post/${postIdToDelete}/${currentUser.user._id}`,
+      const res = await fetch(`https://paul-s-blog.onrender.com/api/post/delete-post/${postIdToDelete}/${currentUser.user._id}`,
         {
           method: "DELETE",
           headers: {
@@ -155,7 +154,7 @@ function DashPosts() {
                           </span>
                         </Table.Cell>
                         <Table.Cell>
-                          <NavLink to={`/edit-post/${post._id}`}>Edit</NavLink>
+                          <NavLink to={`/edit-post/${post._id}/${currentUser.user._id}`}>Edit</NavLink>
                         </Table.Cell>
                       </Table.Row>
                     </Table.Body>

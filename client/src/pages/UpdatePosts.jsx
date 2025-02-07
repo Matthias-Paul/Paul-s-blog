@@ -155,7 +155,7 @@ function UpdatePosts() {
                         <input
                             onChange={(e) => (formDataRef.current.title = e.target.value)}
                             defaultValue={formDataRef.current.title}
-                            className="drop-shadow-md border-none rounded-lg flex-1"
+                            className="drop-shadow-md text-black border-none rounded-lg flex-1"
                             id="title"
                             type="text"
                             placeholder="Title"
