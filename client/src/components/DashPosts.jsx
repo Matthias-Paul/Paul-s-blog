@@ -1,7 +1,7 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
-import { Table } from 'flowbite-react';
-import { NavLink } from 'react-router-dom';
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { Table } from "flowbite-react";
+import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import close from "../assets/close.svg";
 
@@ -9,16 +9,16 @@ function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
   const [showModel, setShowModel] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [postIdToDelete, setPostIdToDelete] = useState(null);
+  const [selectedPostId, setSelectedPostId] = useState(null); // Store selected post ID
 
   const openModel = (postId) => {
-    setPostIdToDelete(postId);
+    setSelectedPostId(postId); // Set the selected post ID
     setShowModel(true);
   };
 
   const closeModel = () => {
-    setPostIdToDelete(null);
     setShowModel(false);
+    setSelectedPostId(null); // Clear the selected post ID
   };
 
   // Define the fetch function for posts
@@ -30,7 +30,7 @@ function DashPosts() {
       `https://paul-s-blog.onrender.com/api/post/get-post?userId=${currentUser.user._id}&startIndex=${startIndex}&limit=${postsPerPage}`
     );
     if (!res.ok) {
-      throw new Error('Failed to fetch posts');
+      throw new Error("Failed to fetch posts");
     }
     return res.json();
   };
@@ -44,7 +44,7 @@ function DashPosts() {
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts', currentUser.user._id],
+    queryKey: ["posts", currentUser.user._id],
     queryFn: fetchPosts,
     getNextPageParam: (lastPage, allPages) =>
       lastPage.posts.length === 9 ? allPages.length : undefined,
@@ -59,35 +59,42 @@ function DashPosts() {
   }, [data]);
 
   const handleDeletePost = async () => {
-    setShowModel(false);
+    if (!selectedPostId) return;
+  
     const token = localStorage.getItem("access_token");
-
+  
     try {
-      const res = await fetch(`https://paul-s-blog.onrender.com/api/post/delete-post/${postIdToDelete}/${currentUser.user._id}`,
+      const res = await fetch(
+        `https://paul-s-blog.onrender.com/api/post/delete-post/${selectedPostId}/${currentUser.user._id}`,
         {
           method: "DELETE",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
-      const data = res.headers.get("Content-Type")?.includes("application/json")
-        ? await res.json()
-        : { message: "No content returned from the server" };
+  
+      const data = await res.json();
   
       if (!res.ok) {
-        console.log(data.message);
-      } else {
-        // Remove the deleted post from the local state
-        setPosts((prevPosts) =>
-          prevPosts.filter((post) => post._id !== postIdToDelete)
-        );
+        console.error("Failed to delete post:", data.message);
+        return;
       }
+  
+      // Update UI after successful deletion
+      setPosts((prevPosts) =>
+        prevPosts.filter((post) => post._id !== selectedPostId)
+      );
+      setSelectedPostId(null);
+      setShowModel(false);
+      console.log("Post deleted successfully");
     } catch (error) {
-      console.log(error.message);
+      console.error("An error occurred while deleting the post:", error.message);
     }
   };
+  
+
 
   if (isLoading) {
     return (

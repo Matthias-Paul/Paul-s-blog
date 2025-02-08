@@ -162,7 +162,7 @@ function UpdatePosts() {
                         />
                         <select
                             onChange={(e) => (formDataRef.current.category = e.target.value)}
-                            defaultValue ={formDataRef.current.category}
+                            value ={formDataRef.current.category}
                             className="drop-shadow-md text-black cursor-pointer border-none rounded-lg sm:ml-[15px] my-[20px] sm:my-[0px]"
                         >
                             <option value="uncategorized">Select a category</option>

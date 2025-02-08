@@ -90,19 +90,23 @@ export const getPosts = async (req, res, next) => {
 
 
 
-
 export const deletePost = async (req, res, next) => {
-  // Use consistent parameter names and adjust the logic accordingly
-  // Assuming the route parameter is `:id`
-  if (!req.user.isAdmin && req.user._id !== req.params.id) {
-    return next(errorHandler(400, "You are not allowed to delete this post!"));
+  const { postId, userId } = req.params;
+
+  // Check if the user is authorized to delete the post
+  if (!req.user.isAdmin && req.user._id !== userId) {
+    return next({ status: 403, message: "You are not allowed to delete this post!" });
   }
 
   try {
-    // Use the same parameter name here (req.params.id)
-    await Post.findByIdAndDelete(req.params.id);
+    // Attempt to delete the post from the database
+    const deletedPost = await Post.findByIdAndDelete(postId);
 
-    res.status(200).json({ message: "Post deleted successfully" });
+    if (!deletedPost) {
+      return next({ status: 404, message: "Post not found!" });
+    }
+
+    res.status(200).json({ message: "Post deleted successfully", deletedPost });
   } catch (error) {
     next(error);
   }
