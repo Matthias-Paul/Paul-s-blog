@@ -85,3 +85,64 @@ export const getPosts = async (req, res, next) => {
     next(error); // Passing the error to the middleware
   }
 };
+
+
+
+
+
+
+export const deletePost = async (req, res, next) => {
+  // Use consistent parameter names and adjust the logic accordingly
+  // Assuming the route parameter is `:id`
+  if (!req.user.isAdmin && req.user._id !== req.params.id) {
+    return next(errorHandler(400, "You are not allowed to delete this post!"));
+  }
+
+  try {
+    // Use the same parameter name here (req.params.id)
+    await Post.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+
+
+export const editPost = async (req, res, next) => {
+  try {
+    // Authorization check: Allow admin or post owner
+    // Convert req.user._id to a string for a proper comparison.
+    if (!req.user.isAdmin && req.user._id.toString() !== req.params.userId) {
+      return next(errorHandler(403, "You are not allowed to update this post!"));
+    }
+
+    // Update post
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.postId,   
+      {
+        $set: {  
+          title: req.body.title,
+          category: req.body.category,
+          content: req.body.content,
+          image: req.body.image,
+        },
+      },
+      { new: true } // Return updated document
+    );
+
+    if (!updatedPost) {
+      return next(errorHandler(404, "Post not found!"));
+    }
+
+    res.status(200).json({
+      message: "Post updated successfully!",
+      updatedPost,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
