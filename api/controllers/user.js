@@ -84,3 +84,28 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
+export const getUsers = async (req, res, next) => {
+  if (!req.user.isAdmin) {
+    return next(errorHandler(403, "You are not allowed to see all users"));
+  }
+
+  try {
+    const sortDirection = req.query.order === "asc" ? 1 : -1;
+    const totalUsers = await User.countDocuments(); 
+    const users = await User.find().sort({ updatedAt: sortDirection }); 
+
+    const userWithoutPassword = users.map((user) => { 
+      const { password, ...rest } = user._doc;
+      return rest;
+    });
+
+    res.status(200).json({
+      users: userWithoutPassword,
+      totalUsers,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+

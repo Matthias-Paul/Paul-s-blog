@@ -69,8 +69,7 @@ export const getPosts = async (req, res, next) => {
     // Fetching posts with pagination
     const posts = await Post.find(filters)
       .sort({ updatedAt: sortDirection })
-      .skip(startIndex)  // Using startIndex for pagination
-      .limit(limit);     // Limiting the number of posts returned
+      
 
     // Counting total posts in the collection (unfiltered)
     const totalPosts = await Post.countDocuments();
