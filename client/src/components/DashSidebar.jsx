@@ -70,9 +70,9 @@ const DashSidebar = () => {
      }
      
 
-      <div className="flex border border-[gray] items-center gap-x-[5px] hover:bg-[blue] cursor-pointer hover:text-white p-[10px] rounded-lg">
+      <div onClick={handleSignout}  className="flex border border-[gray] items-center gap-x-[5px] hover:bg-[blue] cursor-pointer hover:text-white p-[10px] rounded-lg">
         <HiArrowSmRight />
-        <h2 onClick={handleSignout} >Sign Out</h2>
+        <h2 >Sign Out</h2>
       </div>
     </div>
   );

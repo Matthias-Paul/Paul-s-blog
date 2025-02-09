@@ -90,6 +90,10 @@ export const getPosts = async (req, res, next) => {
 
 
 
+
+
+
+
 export const deletePost = async (req, res, next) => {
   const { postId, userId } = req.params;
 
@@ -150,3 +154,5 @@ export const editPost = async (req, res, next) => {
     next(error);
   }
 };
+
+
