@@ -246,7 +246,7 @@ const DashProfile = () => {
               type="text"
               placeholder="Username"
               value={username}
-              className="w-[320px] sm:w-[370px]  lg:w-[550px]  lg:p-[11px] rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
+              className="w-[320px] sm:w-[370px]  lg:w-[550px] text-black lg:p-[11px] rounded-lg border border-gray-300 mt-[6px] lg:mt-[16px]"
             />
           </div>
 

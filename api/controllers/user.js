@@ -85,17 +85,24 @@ export const deleteUser = async (req, res, next) => {
 };
 
 export const getUsers = async (req, res, next) => {
-  if (!req.user.isAdmin) {
+  if (!req.user || !req.user.isAdmin) {
     return next(errorHandler(403, "You are not allowed to see all users"));
   }
 
   try {
     const sortDirection = req.query.order === "asc" ? 1 : -1;
-    const totalUsers = await User.countDocuments(); 
-    const users = await User.find().sort({ updatedAt: sortDirection }); 
+    const startIndex = Math.max(parseInt(req.query.startIndex, 10) || 0, 0);
+    const limit = Math.max(parseInt(req.query.limit, 10) || 9, 1);
 
-    const userWithoutPassword = users.map((user) => { 
-      const { password, ...rest } = user._doc;
+    const users = await User.find()
+      .sort({ updatedAt: sortDirection })
+      .skip(startIndex)
+      .limit(limit);
+
+    const totalUsers = await User.countDocuments();
+
+    const userWithoutPassword = users.map((user) => {
+      const { password, ...rest } = user.toObject();
       return rest;
     });
 
@@ -107,5 +114,6 @@ export const getUsers = async (req, res, next) => {
     next(error);
   }
 };
+
 
 
