@@ -12,6 +12,8 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import PrivateRouteForAdmin from "./components/PrivateRouteForAdmin.jsx";
 import CreatePost from "./pages/CreatePost";
 import UpdatePosts from "./pages/UpdatePosts";
+import PostPage from "./pages/PostPage";
+
 
 const App = () => {
 
@@ -36,6 +38,8 @@ const App = () => {
               <Route path="/edit-post/:postId/:userId" element={<UpdatePosts />} />
               </Route>
               <Route path="/projects" element={<Projects />} />
+              <Route path="/post/:postSlug" element={<PostPage />} />
+
             </Routes>
     
         </ThemeProvider>

@@ -55,7 +55,7 @@ const handleSignout = () => {
           </NavLink>
         </div>
       
-        <div className="hidden md:flex gap-x-[25px] font-[400] text-xl text-center ">
+        <div className="hidden md:flex gap-x-[25px] font-[500] text-xl text-center ">
           <NavLink  to="/" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div >Home</div>
           </NavLink> 
