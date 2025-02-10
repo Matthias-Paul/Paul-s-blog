@@ -173,7 +173,7 @@ function DashPosts() {
                   <button
                     className="bg-[blue] px-[20px] my-[30px] py-[7px] rounded-lg text-white hover:bg-[gray] cursor-pointer"
                     onClick={() => fetchNextPage()}
-                   
+              
                   >
                     {isFetchingNextPage ? "Loading more..." : "Show more"}
                   </button>

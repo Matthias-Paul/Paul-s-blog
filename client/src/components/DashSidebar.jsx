@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { HiUser, HiArrowSmRight,HiDocumentText } from "react-icons/hi";
+import { HiUser, HiArrowSmRight,HiDocumentText, HiOutlineUserGroup } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutSuccess } from "../redux/user/userSlice.js";
@@ -61,6 +61,26 @@ const DashSidebar = () => {
           <div className="flex items-center gap-x-[5px]">
             <HiDocumentText />
             <h2>Posts</h2>
+          </div>
+        </div>
+      </NavLink>
+        </div>
+      )
+
+     }
+
+{
+      currentUser.user.isAdmin &&(
+        <div>
+        <NavLink to="/dashboard?tab=users">
+        <div
+          className={`flex justify-between p-[10px] border border-[gray] rounded-lg ${
+            tab === "users" ? "bg-[gray] text-white" : "hover:bg-[blue] hover:text-white"
+          }`}
+        >
+          <div className="flex items-center gap-x-[5px]">
+            <HiOutlineUserGroup />
+            <h2>Users</h2>
           </div>
         </div>
       </NavLink>
