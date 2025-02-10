@@ -121,12 +121,12 @@ function DashPosts() {
               <div className="sm:p-[20px] md:mt-[-3px] rounded-[5px] md:shadow-md dark:border md:mx-auto overflow-x-scroll mt-[10px] scrollbar scrollbar-thumb-[gray]">
                 <Table className="w-[1000px] static mx-auto table-auto bg-transparent dark:bg-transparent">
                   <Table.Head>
-                    <Table.HeadCell>Date Updated</Table.HeadCell>
-                    <Table.HeadCell>Post Image</Table.HeadCell>
-                    <Table.HeadCell>Post Title</Table.HeadCell>
-                    <Table.HeadCell>Category</Table.HeadCell>
-                    <Table.HeadCell>Delete</Table.HeadCell>
-                    <Table.HeadCell>Edit</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >DATE UPDATED</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >POST IMAGE</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >POST TITLE  </Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >CATEGORY</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >DELETE</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >EDIT</Table.HeadCell>
                   </Table.Head>
 
                   {posts.map((post) => (

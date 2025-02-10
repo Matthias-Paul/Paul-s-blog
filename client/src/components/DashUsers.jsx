@@ -82,15 +82,15 @@ function DashUsers() {
         <div className="md:ml-[280px] relative mx-auto">
           {currentUser.user.isAdmin && users.length > 0 ? (
             <>
-              <div className="sm:p-[20px] md:mt-[-3px] rounded-[5px] md:shadow-md dark:border md:mx-auto overflow-x-scroll mt-[10px] scrollbar scrollbar-thumb-[gray]">
+              <div className="sm:p-[20px]  m-auto md:mt-[-3px] rounded-[5px] md:shadow-md dark:border md:mx-auto overflow-x-scroll mt-[10px] scrollbar scrollbar-thumb-[gray]">
                 <Table className="w-[1000px] static mx-auto table-auto bg-transparent dark:bg-transparent">
                   <Table.Head>
-                    <Table.HeadCell>Date Created</Table.HeadCell>
-                    <Table.HeadCell>User Image</Table.HeadCell>
-                    <Table.HeadCell>Username</Table.HeadCell>
-                    <Table.HeadCell>Admin</Table.HeadCell>
-                    <Table.HeadCell>Email Address</Table.HeadCell>
-                  
+                    <Table.HeadCell className="font-medium" >DATE CREATED</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >USER IMAGE</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >USERNAME</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >ROLE</Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >EMAIL ADDRESS  </Table.HeadCell>
+                    <Table.HeadCell className="font-medium" >DATE UPDATED</Table.HeadCell>
                   </Table.Head>
 
                   {users.map((user) => (
@@ -115,8 +115,11 @@ function DashUsers() {
                             </div>
                       
                         </Table.Cell>
-                        <Table.Cell>{user.isAdmin? "True": "False"}</Table.Cell>
-                        <Table.Cell>{user.email}</Table.Cell>
+                        <Table.Cell>{user.isAdmin? "Admin": "User"}</Table.Cell>
+                        <Table.Cell><div className="truncate w-[170px]"> {user.email}</div></Table.Cell>
+                        <Table.Cell>
+                          {new Date(user.updatedAt).toLocaleDateString()}
+                        </Table.Cell>
                       </Table.Row>
                     </Table.Body>
                   ))}
