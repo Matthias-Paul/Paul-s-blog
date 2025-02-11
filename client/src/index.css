@@ -7,3 +7,16 @@
 .ql-editor{
     font-size:1.1rem;
 }
+
+.post-content p {
+    margin-bottom: 0.3rem;
+    font-family:sans-serif;
+}
+.post-content a {
+    text-decoration:none;
+    color:blue;
+    cursor:pointer;
+}
+.post-content a:hover {
+    text-decoration:underline;
+}
