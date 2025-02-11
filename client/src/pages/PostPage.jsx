@@ -19,30 +19,13 @@ function PostPage() {
         return res.json();
       };
 
-      const fetchUser = async () => {
-   
-    
-        const res = await fetch(
-          `https://paul-s-blog.onrender.com/api/user/get-user/${currentUser.user._id}`
-        );
-        if (!res.ok) {
-          throw new Error("Failed to fetch user");
-        }
-        return res.json();
-      };
+ 
 
       const { data: dataOne, isLoading, isError } = useQuery({
         queryKey: ["post", postSlug],
         queryFn: fetchPost,
         enabled: !!postSlug,
       });
-
-      const { data:dataTwo } = useQuery({
-        queryKey: ["user", currentUser.user._id],
-        queryFn: fetchUser,
-        enabled: !!currentUser.user._id,
-      });
-    
       useEffect(() => {
         if (dataOne && dataOne.posts?.length > 0) {
           setPost(dataOne.posts[0]);
@@ -50,11 +33,31 @@ function PostPage() {
         }
       }, [dataOne]);
 
-      useEffect(() => {
+      const fetchUser = async () => {
+   
+    
+        const res = await fetch(
+          `https://paul-s-blog.onrender.com/api/user/get-user/${post.userId}`
+        );  
+        if (!res.ok) {
+          throw new Error("Failed to fetch user");
+        }
+        return res.json();  
+      };
+      const { data:dataTwo } = useQuery({
+        queryKey: ["OneUser", post.userId],
+        queryFn: fetchUser,   
+       
+      });
+    
+    
+
+      useEffect(() => {  
         if (dataTwo ) {
           setUser(dataTwo);
-          console.log(user)
+         
         }
+        console.log(user)
       }, [dataTwo]);
 
       if (isLoading) {

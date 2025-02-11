@@ -121,8 +121,10 @@ export const getOneUser = async (req, res, next) => {
   try {
     const { userId} = req.params
     const user = await User.findById(userId)
+
+    const { password, ...rest } = user._doc;
     res.status(200).json({
-      user,
+      OneUser:rest,
 
     });
   } catch (error) {
