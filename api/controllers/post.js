@@ -23,24 +23,26 @@ export const createPost = async (req, res, next) => {
     .toLowerCase()
     .replace(/[^a-zA-Z0-9-]/g, "")}`;
     const uniqueSlug = `${slug}-${Date.now()}`;
-
+    
+    console.log(createdPost, req.user)
   const newPost = new Post({
     ...req.body,
     userId: req.user.id,
     userEmail: req.user.userEmail,
     username: req.user.username,
-    slug: uniqueSlug,
-  });  
+    profilePicture:req.user.profilePicture,
+    slug: uniqueSlug,   
+  });      
 
   try {
     // Save the post to the database
     const createdPost = await newPost.save();
-
-    // Return success response
-    res.status(201).json({
+   console.log(createdPost, req.user)
+    // Return success response     
+    res.status(201).json({    
       success: true,
       message: "Post created successfully!",
-      createdPost,
+      createdPost, 
     });
   } catch (error) {
     // Handle errors

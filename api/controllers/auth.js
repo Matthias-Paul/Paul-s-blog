@@ -69,7 +69,7 @@ export const signin = async (req, res, next) => {
   
     // Generate Token
     const token = jwt.sign(
-      { id: validUser._id, isAdmin: validUser.isAdmin, userEmail: validUser.email, username: validUser.username    }, // Include user ID
+      { id: validUser._id, isAdmin: validUser.isAdmin, userEmail: validUser.email, username: validUser.username, profilePicture: validUser.profilePicture     }, // Include user ID
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -104,7 +104,7 @@ export const google = async (req, res, next) => {
       
     if (user) {
       // Existing user, sign in and generate token
-      const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin, userEmail: user.email, username: user.username }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin, userEmail: user.email, username: user.username, profilePicture: user.profilePicture, }, process.env.JWT_SECRET);
       const { password, ...rest } = user._doc;
       
       res.status(200).cookie("access_token", token, { httpOnly: true }).json({
@@ -119,14 +119,14 @@ export const google = async (req, res, next) => {
 
       const newUser = new User({
         username: name.toLowerCase().split(" ").join("") + Math.random().toString().slice(-4),
-        email,
+        email,  
         password: hashPassword,
         profilePicture: googlePhotoURL,  
       });   
      
       await newUser.save();      
         
-      const token = jwt.sign({ id: newUser._id, isAdmin:newUser.isAdmin, userEmail:newUser.email, username:newUser.username  }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: newUser._id, isAdmin:newUser.isAdmin, userEmail:newUser.email, username:newUser.username, profilePicture:newUser.profilePicture,  }, process.env.JWT_SECRET);
       const { password, ...rest } = newUser._doc; 
           
       res        
