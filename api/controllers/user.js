@@ -115,5 +115,18 @@ export const getUsers = async (req, res, next) => {
   }
 };
 
+export const getOneUser = async (req, res, next) => {
+  
 
+  try {
+    const { userId} = req.params
+    const user = await User.findById(userId)
+    res.status(200).json({
+      user,
+
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 

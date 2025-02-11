@@ -1,10 +1,12 @@
 import {  useParams, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
+import { useSelector } from "react-redux";
 function PostPage() {
     const { postSlug } = useParams();
     const [post, setPost] = useState({})
+    const [user, setUser] = useState([ ])
+    const { currentUser } = useSelector((state) => state.user);
     const fetchPost = async ({ pageParam = 0 }) => {
    
     
@@ -17,18 +19,43 @@ function PostPage() {
         return res.json();
       };
 
-      const { data, isLoading, isError } = useQuery({
+      const fetchUser = async () => {
+   
+    
+        const res = await fetch(
+          `https://paul-s-blog.onrender.com/api/user/get-user/${currentUser.user._id}`
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch user");
+        }
+        return res.json();
+      };
+
+      const { data: dataOne, isLoading, isError } = useQuery({
         queryKey: ["post", postSlug],
         queryFn: fetchPost,
         enabled: !!postSlug,
       });
+
+      const { data:dataTwo } = useQuery({
+        queryKey: ["user", currentUser.user._id],
+        queryFn: fetchUser,
+        enabled: !!currentUser.user._id,
+      });
     
       useEffect(() => {
-        if (data && data.posts?.length > 0) {
-          setPost(data.posts[0]);
+        if (dataOne && dataOne.posts?.length > 0) {
+          setPost(dataOne.posts[0]);
           console.log(postSlug, post)
         }
-      }, [data]);
+      }, [dataOne]);
+
+      useEffect(() => {
+        if (dataTwo ) {
+          setUser(dataTwo);
+          console.log(user)
+        }
+      }, [dataTwo]);
 
       if (isLoading) {
     return (
@@ -61,10 +88,10 @@ function PostPage() {
                     <div className="w-[35px] h-[35px] md:w-[55px] md:h-[55px]   ">
                       <img 
                         className="w-full h-full object-cover rounded-[50%]  "
-                        src={post.profilePicture}
+                        src={user.profilePicture}
                         alt="profile"/>
                     </div>
-                    <p className=" ml-[7px]  sm:ml-[10px]  ">{post.username}</p>
+                    <p className=" ml-[7px]  sm:ml-[10px]  ">{user.username}</p>
                </div>
 
                     <p className=" ">{new Date(post.createdAt).toLocaleDateString()}</p>
