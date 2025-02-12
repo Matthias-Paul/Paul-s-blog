@@ -150,7 +150,7 @@ const DashProfile = () => {
 
   const fetchUser = async () => {
     const res = await fetch(
-      `https://paul-s-blog.onrender.com/api/user/get-user/${user.user._id}`
+      `https://paul-s-blog.onrender.com/api/user/get-user/${currentUser.user._id}`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch posts");
@@ -161,9 +161,9 @@ const DashProfile = () => {
 
 
   const { data: getUser} = useQuery({
-      queryKey: ["user", user.user],
+      queryKey: ["user", currentUser.user],
       queryFn: fetchUser,
-      enabled: !!user.user,
+      enabled: !!currentUser.user,
     });
 
 
