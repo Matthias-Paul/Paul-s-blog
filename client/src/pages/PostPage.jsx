@@ -6,7 +6,7 @@ function PostPage() {
     const { postSlug } = useParams();
     const [post, setPost] = useState({})
 
-    const [user, setUser] = useState([])
+
 
     const fetchPost = async ({ pageParam = 0 }) => {
    

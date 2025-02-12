@@ -19,7 +19,7 @@ const DashProfile = () => {
   const [update, setUpdate] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showModel, setShowModel] = useState(false);
-
+  const [user, setUser] = useState([])
 
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -132,6 +132,8 @@ const DashProfile = () => {
     
       // If the update is successful
       dispatch(updateSuccess(data))
+      setUser(data)
+      console.log("game", user)
       setIsUpdating(false)
       setUpdate("User Profile Updated Successfully"); // Display success message
       console.log("User updated successfully:", data);
@@ -145,6 +147,32 @@ const DashProfile = () => {
     }
     
   };
+
+  const fetchUser = async () => {
+    const res = await fetch(
+      `https://paul-s-blog.onrender.com/api/user/get-user/${user.user._id}`
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch posts");
+    }
+    return res.json();
+  }; 
+
+
+
+  const { data: getUser} = useQuery({
+      queryKey: ["user", user.user],
+      queryFn: fetchUser,
+      enabled: !!user.user,
+    });
+
+
+    useEffect(() => {
+      if (getUser) {
+        dispatch(updateSuccess(getUser))
+        console.log("current", currentUser.user)
+      }
+    }, [getUser]);
 
 
 
