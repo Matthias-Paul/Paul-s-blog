@@ -2,6 +2,9 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux";
+
+
 function CreatePost() {
 
   const [UploadImage, setUploadImage] = useState(null);
@@ -11,6 +14,8 @@ function CreatePost() {
   const [formData, setFormData] = useState({})
   const [publishMessage, setPublishMessage] = useState("");
   const [isPublishing, setIsPublishing] = useState(false);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const navigate = useNavigate()
   const handlePostImage = (e) => {
@@ -62,11 +67,20 @@ function CreatePost() {
 
     }
       console.log(formData)
-      const handleSubmit = async (e)=>{
+
+    
+      const handleSubmit = async (e)=>{   
         e.preventDefault()
         setIsPublishing(true)
         const token = localStorage.getItem("access_token")
         try {
+          setFormData({
+            ...formData, 
+            userEmail: currentUser.user.email,
+            username: currentUser.user.username,
+            profilePicture:currentUser.user.profilePicture,
+          
+          })
           const res = await fetch("https://paul-s-blog.onrender.com/api/post/create-post",{
             method:"POST",
             headers:{

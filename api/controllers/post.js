@@ -27,10 +27,7 @@ export const createPost = async (req, res, next) => {
   const newPost = new Post({
     ...req.body,
     userId: req.user.id,
-    userEmail: req.user.userEmail,
-    username: req.user.username,
-    profilePicture:req.user.profilePicture,
-    slug: uniqueSlug,   
+    slug: uniqueSlug,           
   });      
 
   try {

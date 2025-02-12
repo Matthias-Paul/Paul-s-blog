@@ -1,12 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
-import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutSuccess } from "../redux/user/userSlice.js";
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess,signInSuccess, signOutSuccess } from "../redux/user/userSlice.js";
 import close from "../assets/close.svg";
 import { NavLink } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
+
  console.log(currentUser)
   const [username, setUsername] = useState(currentUser.user.username);
   const [email, setEmail] = useState(currentUser.user.email);
@@ -17,6 +19,7 @@ const DashProfile = () => {
   const [update, setUpdate] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showModel, setShowModel] = useState(false);
+
 
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -108,22 +111,26 @@ const DashProfile = () => {
         // Handle specific error messages
         if (data.message) {
           if (data.message.includes("ENOTFOUND") || data.message.includes("Operation")) {
+            setIsUpdating(false)
             setUpdate("Update failed. Check your internet connection!");
-        
+            
           } else {
+            setIsUpdating(false)
             setUpdate(data.message || "An error occurred");
             
           }
         } else {
+          setIsUpdating(false)
           setUpdate("An error occurred while updating user.");
         }
+    
     
         dispatch(updateFailure(data.message || "An error occurred"));
         return;
       }
     
       // If the update is successful
-      dispatch(updateSuccess(data)); // Dispatch success action
+      dispatch(updateSuccess(data))
       setIsUpdating(false)
       setUpdate("User Profile Updated Successfully"); // Display success message
       console.log("User updated successfully:", data);
@@ -137,6 +144,10 @@ const DashProfile = () => {
     }
     
   };
+
+
+
+  
   const handleDeleteUser = async () => {
     setShowModel(false);
   

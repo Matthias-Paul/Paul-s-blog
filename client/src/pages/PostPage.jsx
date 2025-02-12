@@ -33,33 +33,7 @@ function PostPage() {
         }
       }, [data]);
 
-      const fetchUser = async () => {
-      const res = await fetch(
-        `https://paul-s-blog.onrender.com/api/user/get-user/${post.userId}`
-      );
-      if (!res.ok) {
-        throw new Error("Failed to fetch posts");
-      }
-      return res.json();
-    };
-
-
-
-    const { data: getUser} = useQuery({
-        queryKey: ["user", post.userId],
-        queryFn: fetchUser,
-        enabled: !!post.userId,
-      });
-
-
-      useEffect(() => {
-        if (getUser) {
-          setUser(getUser.OneUser);
-          console.log(getUser)
-        }
-      }, [getUser]);
-
-
+     
 
       if (isLoading) {
     return (
@@ -92,10 +66,10 @@ function PostPage() {
                     <div className="w-[35px] h-[35px] md:w-[55px] md:h-[55px]   ">
                       <img 
                         className="w-full h-full object-cover rounded-[50%]  "
-                        src={user.profilePicture}
+                        src={post.profilePicture}
                         alt="profile"/>
                     </div>
-                    <p className=" ml-[7px]  sm:ml-[10px]  ">{user.username}</p>
+                    <p className=" ml-[7px]  sm:ml-[10px]  ">{post.username}</p>
                </div>
 
                     <p className=" ">{new Date(post.createdAt).toLocaleDateString()}</p>

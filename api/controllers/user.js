@@ -1,14 +1,11 @@
 import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import User from "../model/user.model.js";
-
-export const test = (req, res) => {
-  res.send("API Call");
-};
+import Post from "../model/post.model.js";
 
 export const updateUser = async (req, res, next) => {
   try {
-    // Ensure req.user is properly populated
+    // Ensure user authentication
     if (!req.user || !req.user.id) {
       return next(errorHandler(401, "Unauthorized. User not authenticated."));
     }
@@ -20,15 +17,15 @@ export const updateUser = async (req, res, next) => {
       return next(errorHandler(403, "You are not allowed to update this user"));
     }
 
-    // Validate password, if provided
+    // Validate and hash password if provided
     if (req.body.password) {
       if (req.body.password.length < 6) {
         return next(errorHandler(400, "Password must be at least 6 characters long"));
       }
-      req.body.password = bcryptjs.hashSync(req.body.password, 10); // Hash the password
+      req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
 
-    // Validate username, if provided  
+    // Validate username if provided  
     if (req.body.username) {
       const username = req.body.username.trim();
       if (username.length < 5 || username.length > 20) {
@@ -40,30 +37,35 @@ export const updateUser = async (req, res, next) => {
       req.body.username = username; // Trim whitespace
     }
 
-    // Update user data
+    // Update user data in the database
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
-      {
-        $set: {
-          username: req.body.username,
-          email: req.body.email,
-          profilePicture: req.body.profilePicture,
-          ...(req.body.password && { password: req.body.password }), // Only include password if updated
-        },
-      },
-      { new: true, runValidators: true } // Return the updated document
+      { $set: req.body }, // Spread all updates
+      { new: true, runValidators: true }
     );
 
     if (!updatedUser) {
       return next(errorHandler(404, "User not found"));
     }
 
+   
+    // Update only username, email, and profilePicture in all posts where userId matches
+   const post=  await Post.updateMany(
+      { userId: req.params.userId }, 
+      {
+        $set: {
+          username: updatedUser.username, 
+          userEmail: updatedUser.email, 
+          profilePicture: updatedUser.profilePicture
+        }
+      }
+    );
+     console.log("post", post) 
     // Exclude the password from the response
     const { password, ...rest } = updatedUser._doc;
 
-    res.status(200).json({
-        user:rest,
-    });
+    res.status(200).json({ user: rest });
+
   } catch (error) {
     next(error);
   }
@@ -120,11 +122,11 @@ export const getOneUser = async (req, res, next) => {
 
   try {
     const { userId} = req.params
-    const user = await User.findById(userId)
+    const oneUser = await User.findById(userId)
 
-    const { password, ...rest } = user._doc;
+    const { password, ...rest } = oneUser._doc;
     res.status(200).json({
-      OneUser:rest,
+      user:rest,
 
     });
   } catch (error) {
