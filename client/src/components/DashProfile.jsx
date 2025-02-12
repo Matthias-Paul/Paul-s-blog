@@ -74,7 +74,7 @@ const DashProfile = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+    setIsUpdating(false)
     const token = localStorage.getItem("access_token"); 
 
     if (!token) {
@@ -106,8 +106,9 @@ const DashProfile = () => {
     
       // Check if the response indicates a failure
       if (!res.ok) {
-        console.error("Update failed:", data.message);
         setIsUpdating(false)
+        console.error("Update failed:", data.message);
+        
         // Handle specific error messages
         if (data.message) {
           if (data.message.includes("ENOTFOUND") || data.message.includes("Operation")) {
@@ -124,7 +125,7 @@ const DashProfile = () => {
           setUpdate("An error occurred while updating user.");
         }
     
-    
+        setIsUpdating(true)
         dispatch(updateFailure(data.message || "An error occurred"));
         return;
       }
@@ -137,7 +138,7 @@ const DashProfile = () => {
       
     } catch (error) {
       console.error("An error occurred while updating user:", error);
-      setIsUpdating(true)
+      setIsUpdating(false)
       // Handle unexpected errors
       setUpdate(error.message || "An unexpected error occurred");
       dispatch(updateFailure(error.message || "An unexpected error occurred"));
