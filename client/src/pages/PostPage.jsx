@@ -1,7 +1,7 @@
 import {  useParams, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
+import CommentSection from "../components/CommentSection"
 function PostPage() {
     const { postSlug } = useParams();
     const [post, setPost] = useState({})
@@ -78,6 +78,8 @@ function PostPage() {
 
           </div>
           </div>
+
+          <CommentSection postId={post._id} />
         </div>    
       </main>  
     </>
