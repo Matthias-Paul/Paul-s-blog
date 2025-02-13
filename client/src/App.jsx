@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import ThemeProvider from "./components/ThemeProvider.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import PrivateRouteForAdmin from "./components/PrivateRouteForAdmin.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import CreatePost from "./pages/CreatePost";
 import UpdatePosts from "./pages/UpdatePosts";
 import PostPage from "./pages/PostPage";
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+      <ScrollToTop  />
         <Header /> {/* Header is displayed at the top of every page */}
        
         <ThemeProvider>

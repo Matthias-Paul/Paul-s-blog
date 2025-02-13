@@ -59,7 +59,7 @@ function PostPage() {
           <NavLink to={`/search?category=${post.category}`}>
              <button className=" py-[4px] px-[22px] md:px-[38px] first-letter:uppercase bg-[gray] active:bg-[blue] text-[16px] md:text-[19px] text-white rounded-[12px] my-[12px] " > {post.category} </button>
           </NavLink>
-          <div className=" w-full" ><img className=" w-full  mt-[20px] object-cover rounded-[5px] max-h-[800px]" src={post.image} alt={post.title} /> </div>
+          <div className=" w-full" ><img className=" w-full  mt-[20px] object-cover rounded-[6px] sm:rounded-[12px] max-h-[800px]" src={post.image} alt={post.title} /> </div>
           
           <div className="flex items-center justify-between border-b-[2px] pb-[15px] text-[15px] mt-[7px] md:text-[20px] font-[500] ">
                    <div className="flex items-center ">
