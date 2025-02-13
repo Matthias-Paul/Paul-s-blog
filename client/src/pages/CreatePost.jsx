@@ -74,14 +74,8 @@ function CreatePost() {
         setIsPublishing(true)
         const token = localStorage.getItem("access_token")
         try {
-          setFormData({
-            ...formData, 
-            userEmail: currentUser.user.email,
-            username: currentUser.user.username,
-            profilePicture:currentUser.user.profilePicture,
-          
-          })
-          const res = await fetch("https://paul-s-blog.onrender.com/api/post/create-post",{
+        
+          const res = await fetch("http://localhost:5000/api/post/create-post",{
             method:"POST",
             headers:{
               "Content-Type":"application/json",

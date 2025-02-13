@@ -1,53 +1,61 @@
 import { errorHandler } from "../utils/error.js";
 import Post from "../model/post.model.js";
+import User from "../model/user.model.js";
 
 export const createPost = async (req, res, next) => {
-  // Check if user is authorized
-  if (!req.user || !req.user.isAdmin) {
-    return next(errorHandler(403, "You are not allowed to create a post!"));
-  }
-   
-  // Check for title and content in the request body
-  if (!req.body || !req.body.title || !req.body.content) {
-    return next(errorHandler(400, "Please provide a title and a content"));
-  }
+  try {
+    // Check if user is authenticated and is an admin
+    if (!req.user || !req.user.isAdmin) {
+      return next(errorHandler(403, "You are not allowed to create a post!"));
+    }
 
-  if (req.body.content.length < 30) {
-    return next(errorHandler(400, "Content must be more than 30 characters"));;
-  }
+    // Validate title and content
+    const { title, content } = req.body;
+    if (!title || !content) {
+      return next(errorHandler(400, "Please provide a title and content"));
+    }
 
-  // Generate unique slug
-  const slug = `${req.body.title
-    .split(" ")
-    .join("-")
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9-]/g, "")}`;
+    if (content.length < 30) {
+      return next(errorHandler(400, "Content must be more than 30 characters"));
+    }
+
+    // Find user data
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+
+    // Generate unique slug
+    const slug = title.trim().toLowerCase().replace(/[^a-zA-Z0-9-]/g, "").split(" ").join("-");
     const uniqueSlug = `${slug}-${Date.now()}`;
 
-  const newPost = new Post({
-    ...req.body,
-    userId: req.user.id,
-    slug: uniqueSlug,   
-  });      
+    // Create new post object
+    const newPost = new Post({
+      ...req.body,
+      userId: req.user.id,
+      slug: uniqueSlug,
+      userEmail: user.email,
+      username: user.username,
+      profilePicture: user.profilePicture,
+    });
 
-  try {
-    // Save the post to the database
+    // Save to database
     const createdPost = await newPost.save();
 
-    // Return success response     
-    res.status(201).json({    
+    // Send success response
+    res.status(201).json({
       success: true,
       message: "Post created successfully!",
-      createdPost, 
+      createdPost,
     });
-    
-    console.log(createdPost, req.user)
+
+    console.log("Post Created:", createdPost);
   } catch (error) {
-    // Handle errors
-    next(error);
     console.error("Error creating post:", error);
+    next(error);
   }
 };
+
 
 export const getPosts = async (req, res, next) => {
   try {
