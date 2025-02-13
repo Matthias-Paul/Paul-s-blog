@@ -1,10 +1,20 @@
 import { useSelector } from "react-redux";
 import {  NavLink } from "react-router-dom";
 import { FaPaperPlane } from "react-icons/fa";
+import {  useState } from "react";
 
 function CommentSection({postId}) {
     const { currentUser } = useSelector((state) => state.user);
+    const [comment, setComment] = useState("")
 
+
+
+    const handleSubmit = async (e)=>{
+      e.preventDefault()
+      setComment("")
+      
+
+    }
 
   return (
     <>
@@ -32,14 +42,18 @@ function CommentSection({postId}) {
            )}
            {
             currentUser && (
-                <form className="w-full  mx-auto">
+                <form onSubmit={handleSubmit} className="w-full  mx-auto">
                 <div className="relative">
                  
                   <input
-                    className="w-full rounded-xl mt-5 h-[60px] sm:h-[70px] p-4 pr-14 border-2 border-gray-300 shadow-md outline-none resize-none "
+                    className="w-full text-black rounded-xl mt-5 h-[60px] sm:h-[70px] p-4 pr-14 border-2 border-gray-300 shadow-md outline-none resize-none "
                     placeholder="Add a comment..."
+                    onChange={(e)=> setComment(e.target.value) }
+                    value={comment}
                     />
-                    <FaPaperPlane className="absolute mt-[10px] right-4 top-1/2 transform -translate-y-1/2 text-[blue] text-[20px] md:text-[35px]  cursor-pointer hover:scale-110 transition-all"/>
+                   <button type="submit" >
+                     <FaPaperPlane className="absolute mt-[10px] right-4 top-1/2 transform -translate-y-1/2 text-[blue] text-[20px] md:text-[35px]  cursor-pointer hover:scale-110 transition-all"/>
+                    </button>              
                 </div>
               </form>  
             )
