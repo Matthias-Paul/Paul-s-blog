@@ -18,9 +18,9 @@ function CommentSection({postId}) {
 
   return (
     <>
-      <div className="w-full  m-auto  pb-[20px ] ">
-        <div  className="  h-screen max-w-[800px] m-auto pt-[70px] ">
-
+      <div className="w-full  m-auto  ">
+        <div  className="  max-w-[800px] m-auto pt-[30px] ">
+           <h1 className="font-[500] text-[20px] sm:text-[25px] my-[30px] " > Leave a Comment </h1>
            {
            currentUser? (
             <div className="flex items-center text-[16px] sm:text-[20px] text-[gray] font-[400] ">
@@ -32,13 +32,15 @@ function CommentSection({postId}) {
 
             </div>    
            ):(
-                <div className="flex items-center">
-                      <p className="flex" > You need to sign in before you can make a comment. 
-                       <NavLink to="/sign-in">  <p className=" flex text-[blue] ml-[3px] font-[500] hover:underline  "  > Sign In </p> </NavLink>
-                      </p> 
-
-
-                </div>
+            <div className="flex items-center">
+            <p className="text-start">
+              You need to sign in before you can make a comment.  
+              <NavLink to="/sign-in" className="text-[blue] font-medium ml-1 hover:underline">
+                Sign In
+              </NavLink>
+            </p>
+          </div>
+          
            )}
            {
             currentUser && (
@@ -52,7 +54,7 @@ function CommentSection({postId}) {
                     value={comment}
                     />
                    <button type="submit" >
-                     <FaPaperPlane className="absolute mt-[10px] right-4 top-1/2 transform -translate-y-1/2 text-[blue] text-[20px] md:text-[35px]  cursor-pointer hover:scale-110 transition-all"/>
+                     <FaPaperPlane className="absolute mt-[10px] right-4 bg-[gray] p-[10px] rounded-[50%] top-1/2 transform -translate-y-1/2 text-white text-[35px] md:text-[40px]  cursor-pointer hover:scale-110 transition-all"/>
                     </button>              
                 </div>
               </form>  

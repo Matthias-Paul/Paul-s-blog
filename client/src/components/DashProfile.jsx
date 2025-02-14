@@ -3,12 +3,12 @@ import { useState, useRef, useEffect } from "react";
 import image from "../assets/download.png";
 import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess,signInSuccess, signOutSuccess } from "../redux/user/userSlice.js";
 import close from "../assets/close.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
-
+  const {pathname} = useLocation()
  console.log(currentUser)
   const [username, setUsername] = useState(currentUser.user.username);
   const [email, setEmail] = useState(currentUser.user.email);
@@ -172,7 +172,7 @@ const DashProfile = () => {
         dispatch(updateSuccess(getUser))
         console.log("current", currentUser.user)
       }
-    }, [getUser]);
+    }, [getUser, pathname]);
 
 
 

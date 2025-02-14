@@ -52,7 +52,7 @@ function PostPage() {
 
   return (
     <>
-      <main className="w-full  m-auto px-[12px] sm:px-[20px] pb-[200px]  ">
+      <main className="w-full  m-auto px-[12px] sm:px-[20px] pb-[150px]  ">
         <div className=" max-w-[1400px] flex flex-col items-center text-center m-auto pt-[100px] ">
           <div className="  w-full  ">
           <h1 className=" text-[25px] md:text-[40px] px-[30px]    max-w-[800px] font-serif m-auto font-[600] ">{post.title}</h1>
