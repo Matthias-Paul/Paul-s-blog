@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs";
+import mongoose from "mongoose"; // Import mongoose to use ObjectId conversion
 import { errorHandler } from "../utils/error.js";
 import User from "../model/user.model.js";
 import Post from "../model/post.model.js";
@@ -38,10 +39,10 @@ export const updateUser = async (req, res, next) => {
       req.body.username = username; // Trim whitespace
     }
 
-    // Update user data in the database
+    // Update user data in the database and return updated document
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
-      { $set: req.body }, // Spread all updates
+      { $set: req.body }, 
       { new: true, runValidators: true }
     );
 
@@ -49,10 +50,14 @@ export const updateUser = async (req, res, next) => {
       return next(errorHandler(404, "User not found"));
     }
 
-   
-    // Update only username, email, and profilePicture in all posts where userId matches
-   const post=  await Post.updateMany(
-      { userId: req.params.userId }, 
+    console.log("Updated user:", updatedUser);
+
+    // Convert userId to ObjectId if necessary
+    const userId = new mongoose.Types.ObjectId(req.params.userId);
+
+    // Update posts where userId matches
+    const postUpdate = await Post.updateMany(
+      { userId: userId }, // Ensure correct type
       {
         $set: {
           username: updatedUser.username, 
@@ -61,17 +66,22 @@ export const updateUser = async (req, res, next) => {
         }
       }
     );
-     console.log("post", post) 
 
-     const comment=  await Comment.updateMany(
-      { postId: req.params.postId }, 
-      {
-        $set: {
+    console.log("Posts updated:", postUpdate.modifiedCount);
+
+    // Update comments where userId matches
+    const commentUpdate = await Comment.updateMany(
+      { userId: userId },
+      {    
+        $set: {   
           username: updatedUser.username, 
-          profilePicture: updatedUser.profilePicture,
+          profilePicture: updatedUser.profilePicture
         }
       }
     );
+
+    console.log("Comments updated:", commentUpdate.modifiedCount);
+
     // Exclude the password from the response
     const { password, ...rest } = updatedUser._doc;
 
@@ -81,7 +91,6 @@ export const updateUser = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const deleteUser = async (req, res, next) => {
   try {

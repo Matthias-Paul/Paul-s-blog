@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { FaPaperPlane } from "react-icons/fa";
@@ -8,42 +8,7 @@ function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setCommentError(null);
-
-    try {
-      const token = localStorage.getItem("access_token");
-
-      const res = await fetch(
-        "https://paul-s-blog.onrender.com/api/comments/create-comment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            comment,
-            postId,
-            userId: currentUser?.user?._id,
-          }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setCommentError(data.message);
-      } else {
-        setComment("");
-      }
-    } catch (error) {
-      console.log(error);
-      setCommentError("Something went wrong");
-    }
-  };
+  const queryClient = useQueryClient();
 
   const fetchComments = async ({ pageParam = 0 }) => {
     const commentPerPage = 5;
@@ -69,36 +34,72 @@ function CommentSection({ postId }) {
       enabled: !!postId,
     });
 
-  const comments = data?.pages?.flatMap((page) => page.comments) || [];
+    const mutation = useMutation({
+        mutationFn: async () => {
+          const token = localStorage.getItem("access_token");
+      
+          const res = await fetch(
+            "https://paul-s-blog.onrender.com/api/comments/create-comment",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                comment,
+                postId,
+                userId: currentUser?.user?._id,
+              }),
+            }
+          );
+      
+          if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Failed to post comment");
+          }
+      
+          return res.json();
+        },
+        onSuccess: () => {
+          setComment("");
+          queryClient.invalidateQueries(["comments", postId]);
+        },
+        onError: (error) => {
+          setCommentError(error.message);
+        },
+      });
+      
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setCommentError(null);
+    if (comment.trim() === "") return; // Prevent empty comments
+    mutation.mutate();
+  };
 
   return (
     <div className="w-full m-auto">
       <div className="max-w-[800px] m-auto pt-[30px]">
-        <h1 className="font-[500] text-[20px] sm:text-[25px] my-[30px]">
-          Leave a Comment
-        </h1>
+        <h1 className="font-[500] text-[20px] sm:text-[25px] my-[30px]">Leave a Comment</h1>
+
         {currentUser ? (
           <div className="flex items-center text-[16px] sm:text-[20px] text-gray-500 font-[400]">
-            <p className="flex">Signed in as:</p>
+            <p>Signed in as:</p>
             <img
               className="h-[30px] w-[30px] object-cover rounded-full mx-[5px]"
               src={currentUser.user.profilePicture}
               alt="User"
             />
             <NavLink to="/dashboard?tab=profile">
-              <p className="text-[16px] flex hover:underline">
-                @{currentUser.user.username}
-              </p>
+              <p className="text-[16px] flex hover:underline">@{currentUser.user.username}</p>
             </NavLink>
           </div>
         ) : (
           <div className="flex items-center">
             <p className="text-start">
               You need to sign in before you can make a comment.
-              <NavLink
-                to="/sign-in"
-                className="text-blue-500 font-medium ml-1 hover:underline"
-              >
+              <NavLink to="/sign-in" className="text-blue-500 font-medium ml-1 hover:underline">
                 Sign In
               </NavLink>
             </p>
@@ -127,11 +128,21 @@ function CommentSection({ postId }) {
           </form>
         )}
 
-        <div>
-          {comments.length > 0 ? (
-            comments.map((comment) => (
-              <div key={comment._id} className="border-b py-2">
-                <div>{comment.comment}</div>
+        <div className="flex flex-col items-start mt-[10px]">
+          {data?.pages.flatMap((page) => page.comments).length > 0 ? (
+            data.pages.flatMap((page) => page.comments).map((comment) => (
+              <div key={comment._id} className="py-2 flex">
+                <img
+                  className="w-[35px] mr-[10px] object-cover h-[35px] rounded-full"
+                  src={comment?.profilePicture}
+                  alt="User"
+                />
+                <div className="flex flex-col shadow-sm bg-gray-50 p-[10px] rounded-lg text-black gap-x-[5px]">
+                  <div className="font-[500] text-start">{comment?.username}</div>
+                  <div className="text-start break-words max-w-[330px] md:max-w-[500px] lg:max-w-[730px] p-2">
+                    {comment?.comment}
+                  </div>
+                </div>
               </div>
             ))
           ) : (

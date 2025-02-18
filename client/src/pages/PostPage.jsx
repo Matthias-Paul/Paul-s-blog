@@ -74,7 +74,7 @@ function PostPage() {
 
                     <p className=" ">{new Date(post.createdAt).toLocaleDateString()}</p>
                   </div>  
-          <div dangerouslySetInnerHTML={{__html:post.content}}  className="text-start m-auto mt-[20px] break-words w-full max-w-[800px] post-content ">
+          <div dangerouslySetInnerHTML={{__html:post.content}}  className="text-start m-auto mt-[20px]  break-words w-full max-w-[800px] post-content ">
 
           </div>
           </div>
