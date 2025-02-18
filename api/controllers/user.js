@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import User from "../model/user.model.js";
 import Post from "../model/post.model.js";
+import Comment from "../model/comment.model.js";
 
 export const updateUser = async (req, res, next) => {
   try {
@@ -61,6 +62,16 @@ export const updateUser = async (req, res, next) => {
       }
     );
      console.log("post", post) 
+
+     const comment=  await Comment.updateMany(
+      { postId: req.params.postId }, 
+      {
+        $set: {
+          username: updatedUser.username, 
+          profilePicture: updatedUser.profilePicture,
+        }
+      }
+    );
     // Exclude the password from the response
     const { password, ...rest } = updatedUser._doc;
 
@@ -97,7 +108,7 @@ export const getUsers = async (req, res, next) => {
     const limit = Math.max(parseInt(req.query.limit, 10) || 9, 1);
 
     const users = await User.find()
-      .sort({ updatedAt: sortDirection })
+      .sort({ updatedAt: sortDirection })    
       .skip(startIndex)
       .limit(limit);
 

@@ -26,7 +26,7 @@ const postSchema = new mongoose.Schema({
    profilePicture:{
      type:String,
      default:"https://res.cloudinary.com/drkxtuaeg/image/upload/v1735897100/Image_4_jb0cpq.png",
-},
+  },
    category:{
         type:String,
         default:"uncategorized",

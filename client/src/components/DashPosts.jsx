@@ -98,7 +98,7 @@ function DashPosts() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto text-xl md:ml-[300px] md:text-2xl">
+      <div className="mx-auto text-xl  md:ml-[300px] md:text-2xl">
         Loading posts...
       </div>
     );
@@ -106,7 +106,7 @@ function DashPosts() {
 
   if (isError) {
     return (
-      <div className="mx-auto md:ml-[300px] text-xl lg:text-2xl">
+      <div className="mx-auto px-[12px] sm:px-[0px] md:ml-[300px] text-xl lg:text-2xl">
         Failed to load posts. Please try again later.
       </div>
     );

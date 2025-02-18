@@ -44,7 +44,7 @@ function PostPage() {
   }
   if (isError) {
     return (
-      <div className="flex justify-center text-xl pt-[60px] md:pt-[80px] md:text-2xl">
+      <div className="flex justify-center px-[12px] sm:px-[0px] text-xl pt-[60px] md:pt-[80px] md:text-2xl">
         Failed to load post. Please try again later.
       </div>
     );

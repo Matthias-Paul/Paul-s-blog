@@ -70,7 +70,7 @@ function DashUsers() {
 
   if (isError) {
     return (
-      <div className="mx-auto md:ml-[300px] text-xl lg:text-2xl">
+      <div className="mx-auto px-[12px] sm:px-[0px] md:ml-[300px] text-xl lg:text-2xl">
         Failed to load users. Please try again later.
       </div>
     );
