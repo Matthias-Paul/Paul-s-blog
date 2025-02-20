@@ -1,8 +1,9 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane, FaThumbsUp } from "react-icons/fa";
 import { useState } from "react";
+import moment from "moment";
 
 function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
@@ -34,47 +35,77 @@ function CommentSection({ postId }) {
       enabled: !!postId,
     });
 
-    const mutation = useMutation({
-        mutationFn: async () => {
-          const token = localStorage.getItem("access_token");
-      
-          const res = await fetch(
-            "https://paul-s-blog.onrender.com/api/comments/create-comment",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                comment,
-                postId,
-                userId: currentUser?.user?._id,
-              }),
-            }
-          );
-      
-          if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "Failed to post comment");
-          }
-      
-          return res.json();
-        },
-        onSuccess: () => {
-          setComment("");
-          queryClient.invalidateQueries(["comments", postId]);
-        },
-        onError: (error) => {
-          setCommentError(error.message);
-        },
-      });
-      
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const token = localStorage.getItem("access_token");
+
+      const res = await fetch(
+        "https://paul-s-blog.onrender.com/api/comments/create-comment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            comment,
+            postId,
+            userId: currentUser?.user?._id,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to post comment");
+      }
+
+      return res.json();
+    },
+    onSuccess: () => {
+      setComment("");
+      queryClient.invalidateQueries(["comments", postId]);
+    },
+    onError: (error) => {
+      setCommentError(error.message);
+    },
+  });
+
+  const likeMutation = useMutation({
+    mutationFn: async (commentId) => {
+      const token = localStorage.getItem("access_token");
+
+      const res = await fetch(
+        `http://localhost:5000/api/comments/like-comment/${commentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to like comment");
+      }
+
+      return res.json();
+    },
+    onSuccess: (_, commentId) => {
+      queryClient.invalidateQueries(["comments", postId]);
+    },
+  });
+
+  const handleLikes = (commentId) => {
+    likeMutation.mutate(commentId);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setCommentError(null);
-    if (comment.trim() === "") return; // Prevent empty comments
+    if (comment.trim() === "") return;
     mutation.mutate();
   };
 
@@ -99,7 +130,7 @@ function CommentSection({ postId }) {
           <div className="flex items-center">
             <p className="text-start">
               You need to sign in before you can make a comment.
-              <NavLink to="/sign-in" className="text-blue-500 font-medium ml-1 hover:underline">
+              <NavLink to="/sign-in" className="text-[blue] font-medium ml-1 hover:underline">
                 Sign In
               </NavLink>
             </p>
@@ -133,14 +164,30 @@ function CommentSection({ postId }) {
             data.pages.flatMap((page) => page.comments).map((comment) => (
               <div key={comment._id} className="py-2 flex">
                 <img
-                  className="w-[35px] mr-[10px] object-cover h-[35px] rounded-full"
+                  className="w-[35px] flex flex-shrink-0 mr-[10px] object-cover h-[35px] rounded-full"
                   src={comment?.profilePicture}
                   alt="User"
                 />
                 <div className="flex flex-col shadow-sm bg-gray-50 p-[10px] rounded-lg text-black gap-x-[5px]">
                   <div className="font-[500] text-start">{comment?.username}</div>
-                  <div className="text-start break-words max-w-[330px] md:max-w-[500px] lg:max-w-[730px] p-2">
+                  <div className="text-start break-words max-w-[250px] sm:max-w-[470px] md:max-w-[600px] lg:max-w-[730px] p-2">
                     {comment?.comment}
+                  </div>
+                  <div className="flex font-[500] text-[13px] gap-x-[10px]">
+                    <div>
+                      {(() => {
+                        const diff = moment.duration(moment().diff(moment(comment.createdAt)));
+
+                        if (diff.asSeconds() < 60) return "just now";
+                        if (diff.asMinutes() < 60) return `${Math.floor(diff.asMinutes())}m ago`;
+                        if (diff.asHours() < 24) return `${Math.floor(diff.asHours())}h ago`;
+                        return `${Math.floor(diff.asDays())}d ago`;
+                      })()}
+                    </div>
+
+                    <button onClick={() => handleLikes(comment._id)} className="flex items-center">
+                      <FaThumbsUp className={`mr-1 ${comment.likes.length >0 ? "text-[blue]" : "text-[gray]" } `} /> { comment.likes.length > 0 && comment.likes.length}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -152,10 +199,7 @@ function CommentSection({ postId }) {
 
         {hasNextPage && (
           <div className="flex justify-center items-center">
-            <button
-              className="underline my-[30px] text-green-500 cursor-pointer"
-              onClick={() => fetchNextPage()}
-            >
+            <button className="underline my-[30px] text-green-500 cursor-pointer" onClick={() => fetchNextPage()}>
               {isFetchingNextPage ? "Loading more..." : "Load more"}
             </button>
           </div>

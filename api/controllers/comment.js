@@ -61,3 +61,35 @@ export const getComment = async (req, res, next) =>{
 
 
 }
+
+
+export const likeComment = async (req, res, next) => {
+
+    try {
+        const { commentId } = req.params;
+        const userId = req.user.id;
+
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return next(errorHandler(404, "Comment not found"));
+        }
+
+        const hasLiked = comment.likes.includes(userId);
+
+        // Update the likes and numberOfLikes count in a single operation
+        const updatedComment = await Comment.findByIdAndUpdate(
+            commentId,
+            {
+                $inc: { numberOfLikes: hasLiked ? -1 : 1 },
+                [hasLiked ? "$pull" : "$push"]: { likes: userId }
+            },
+            { new: true } // Return the updated document
+        );
+
+        res.status(200).json({ comment: updatedComment });
+        
+        console.log(updatedComment)
+    } catch (error) { 
+        next(error);
+    }
+};

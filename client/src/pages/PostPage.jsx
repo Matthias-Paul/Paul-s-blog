@@ -37,7 +37,7 @@ function PostPage() {
 
       if (isLoading) {
     return (
-      <div className="flex justify-center text-xl pt-[60px] md:pt-[80px] md:text-2xl">
+      <div className="flex justify-center text-xl pt-[60px] sm:pt-[80px] md:text-2xl">
         Loading...
       </div>
     );
