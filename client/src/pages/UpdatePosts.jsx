@@ -150,7 +150,7 @@ console.log(formData)
   };
 
   return (
-    <div className={`w-full m-auto px-[12px] sm:px-[20px] ${uploadImageURL === "" ? "pb-[350px]" : "pb-[750px]"}`}>
+    <div className={`w-full m-auto font-work px-[12px] sm:px-[20px] ${uploadImageURL === "" ? "pb-[350px]" : "pb-[750px]"}`}>
       <div className="h-screen max-w-[1400px] m-auto pt-[70px]">
         <h1 className="text-center font-[600] text-[24px] sm:text-[30px] my-[25px]">Edit a post</h1>
         <form onSubmit={handleSubmit} className="flex flex-col m-auto max-w-[800px]">

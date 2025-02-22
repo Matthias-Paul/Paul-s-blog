@@ -14,6 +14,11 @@ export default {
         lightGray: "#a3a3a3", 
         blue: "#2563eb",
       },
+      fontFamily:{
+        jakarta:["Jakarta Sans", "sans-serif"],
+        serif:["Source Serif Pro", "sans-serif"],
+        work:["Work Sans", "sans-serif"],
+      },
     },
   },
   plugins: [

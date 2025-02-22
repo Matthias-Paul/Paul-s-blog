@@ -87,9 +87,72 @@ export const likeComment = async (req, res, next) => {
         );
 
         res.status(200).json({ comment: updatedComment });
-        
+
         console.log(updatedComment)
     } catch (error) { 
         next(error);
     }
 };
+
+
+export const editComment = async (req, res, next) => {
+    try {
+      const { commentId } = req.params;
+      const userId = req.user.id;
+  
+      // Find comment by ID
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return next(errorHandler(404, "Comment not found"));
+      }
+  
+      // Allow editing if the user is either the owner OR an admin
+      if (comment.userId.toString() !== userId && !req.user.isAdmin) {
+        return next(errorHandler(403, "You are not allowed to edit this comment!"));
+      }
+  
+      // Ensure comment content is provided
+      if (!req.body.comment || req.body.comment.trim() === "") {
+        return next(errorHandler(400, "Comment content cannot be empty"));
+      }
+  
+      // Update the comment
+      const updatedComment = await Comment.findByIdAndUpdate(
+        commentId,
+        { comment: req.body.comment },
+        { new: true, runValidators: true }
+      );
+  
+      res.status(200).json({ editedComment: updatedComment });
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+
+  export const deleteComment = async (req, res, next) =>{
+
+
+    try {
+      const { commentId } = req.params;
+      const userId = req.user.id;
+  
+      // Find comment by ID
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return next(errorHandler(404, "Comment not found"));
+      }
+  
+      // Allow deleting if the user is either the owner OR an admin
+      if (comment.userId.toString() !== userId && !req.user.isAdmin) {
+        return next(errorHandler(403, "You are not allowed to delete this comment!"));
+      }     
+  
+      await Comment.findByIdAndDelete(commentId)
+      res.status(200).json("Comment deleted!")
+
+    } catch (error) {
+      next(error)
+    }
+
+  }

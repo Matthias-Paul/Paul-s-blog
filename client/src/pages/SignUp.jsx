@@ -55,7 +55,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="min-h-screen pt-20 flex items-center p-5 sm:p-8">
+      <div className="min-h-screen font-serif pt-20 flex items-center p-5 sm:p-8">
         <div className="md:flex justify-center m-auto md:space-x-[50px]">
           {/* Left Content */}
           <div className="m-auto">

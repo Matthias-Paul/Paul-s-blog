@@ -8,7 +8,7 @@ function PostPage() {
 
 
 
-    const fetchPost = async ({ pageParam = 0 }) => {
+    const fetchPost = async () => {
    
     
         const res = await fetch(
@@ -31,7 +31,7 @@ function PostPage() {
           setPost(data.posts[0]);
           console.log(postSlug, post)
         }
-      }, [data]);
+      }, [data, post, postSlug]);
 
      
 
@@ -44,7 +44,7 @@ function PostPage() {
   }
   if (isError) {
     return (
-      <div className="flex justify-center px-[12px] sm:px-[0px] text-xl pt-[60px] md:pt-[80px] md:text-2xl">
+      <div className="flex justify-center px-[12px] sm:px-[0px] text-xl pt-[60px] sm:pt-[80px] md:text-2xl">
         Failed to load post. Please try again later.
       </div>
     );
@@ -52,7 +52,7 @@ function PostPage() {
 
   return (
     <>
-      <main className="w-full  m-auto px-[12px] sm:px-[20px] pb-[150px]  ">
+      <main className="w-full  m-auto px-[12px] font-serif sm:px-[20px] pb-[150px]  ">
         <div className=" max-w-[1400px] flex flex-col items-center text-center m-auto pt-[100px] ">
           <div className="  w-full  ">
           <h1 className=" text-[25px] md:text-[40px] px-[30px]    max-w-[800px] font-serif m-auto font-[600] ">{post.title}</h1>
