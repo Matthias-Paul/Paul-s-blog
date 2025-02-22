@@ -150,9 +150,9 @@ export const editComment = async (req, res, next) => {
   
       await Comment.findByIdAndDelete(commentId)
       res.status(200).json("Comment deleted!")
-
+   
     } catch (error) {
       next(error)
     }  
 
-  }
+  }         

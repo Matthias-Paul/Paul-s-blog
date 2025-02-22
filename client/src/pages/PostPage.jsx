@@ -124,7 +124,7 @@ function PostPage() {
 
                               </div>
             
-                              <div className=" line-clamp-3 text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+                              <div className="  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
                                 {article.title}
                               </div>
             
