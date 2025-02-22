@@ -5,6 +5,7 @@ import CommentSection from "../components/CommentSection"
 function PostPage() {
     const { postSlug } = useParams();
     const [post, setPost] = useState({})
+    const [recentArticle, setRecentArticle] = useState([])
 
 
 
@@ -20,6 +21,8 @@ function PostPage() {
         return res.json();
       };
 
+
+
       const { data, isLoading, isError } = useQuery({
         queryKey: ["post", postSlug],
         queryFn: fetchPost,
@@ -33,7 +36,29 @@ function PostPage() {
         }
       }, [data, post, postSlug]);
 
-     
+       const fetchRecentArticle = async () => {
+   
+    
+        const res = await fetch(
+          `https://paul-s-blog.onrender.com/api/post/get-post?limit=3`
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        return res.json();
+      };
+
+      const { data: recentPost } = useQuery({
+        queryKey: ["recentPost"],
+        queryFn: fetchRecentArticle,
+        
+      });
+      useEffect(() => {
+        if (recentPost) {
+          setRecentArticle(recentPost.posts);
+          console.log(recentPost.posts)
+        }
+      }, []);
 
       if (isLoading) {
     return (
@@ -80,6 +105,56 @@ function PostPage() {
           </div>
 
           <CommentSection postId={post._id} />
+
+          <div>
+            <h1 className="text-center font-[500] text-2xl my-[20px]  " > Recent Articles  </h1>
+               <div className=" max-w-[500px] lg:max-w-[900px] xl:max-w-[1400px] grid-cols-1 lg:grid-cols-2 grid xl:grid-cols-3 gap-x-[20px] m-auto">
+
+                  {  recentArticle &&    recentArticle.map((article) => (
+                              <div
+                              className="mb-[20px] p-[16px] border border-color-[#E8E8EA] cursor-pointer rounded-[12px] "
+                              key={article._id}
+                            >
+                              <div>
+                                <img className="rounded-[6px] " src={article.image} alt={article.title} />
+                              </div>
+            
+                              <div className="text-[14px] font-[500] text-[#4B6BFB] max-w-[90px] my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
+                              {article.category}
+
+                              </div>
+            
+                              <div className=" line-clamp-3 text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+                                {article.title}
+                              </div>
+            
+                              <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F] ">
+                                <div className="w-[35px] h-[35px]  ">
+                                  <img 
+                                    className="w-full h-full rounded-[50%]  "
+                                    src={article.profilePicture}
+                                    alt="profile"/>
+                                </div>
+                                <div  className="flex justify-between w-full ">
+                                <div className=" ml-[7px]  sm:ml-[10px]  ">{article.username}</div>
+                                <div className="  ">
+                                {new Date(article.createdAt).toLocaleDateString()}
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+
+
+                            ))
+
+
+                    
+                  }
+                  </div>
+          </div>  
         </div>    
       </main>  
     </>
