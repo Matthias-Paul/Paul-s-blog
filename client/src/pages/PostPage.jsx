@@ -58,7 +58,7 @@ function PostPage() {
           setRecentArticle(recentPost.posts);
           console.log(recentPost.posts)
         }
-      }, []);
+      }, [recentPost, post, postSlug ]);
 
       if (isLoading) {
     return (
@@ -107,31 +107,34 @@ function PostPage() {
           <CommentSection postId={post._id} />
 
           <div>
-            <h1 className="text-center font-[500] text-2xl my-[20px]  " > Recent Articles  </h1>
-               <div className=" max-w-[500px] lg:max-w-[900px] xl:max-w-[1400px] grid-cols-1 lg:grid-cols-2 grid xl:grid-cols-3 gap-x-[20px] m-auto">
+            <h1 className="text-center font-[500] text-2xl my-[25px]  " > Recent Articles  </h1>
 
+               <div className=" max-w-[500px]   lg:max-w-[900px] xl:max-w-[1400px] grid-cols-1 lg:grid-cols-2 grid xl:grid-cols-3 gap-x-[20px] m-auto">
                   {  recentArticle &&    recentArticle.map((article) => (
+
                               <div
-                              className="mb-[20px] p-[16px] border border-color-[#E8E8EA] cursor-pointer rounded-[12px] "
+                              className="mb-[20px] p-[16px] border border-color-[#E8E8EA]  rounded-[12px] "
                               key={article._id}
                             >
-                              <div>
-                                <img className="rounded-[6px] " src={article.image} alt={article.title} />
+                                                              <NavLink to={`/post/${article.slug}`}>
+
+                              <div className="h-[285px]   object-cover flex-shrink-0   " >
+                                <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={article.image} alt={article.title} />
                               </div>
-            
-                              <div className="text-[14px] font-[500] text-[#4B6BFB] max-w-[90px] my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
+
+                              <div className="text-[14px]  first-letter:capitalize font-[500] text-[#4B6BFB]  my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
                               {article.category}
 
                               </div>
             
-                              <div className="  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+                              <div className=" line-clamp-3  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
                                 {article.title}
                               </div>
-            
+
                               <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F] ">
-                                <div className="w-[35px] h-[35px]  ">
+                                <div className=" object-cover flex-shrink-0  ">
                                   <img 
-                                    className="w-full h-full rounded-[50%]  "
+                                    className="w-[40px] h-[40px] object-cover rounded-[50%]  "
                                     src={article.profilePicture}
                                     alt="profile"/>
                                 </div>
@@ -139,9 +142,16 @@ function PostPage() {
                                 <div className=" ml-[7px]  sm:ml-[10px]  ">{article.username}</div>
                                 <div className="  ">
                                 {new Date(article.createdAt).toLocaleDateString()}
+
+
                                 </div>
+                                
                                 </div>
+
                               </div>
+
+                              </NavLink>
+
                             </div>
 
 
@@ -151,9 +161,11 @@ function PostPage() {
                             ))
 
 
-                    
+
                   }
+
                   </div>
+
           </div>  
         </div>    
       </main>  

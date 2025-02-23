@@ -9,6 +9,6 @@ router.get("/get-comment/:postId", getComment)
 router.put("/like-comment/:commentId", verifyToken, likeComment)
 router.put("/edit-comment/:commentId", verifyToken, editComment)
 router.delete("/delete-comment/:commentId", verifyToken, deleteComment)
-
+      
 
 export default router;
