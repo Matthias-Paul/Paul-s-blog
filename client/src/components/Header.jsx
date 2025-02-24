@@ -41,7 +41,7 @@ const handleSignout = () => {
   return (
     <>
     
-      <div className=" fixed border-b-2 font-work  w-full z-[100] bg-white px-[12px] sm:px-[20px]   ">
+      <div className=" fixed shadow-md  font-work  w-full z-[100] bg-white px-[12px] sm:px-[20px]   ">
         <div  className="flex justify-between max-w-[1400px] m-auto  items-center py-[5px] sm:py-[15px] ">
         
         <div>
@@ -65,7 +65,7 @@ const handleSignout = () => {
           </NavLink>
 
           <NavLink to="/projects" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
-            <div>Projects</div>
+            <div>Blogs</div>
           </NavLink>
         </div>
         <div className=" cursor-pointer  flex md:h-7 md:w-10 md:bg-black text-black md:text-white rounded-lg items-center justify-center  "
@@ -99,7 +99,7 @@ const handleSignout = () => {
                 </NavLink>
                 
                 <NavLink to="/projects">
-                  <div onClick={toggle} className="mt-[30px] ">Projects</div>
+                  <div onClick={toggle} className="mt-[30px] ">Blogs</div>
                 </NavLink>
 
               </div>
