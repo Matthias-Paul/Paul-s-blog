@@ -68,11 +68,11 @@ useEffect(() => {
       <div className="w-full font-work  m-auto px-[12px] sm:px-[20px] mb-[20px ] ">
         <div className=" max-w-[1400px] m-auto pt-[50px] sm:pt-[70px] " >
 
-        <div className="relative text-white max-w-[1400px] mb-[50px] " >
-            <img src={project} alt="Hero-image" className=" my-[10px]  w-full object-cover flex-shrink-0 rounded-[8px]  sm:rounded-[12px] "  />
+        <div className="relative text-white  max-w-[1400px] mb-[50px] " >
+            <img src={project}  className=" my-[10px]  w-full object-cover flex-shrink-0 rounded-[8px]  sm:rounded-[12px] "  />
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center ">
-                <h1 className="font-[700] px-[12px] text-[25px] sm:text-[35px] md:text-[55px] " > PAUL&#39;S BLOG: FAITH, FITNESS AND SPORT INSIGHTS     </h1>
-                <p className=" px-[12px] leading-[25px]  font-[400] sm:font-[500] lg:leading-[40px] text-[20px] lg:text-[35px]  mt-[20px] max-w-[700px] " >
+                <h1 className="font-[700] px-[12px] text-[21px] sm:text-[35px] md:text-[55px] " > PAUL&#39;S BLOG: FAITH, FITNESS AND SPORT INSIGHTS     </h1>
+                <p className=" px-[12px] leading-[25px]  font-[400] sm:font-[500] lg:leading-[40px] text-[18px] sm:text-[20px] lg:text-[35px]  mt-[20px] max-w-[700px] " >
                   Stay informed with inspiring religious content, health tips and the latest sports updates
                      </p>
             </div> 
@@ -81,14 +81,14 @@ useEffect(() => {
 
           {
    isError && (
-    <div className="text-red-500 " >         Failed to load article. Please try again later.
+    <div className="text-red-500 " >         Failed to load blogs. Please try again later.
   </div>
    )
 }
 
 {
    isLoading && (
-    <div className="text-green-500 " >         Loading articles...    </div>
+    <div className="text-green-500 " >         Loading blogs...    </div>
    )
 }
    

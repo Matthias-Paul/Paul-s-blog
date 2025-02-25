@@ -28,8 +28,8 @@ const Footer = () => {
 
                  <div>
                    <h1 className="text-lg font-[500] my-3 " >FOLLOW US </h1> 
-                   <div className="mb-2">Github</div>
-                   <div>Discord </div>
+                   <div className="mb-2">Facebook</div>
+                   <div>Twitter </div>
                  </div>
 
                  <div>

@@ -81,7 +81,7 @@ function PostPage() {
         <div className=" max-w-[1400px] flex flex-col items-center text-center m-auto pt-[100px] ">
           <div className="  w-full  ">
           <h1 className=" text-[25px] md:text-[40px] px-[30px]    max-w-[800px] font-serif m-auto font-[600] ">{post.title}</h1>
-          <NavLink to={`/search?category=${post.category}`}>
+          <NavLink to={`/post?category=${post.category}`}>
              <button className=" py-[4px] px-[22px] md:px-[38px] first-letter:uppercase bg-[gray] active:bg-[blue] text-[16px] md:text-[19px] text-white rounded-[12px] my-[12px] " > {post.category} </button>
           </NavLink>
           <div className=" w-full" ><img className=" w-full  mt-[20px] object-cover rounded-[6px] sm:rounded-[12px] max-h-[800px]" src={post.image} alt={post.title} /> </div>

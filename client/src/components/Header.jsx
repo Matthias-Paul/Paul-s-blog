@@ -67,6 +67,16 @@ const handleSignout = () => {
           <NavLink to="/projects" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div>Blogs</div>
           </NavLink>
+
+          {
+              currentUser?.user?.isAdmin && (
+                <NavLink to="/create-post" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+                <div>Add Blog</div>
+              </NavLink>
+
+              )
+
+          }
         </div>
         <div className=" cursor-pointer  flex md:h-7 md:w-10 md:bg-black text-black md:text-white rounded-lg items-center justify-center  "
         onClick={themeMode}>
@@ -101,6 +111,14 @@ const handleSignout = () => {
                 <NavLink to="/projects">
                   <div onClick={toggle} className="mt-[30px] ">Blogs</div>
                 </NavLink>
+
+                {
+                  currentUser?.user?.isAdmin && (
+                    <NavLink to="/create-post">
+                    <div onClick={toggle} className="mt-[30px] ">Add Blog</div>
+                  </NavLink>
+                  )
+                }
 
               </div>
          
