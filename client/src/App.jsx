@@ -15,7 +15,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import CreatePost from "./pages/CreatePost";
 import UpdatePosts from "./pages/UpdatePosts";
 import PostPage from "./pages/PostPage";
-
+import Category from "./pages/Category";
 
 const App = () => {
 
@@ -42,6 +42,7 @@ const App = () => {
               </Route>
               <Route path="/projects" element={<Projects />} />
               <Route path="/post/:postSlug" element={<PostPage />} />
+              <Route path="/post" element={<Category />} />
 
             </Routes>
     

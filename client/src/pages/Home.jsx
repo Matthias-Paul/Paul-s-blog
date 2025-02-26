@@ -64,14 +64,14 @@ const Home = () => {
 
 {
    isError && (
-    <div className="text-red-500 " >         Failed to load article. Please try again later.
+    <div className="text-red-500 " >         Failed to load blog. Please try again later.
   </div>
    )
 }
 
 {
    isLoading && (
-    <div className="text-green-500 " >         Loading articles...    </div>
+    <div className="text-green-500 " >         Loading blogs...    </div>
    )
 }
         <div>

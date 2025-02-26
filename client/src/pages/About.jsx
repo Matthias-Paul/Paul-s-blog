@@ -24,8 +24,8 @@ const openWhatsapp = ()=>{
         <div className=" max-w-[1400px] m-auto pt-[50px] sm:pt-[70px] "  >
         <div className="bg-[gray] rounded-[8px] mt-[10px] sm:rounded-[12px]  " >
 
-        <div className="max-w-[900px] px-[7px] p-[40px] sm:p-[90px] m-auto text-white "  >
-          <div className="flex justify-between py-[15px] items-center font-[500] text-[18px] sm:text-[25px]  w-full " >
+        <div className="max-w-[900px] px-[7px] p-[25px] md:p-[90px] m-auto text-white "  >
+          <div className="flex justify-between py-[15px] items-center font-[500] text-[15px] sm:text-[25px]  w-full " >
             <div className=" flex items-center gap-x-[5px] "   >
           <img className="flex-shrink-0 object-cover rounded-[50%] w-[40px] h-[40px]  " src={profile}  />
           <div> Adesina Paul   </div>
@@ -50,7 +50,7 @@ const openWhatsapp = ()=>{
 
         </div>
 
-        <div className=" max-w-[700px] m-auto my-[30px]  mb-[60px] " >
+        <div className=" max-w-[700px] m-auto py-[30px]  pb-[60px] " >
         <h1 className=" text-[22px] sm:text-[30px] font-[600] sm:font-[700] my-[5px]  " > Meet Paul: A Passionate MERN Stack Developer </h1> 
         <p className=" mb-[10px] text-[16px] sm:text-[18px] " >Paul is a MERN stack developer with a strong passion for building products. Whether developing seamless React interfaces, designing efficient Node.js and Express.js backends, or managing data with MongoDB, Paul is always eager to innovate and create scalable web applications. His ability to write clean, maintainable code and optimize performance ensures that his applications run smoothly and efficiently.  </p>
          <h2 className=" text-[22px] sm:text-[25px] font-[500] my-[10px] sm:my-[15px] " > From Code to Craft: A Journey in Tech </h2>
@@ -66,7 +66,7 @@ const openWhatsapp = ()=>{
         Paul also enjoys collaborating with other developers, contributing to open-source projects, and sharing his knowledge with the tech community. His ability to adapt and learn quickly has helped him refine his problem-solving skills, making him a valuable asset in any development team. </p>
 
      <h1 className=" text-[22px] sm:text-[30px] font-[600] sm:font-[700] my-[5px]  " >What&#39;s Next for Paul?  </h1>
-     <p className=" mb-[10px] text-[16px] sm:text-[18px] " > With a strong foundation in MERN stack development, Paul is on a path to making a significant impact in the tech industry. Whether you're looking for a skilled full-stack developer, a problem solver, or someone who can bring fresh ideas to the table, Paul is someone to watch. His dedication to writing clean code, optimizing performance, and delivering high-quality applications sets him apart as a developer committed to excellence. </p>
+     <p className=" pb-[10px] text-[16px] sm:text-[18px] " > With a strong foundation in MERN stack development, Paul is on a path to making a significant impact in the tech industry. Whether you're looking for a skilled full-stack developer, a problem solver, or someone who can bring fresh ideas to the table, Paul is someone to watch. His dedication to writing clean code, optimizing performance, and delivering high-quality applications sets him apart as a developer committed to excellence. </p>
 
         </div>  
 
