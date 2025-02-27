@@ -49,13 +49,15 @@ const {
   queryKey: ["posts"],
   queryFn: fetchPosts,
   getNextPageParam: (lastPage, allPages) =>
-    lastPage.posts.length === 9 ? allPages.length : undefined,
+    lastPage.posts.length === 9 ? allPages.length + 1 : undefined,
  
 });
 
 useEffect(() => {
   if (data) {
     const allPosts = data.pages.flatMap((page) => page.posts);
+    console.log("Fetched Posts:", allPosts);
+
     setPosts(allPosts);
   }
 }, [data]);
@@ -99,57 +101,15 @@ useEffect(() => {
                   
                   {  posts &&    posts.map((post) => (
 
-                              <div
-                              className="mb-[20px] p-[16px] border border-color-[#E8E8EA]  rounded-[12px] "
-                              key={post._id}
-                            >
-                              <NavLink to={`/post/${post.slug}`}>
-
-                              <div className="h-[285px]   object-cover flex-shrink-0   " >
-                                <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={post.image} alt={post.title} />
-                              </div>
-
-                              <div className="text-[14px] text-center  first-letter:capitalize font-[500] text-[#4B6BFB]  my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
-                              {post.category}
-
-                              </div>
-            
-                              <div className=" line-clamp-3  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
-                                {post.title}
-                              </div>
-
-                              <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F] ">
-                                <div className=" object-cover flex-shrink-0  ">
-                                  <img 
-                                    className="w-[40px] h-[40px] object-cover rounded-[50%]  "
-                                    src={post.profilePicture}
-                                    alt="profile"/>
-                                </div>
-                                <div  className="flex justify-between w-full ">
-                                <div className=" ml-[7px]  sm:ml-[10px]  ">{post.username}</div>
-                                <div className="  ">
-                                {new Date(post.createdAt).toLocaleDateString()}
-
-
-                                </div>
-                                
-                                </div>
-
-                              </div>
-
-                              </NavLink>
-
-                            </div>
-
-
-
-
+                     <PostCards key={post.slug}  post={post} />
 
                             ))
 
 
 
                   }
+
+                 
 
                   </div>
 
@@ -171,5 +131,58 @@ useEffect(() => {
     </>
   )
 }
+
+const PostCards = ({ post }) => (
+
+  <div
+            className="mb-[20px] p-[16px] border border-color-[#E8E8EA]  rounded-[12px] "
+         
+          >
+            <NavLink to={`/post/${post.slug}`}>
+
+            <div className="h-[285px]   object-cover flex-shrink-0   " >
+              <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={post.image} alt={post.title} />
+            </div>
+
+            <div className="text-[14px] text-center  first-letter:capitalize font-[500] text-[#4B6BFB]  my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
+            {post.category}
+
+            </div>
+
+            <div className=" line-clamp-3  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+              {post.title}
+            </div>
+
+            <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F] ">
+              <div className=" object-cover flex-shrink-0  ">
+                <img 
+                  className="w-[40px] h-[40px] object-cover rounded-[50%]  "
+                  src={post.profilePicture}
+                  alt="profile"/>
+              </div>
+              <div  className="flex justify-between w-full ">
+              <div className=" ml-[7px]  sm:ml-[10px]  ">{post.username}</div>
+              <div className="  ">
+              {new Date(post.createdAt).toLocaleDateString()}
+
+
+              </div>
+              
+              </div>
+
+            </div>
+
+            </NavLink>
+
+          </div>
+
+
+
+
+
+)
+
+
+
 
 export default Projects
