@@ -168,8 +168,11 @@ const PostCard = ({ post }) => (
       </div>
       <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F]">
         <img className="w-[40px] h-[40px] object-cover rounded-[50%]" src={post.profilePicture} alt="profile" />
+        <div  className="flex justify-between w-full ">
+
         <div className="ml-[7px] sm:ml-[10px]">{post.username}</div>
         <div>{new Date(post.createdAt).toLocaleDateString()}</div>
+        </div>
       </div>
     </NavLink>
   </div>
