@@ -49,19 +49,17 @@ const {
   queryKey: ["posts"],
   queryFn: fetchPosts,
   getNextPageParam: (lastPage, allPages) =>
-    lastPage.posts.length === 9 ? allPages.length + 1 : undefined,
+    lastPage.posts.length === 9 ? allPages.length : undefined,
  
 });
 
 useEffect(() => {
   if (data) {
     const allPosts = data.pages.flatMap((page) => page.posts);
-    console.log("Fetched Posts:", allPosts);
-
-    setPosts(allPosts);
+    const uniquePosts = Array.from(new Map(allPosts.map((p) => [p._id, p])).values());
+    setPosts(uniquePosts);
   }
 }, [data]);
-
 
 
 
@@ -101,7 +99,7 @@ useEffect(() => {
                   
                   {  posts &&    posts.map((post) => (
 
-                     <PostCards key={post.slug}  post={post} />
+                     <PostCards key={post._id}  post={post} />
 
                             ))
 

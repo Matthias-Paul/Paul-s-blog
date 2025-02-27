@@ -149,7 +149,7 @@ const CategoryBanner = ({ image, title, description, type }) => (
       </p>
     </div>
   </div>
-<div  className=" mb-[10px] font-[600] text-[22px] sm:text-[30px] flex justify-center m-auto " > {type} </div>
+<div  className=" mb-[10px] font-[600] text-[20px] sm:text-[30px] flex justify-center m-auto " > {type} Blogs </div>
   </div>
 );
 
