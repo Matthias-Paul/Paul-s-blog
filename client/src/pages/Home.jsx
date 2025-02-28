@@ -42,7 +42,7 @@ const Home = () => {
       <div className="w-full font-work  m-auto px-[12px] sm:px-[20px] pb-[20px ] ">
         <div className=" max-w-[1400px] m-auto pt-[50px] sm:pt-[70px] " >
           <div className="relative text-white max-w-[1400px]  " >
-            <img src={heroImage}  className="  my-[10px] w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px] "  />
+            <img src={heroImage}  className="  my-[10px]  w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px] "  />
             <div className="absolute inset-0 flex flex-col justify-center left-2 md:left-2 lg:left-10 ">
                 <h1 className="font-[700] text-[18px] sm:text-[25px] md:text-[30px] lg:text-[40px] xl:text-[50px] " > WELCOME TO MY BLOG  </h1>
                 <p className=" leading-[18px] sm:leading-[25px] md:leading-[30px] lg:leading-[43px]  font-[400] sm:font-[500] text-[14px] sm:text-[18px] md:text-[20px] lg:text-[25px] mt-[4px] sm:mt-[10px] max-w-[200px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[650px] " > Explore expert insights on health, religion, and sports to stayed informed, inspired, and ahead in every aspect of life.   </p>
