@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-full font-work  m-auto px-[12px] sm:px-[20px] pb-[20px ] ">
+      <div className="w-full font-work  m-auto px-[12px] sm:px-[20px] pb-[20px] ">
         <div className=" max-w-[1400px] m-auto pt-[50px] sm:pt-[70px] " >
           <div className="relative text-white max-w-[1400px]  " >
             <img src={heroImage}  className="  my-[10px]  w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px] "  />

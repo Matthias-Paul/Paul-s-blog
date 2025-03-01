@@ -2,6 +2,16 @@ import { NavLink } from "react-router-dom";
 
 const Footer = () => {
  const year = new Date().getFullYear()
+
+ 
+
+ const openFacebook = ()=>{
+  window.open("https://m.facebook.com/profile.php?id=61567086932348", "_blank")
+}
+const openInstagram = ()=>{
+window.open("https://www.instagram.com/adesinapaul8?igsh=MXhlbmw4bHF6ZDNmdg==", "_blank")
+}
+
   return (
  
     <>
@@ -22,14 +32,15 @@ const Footer = () => {
             <div className="grid grid-cols-2 gap-3 mt-10 mb-[90px] md:grid-cols-3 md:gap-6 place-items-around ">
                 <div>
                    <h1 className="text-lg font-[500] my-3 " >ABOUT </h1> 
-                   <div className="mb-2">100 JS Projects</div>
-                   <div>Paul&#39;s Blog </div>
+                   <NavLink to="/projects" >  <div className="mb-2"> Projects</div>               </NavLink>
+
+                   <NavLink to="/" > <div>Paul&#39;s Blog </div>   </NavLink>
                  </div>
 
                  <div>
                    <h1 className="text-lg font-[500] my-3 " >FOLLOW US </h1> 
-                   <div className="mb-2">Facebook</div>
-                   <div>Twitter </div>
+                   <div onClick={openFacebook}  className="mb-2 cursor-pointer ">Facebook</div>
+                   <div onClick={openInstagram}  className="cursor-pointer " >Instagram </div>
                  </div>
 
                  <div>

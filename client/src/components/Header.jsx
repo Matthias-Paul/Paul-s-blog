@@ -92,7 +92,7 @@ const handleSignout = () => {
             ) : (
               <>
              
-              <div className="absolute text-center text-lg h-screen w-screen z-[100] top-0 left-0 bg-[gray] text-white opacity-80 pt-[20%]  ">
+              <div className="absolute text-center text-lg h-screen w-screen z-[100] top-0 left-0 bg-black text-white opacity-95 pt-[20%]  ">
                 <div>
                   <img
                     onClick={toggle}
