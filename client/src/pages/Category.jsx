@@ -134,10 +134,10 @@ const Category = () => {
 // Reusable Category Banner Component
 const CategoryBanner = ({ image, title, description, type }) => (
     <div>
-  <div className="relative text-white max-w-[1400px] mb-[15px]">
+  <div className="relative text-white object-cover flex-shrink-0 max-w-[1400px] mb-[15px]">
     <img
       src={image}
-      className="my-[10px] w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px]"
+      className="my-[10px] max-h-[700px] w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px]"
       alt={title}
     />
     <div className="absolute inset-0 flex flex-col justify-center items-center text-center">
@@ -160,18 +160,23 @@ const PostCard = ({ post }) => (
       <div className="h-[285px] object-cover flex-shrink-0">
         <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0" src={post.image} alt={post.title} />
       </div>
-      <div className="text-[14px] text-center first-letter:capitalize font-[500] text-[#4B6BFB] my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]">
-        {post.category}
-      </div>
-      <div className="line-clamp-3 text-[22px] text-start sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+      <div
+                                  className={`text-[14px] 
+                                    ${post.category === "uncategorized" ? "max-w-[112px]" : ""}  
+                                    ${post.category === "religion" ? "max-w-[71px]" : ""} 
+                                    text-start max-w-[60px] first-letter:capitalize 
+                                    font-medium text-[#4B6BFB] my-6 
+                                    bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]`}
+                                >
+                                  {post.category}
+                                </div>
+      <div className="line-clamp-3 opacity-[0.7] text-[22px] text-start sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
         {post.title}
       </div>
       <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F]">
-      <div className=" object-cover flex-shrink-0  ">
-
+       
        <img className="w-[40px] h-[40px] object-cover rounded-[50%]" src={post.profilePicture} alt="profile" />
-       </div>
-
+       
         <div  className="flex justify-between w-full ">
 
         <div className="ml-[7px] sm:ml-[10px]">{post.username}</div>

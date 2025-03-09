@@ -11,7 +11,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser" 
 import path from "path"
 
-dotenv.config();
+dotenv.config();   
 
 const PORT = process.env.PORT 
 const MONGO = process.env.MONGO

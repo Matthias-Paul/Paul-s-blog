@@ -68,13 +68,28 @@ useEffect(() => {
       <div className="w-full font-work  m-auto px-[12px] sm:px-[20px] mb-[20px ] ">
         <div className=" max-w-[1400px] m-auto pt-[50px] sm:pt-[70px] " >
 
-        <div className="relative text-white  max-w-[1400px] mb-[50px] " >
-            <img src={project}  className=" my-[10px]  w-full object-cover flex-shrink-0 rounded-[8px]  sm:rounded-[12px] "  />
+        <div className="relative text-white w-full object-cover flex-shrink-0 max-w-[1400px] mb-[50px] " >
+            <img src={project}  className=" my-[10px] max-h-[650px]  w-full object-cover flex-shrink-0 rounded-[8px]  sm:rounded-[12px] "  />
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center ">
                 <h1 className="font-[700] px-[12px] text-[21px] sm:text-[35px] md:text-[55px] " > PAUL&#39;S BLOG: FAITH, FITNESS AND SPORT INSIGHTS     </h1>
                 <p className=" px-[12px] leading-[25px]  font-[400] sm:font-[500] lg:leading-[40px] text-[18px] sm:text-[20px] lg:text-[35px]  mt-[20px] max-w-[700px] " >
                   Stay informed with inspiring religious content, health tips and the latest sports updates
                      </p>
+                     {
+              !currentUser?.user && (
+                <div className=" flex mt-[15px] md:mt-[25px] gap-x-[4px] md:gap-x-[10px] " >
+                  <NavLink to="/sign-up" >
+                  <button className=" px-4 text-[18px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN UP </button>
+
+                  </NavLink>  
+                  <NavLink to="/sign-in" >
+                  <button className=" px-4 text-[18px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN IN </button>
+
+                  </NavLink> 
+                </div>  
+              )
+            }           
+           
             </div> 
           </div>
 
@@ -142,12 +157,19 @@ const PostCards = ({ post }) => (
               <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={post.image} alt={post.title} />
             </div>
 
-            <div className="text-[14px] text-center  first-letter:capitalize font-[500] text-[#4B6BFB]  my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
-            {post.category}
+            <div
+                                  className={`text-[14px] 
+                                    ${post.category === "uncategorized" ? "max-w-[112px]" : ""}  
+                                    ${post.category === "religion" ? "max-w-[71px]" : ""} 
+                                    text-start max-w-[60px] first-letter:capitalize 
+                                    font-medium text-[#4B6BFB] my-6 
+                                    bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]`}
+                                >
+                                  {post.category}
+                                </div>
 
-            </div>
 
-            <div className=" line-clamp-3  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+            <div className=" line-clamp-3  text-[22px] text-start opacity-[0.7]  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
               {post.title}
             </div>
 

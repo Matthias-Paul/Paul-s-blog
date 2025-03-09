@@ -41,11 +41,27 @@ const Home = () => {
     <>
       <div className="w-full font-work  m-auto px-[12px] sm:px-[20px] pb-[20px] ">
         <div className=" max-w-[1400px] m-auto pt-[50px] sm:pt-[70px] " >
-          <div className="relative text-white max-w-[1400px]  " >
-            <img src={heroImage}  className="  my-[10px]  w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px] "  />
+          <div className="relative text-white max-w-[1400px]  object-cover flex-shrink-0   " >
+            <img src={heroImage}  className="  my-[10px] max-h-[650px]  w-full object-cover flex-shrink-0 rounded-[8px] sm:rounded-[12px] "  />
             <div className="absolute inset-0 flex flex-col justify-center left-2 md:left-2 lg:left-10 ">
                 <h1 className="font-[700] text-[18px] sm:text-[25px] md:text-[30px] lg:text-[40px] xl:text-[50px] " > WELCOME TO MY BLOG  </h1>
                 <p className=" leading-[18px] sm:leading-[25px] md:leading-[30px] lg:leading-[43px]  font-[400] sm:font-[500] text-[14px] sm:text-[18px] md:text-[20px] lg:text-[25px] mt-[4px] sm:mt-[10px] max-w-[200px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[650px] " > Explore expert insights on health, religion, and sports to stayed informed, inspired, and ahead in every aspect of life.   </p>
+            {
+              !currentUser?.user && (
+                <div className=" flex mt-[15px] md:mt-[25px] gap-x-[4px] md:gap-x-[10px] " >
+                  <NavLink to="/sign-up" >
+                  <button className=" px-4 text-[18px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN UP </button>
+
+                  </NavLink>  
+                  <NavLink to="/sign-in" >
+                  <button className=" px-4 text-[18px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN IN </button>
+
+                  </NavLink> 
+                </div>  
+              )
+            }           
+           
+           
             </div> 
           </div>
 
@@ -91,12 +107,19 @@ const Home = () => {
                                 <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={article.image} alt={article.title} />
                               </div>
 
-                              <div className="text-[14px] text-center  first-letter:capitalize font-[500] text-[#4B6BFB]  my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
-                              {article.category}
+                              <div
+                                  className={`text-[14px] 
+                                    ${article.category === "uncategorized" ? "max-w-[112px]" : ""}  
+                                    ${article.category === "religion" ? "max-w-[71px]" : ""} 
+                                    text-start max-w-[60px] first-letter:capitalize 
+                                    font-medium text-[#4B6BFB] my-6 
+                                    bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]`}
+                                >
+                                  {article.category}
+                                </div>
 
-                              </div>
             
-                              <div className=" line-clamp-3  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+                              <div className=" line-clamp-3  text-[22px] text-start opacity-[0.7]  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
                                 {article.title}
                               </div>
 

@@ -34,7 +34,7 @@ window.open("https://www.instagram.com/adesinapaul8?igsh=MXhlbmw4bHF6ZDNmdg==", 
                    <h1 className="text-lg font-[500] my-3 " >ABOUT </h1> 
                    <NavLink to="/projects" >  <div className="mb-2"> Projects</div>               </NavLink>
 
-                   <NavLink to="/" > <div>Paul&#39;s Blog </div>   </NavLink>
+                   <NavLink to="/about" > <div>About</div>   </NavLink>
                  </div>
 
                  <div>

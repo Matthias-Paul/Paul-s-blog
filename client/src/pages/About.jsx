@@ -34,7 +34,7 @@ const openWhatsapp = ()=>{
           <div> MERN stack developer  </div>
           </div>  
        
-         <p className="  text-[15px] font-[500] sm:text-[20px] leading-[25px] " > MEET PAUL: A passionate  MERN stack developer, but beyond coding, i have a deep interest in religion, sport and health. That&#39;s why i created Paul&#39;s Blog- a space where i share insights, stories and reflections on these topics. </p>
+         <p className="  text-[15px] font-[500] sm:text-[20px] leading-[25px] md:leading-[35px] " > MEET PAUL: A passionate  MERN stack developer, but beyond coding, i have a deep interest in religion, sport and health. That&#39;s why i created Paul&#39;s Blog- a space where i share insights, stories and reflections on these topics. </p>
 
 
          <div className="text-white mt-[30px] flex justify-between text-[30px]  " > 

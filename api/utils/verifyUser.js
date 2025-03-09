@@ -29,6 +29,18 @@ export const verifyToken = (req, res, next) => {
     });
   } catch (error) {
     console.error("Token verification failed:", error.message);
+    
+    if (error.name === "JsonWebTokenError") {
+      
+      next(errorHandler(401, "Invalid token. Unauthorized"));
+
+    }
+
+    if (error.name === "TokenExpiredError") {
+     
+      next(errorHandler(401, "Token has expired. Please log in again"));
+      
+    }
     next(errorHandler(500, "An internal server error occurred."));
   }
 };

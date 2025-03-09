@@ -122,12 +122,18 @@ function PostPage() {
                                 <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={article.image} alt={article.title} />
                               </div>
 
-                              <div className="text-[14px]  first-letter:capitalize font-[500] text-[#4B6BFB]  my-[26px] bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px] ">
-                              {article.category}
-
-                              </div>
+                              <div
+                                  className={`text-[14px] 
+                                    ${post.category === "uncategorized" ? "max-w-[112px]" : ""}  
+                                    ${post.category === "religion" ? "max-w-[71px]" : ""} 
+                                    text-start max-w-[60px] first-letter:capitalize 
+                                    font-medium text-[#4B6BFB] my-6 
+                                    bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]`}
+                                >
+                                  {post.category}
+                                </div>
             
-                              <div className=" line-clamp-3  text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
+                              <div className=" line-clamp-3 opacity-[0.7] text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
                                 {article.title}
                               </div>
 

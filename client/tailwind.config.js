@@ -20,6 +20,8 @@ export default {
         jakarta:["Jakarta Sans", "sans-serif"],
         serif:["Source Serif Pro", "sans-serif"],
         work:["Work Sans", "sans-serif"],
+        noto:["Noto Serif", "serif"],
+        lobster: ["Lobster", "cursive"],
       },
     },
   },

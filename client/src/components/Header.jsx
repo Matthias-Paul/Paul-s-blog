@@ -42,35 +42,40 @@ const handleSignout = () => {
     <>
     
       <div className=" fixed shadow-md  font-work  w-full z-[100] bg-white px-[12px] sm:px-[20px]   ">
+      <div className=" cursor-pointer md:hidden  flex  mb-[-30px] sm:mb-[-40px] mt-[14px] sm:mt-[20px]  text-black  rounded-lg items-center justify-center  "
+        onClick={themeMode}>
+          {theme === "light"? <FaSun/> : <FaMoon /> }
+        </div>
         <div  className="flex justify-between max-w-[1400px] m-auto  items-center py-[5px] sm:py-[15px] ">
         
         <div>
+       
           <NavLink
             to="/"
             className="whitespace-nowrap  text-center self-center text-sm sm:text-xl font-semibold dark:text-white">
-            <span className=" px-2 py-1 bg-gradient-to-r from-[blue] to-[gray] text-white rounded-lg ">
-              Paul&#39;s
+            <span className=" px-2 py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg ">
+              Paul&#39;s 
             </span>
-            Blog
+           <span> Blog </span>
           </NavLink>
         </div>
       
         <div className="hidden md:flex gap-x-[25px] font-[500] text-xl text-center ">
-          <NavLink  to="/" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+          <NavLink  to="/" className={({isActive}) => isActive ? "bg-[blue] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div >Home</div>
           </NavLink> 
 
-          <NavLink to="/about"   className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+          <NavLink to="/about"   className={({isActive}) => isActive ? "bg-[blue] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div >About</div>
           </NavLink>
 
-          <NavLink to="/projects" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+          <NavLink to="/projects" className={({isActive}) => isActive ? "bg-[blue] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
             <div>Blogs</div>
           </NavLink>
 
           {
               currentUser?.user?.isAdmin && (
-                <NavLink to="/create-post" className={({isActive}) => isActive ? "bg-[gray] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
+                <NavLink to="/create-post" className={({isActive}) => isActive ? "bg-[blue] pb-[3px] text-white rounded-lg px-[12px]" : ""} >
                 <div>Add Blog</div>
               </NavLink>
 
@@ -78,14 +83,13 @@ const handleSignout = () => {
 
           }
         </div>
-        <div className=" cursor-pointer  flex md:h-7 md:w-10 md:bg-black text-black md:text-white rounded-lg items-center justify-center  "
-        onClick={themeMode}>
-          {theme === "light"? <FaSun/> : <FaMoon /> }
-        </div>
+    
      
    
-        <div className=" flex ">
-   
+        <div className=" flex items-between justify-between ">
+        
+
+
           <div className="flex md:hidden mr-[15px]  ">
             {!visible ? (
               <img className="max-w-[30px] cursor-pointer" src={menu} onClick={toggle} />
@@ -94,6 +98,9 @@ const handleSignout = () => {
              
               <div className="absolute text-center text-lg h-screen w-screen z-[100] top-0 left-0 bg-black text-white opacity-95 pt-[20%]  ">
                 <div>
+
+
+                  
                   <img
                     onClick={toggle}
                     className=" mx-auto cursor-pointer"
@@ -119,16 +126,29 @@ const handleSignout = () => {
                   </NavLink>
                   )
                 }
-
+  
               </div>
+
+           
          
               </>
             )}
+            
           </div>
+          
+          <div className=" cursor-pointer  inline md:flex hidden mt-[5px] mr-[10px] md:h-7 md:w-10 md:bg-black  text-black md:text-white rounded-lg items-center justify-center  "
+        onClick={themeMode}>
+          {theme === "light"? <FaSun/> : <FaMoon /> }
+        </div>
         <div>
+      
+
+
+
+      
         { currentUser? (
           <div onClick={toggleProfile} >
-          <img className="w-9 h-9 rounded-[50%] object-cover cursor-pointer " src={currentUser? currentUser.user.profilePicture:"" } />
+          <img className="w-9 h-9 rounded-[50%]  object-cover cursor-pointer " src={currentUser? currentUser.user.profilePicture:"" } />
           
           </div>
         ) : (
@@ -155,9 +175,19 @@ const handleSignout = () => {
            ""
           )
         }
+
+        
+
         </div>
+
+
+        
         </div>
         
+
+
+
+
         </div>
         
         </div>
