@@ -124,13 +124,13 @@ function PostPage() {
 
                               <div
                                   className={`text-[14px] 
-                                    ${post.category === "uncategorized" ? "max-w-[112px]" : ""}  
-                                    ${post.category === "religion" ? "max-w-[71px]" : ""} 
+                                    ${article.category === "uncategorized" ? "max-w-[112px]" : ""}  
+                                    ${article.category === "religion" ? "max-w-[71px]" : ""} 
                                     text-start max-w-[60px] first-letter:capitalize 
                                     font-medium text-[#4B6BFB] my-6 
                                     bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]`}
                                 >
-                                  {post.category}
+                                  {article.category}
                                 </div>
             
                               <div className=" line-clamp-3 opacity-[0.7] text-[22px] text-start  sm:text-[26px] font-[600] mb-[24px] leading-[30px]">
