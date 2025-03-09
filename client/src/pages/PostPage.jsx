@@ -122,11 +122,14 @@ function PostPage() {
                                 <img className="rounded-[6px] w-full h-full object-cover flex-shrink-0 " src={article.image} alt={article.title} />
                               </div>
 
+                          
                               <div
                                   className={`text-[14px] 
                                     ${article.category === "uncategorized" ? "max-w-[112px]" : ""}  
                                     ${article.category === "religion" ? "max-w-[71px]" : ""} 
-                                    text-start max-w-[60px] first-letter:capitalize 
+                                    ${article.category === "sport" ? "max-w-[60px]" : ""}
+                                    ${article.category === "health" ? "max-w-[62px]" : ""}
+                                    text-start  first-letter:capitalize 
                                     font-medium text-[#4B6BFB] my-6 
                                     bg-[#4B6BFB0D] rounded-[6px] px-[10px] py-[4px]`}
                                 >
