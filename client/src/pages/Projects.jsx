@@ -72,18 +72,18 @@ useEffect(() => {
             <img src={project}  className=" my-[10px] max-h-[650px]  w-full object-cover flex-shrink-0 rounded-[8px]  sm:rounded-[12px] "  />
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center ">
                 <h1 className="font-[700] px-[12px] text-[21px] sm:text-[35px] md:text-[55px] " > PAUL&#39;S BLOG: FAITH, FITNESS AND SPORT INSIGHTS     </h1>
-                <p className=" px-[12px] leading-[25px]  font-[400] sm:font-[500] lg:leading-[40px] text-[18px] sm:text-[20px] lg:text-[35px]  mt-[20px] max-w-[700px] " >
+                <p className=" px-[12px] leading-[25px]  font-[400] sm:font-[500] lg:leading-[40px] text-[18px] sm:text-[20px] lg:text-[35px] mt-[10px] sm:mt-[20px] max-w-[700px] " >
                   Stay informed with inspiring religious content, health tips and the latest sports updates
                      </p>
                      {
               !currentUser?.user && (
                 <div className=" flex mt-[15px] md:mt-[25px] gap-x-[4px] md:gap-x-[10px] " >
                   <NavLink to="/sign-up" >
-                  <button className=" px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN UP </button>
+                  <button className=" px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-md sm:rounded-lg " > SIGN UP </button>
 
                   </NavLink>  
                   <NavLink to="/sign-in" >
-                  <button className=" px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN IN </button>
+                  <button className=" px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-md sm:rounded-lg " > SIGN IN </button>
 
                   </NavLink> 
                 </div>  

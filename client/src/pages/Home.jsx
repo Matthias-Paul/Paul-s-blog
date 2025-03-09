@@ -50,11 +50,11 @@ const Home = () => {
               !currentUser?.user && (
                 <div className=" flex mt-[15px] md:mt-[25px] gap-x-[4px] md:gap-x-[10px] " >
                   <NavLink to="/sign-up" >
-                  <button className="px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN UP </button>
+                  <button className="px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-md sm:rounded-lg " > SIGN UP </button>
 
                   </NavLink>  
                   <NavLink to="/sign-in" >
-                  <button className=" px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-lg " > SIGN IN </button>
+                  <button className=" px-2 sm:px-4 text-[16px] md:text-[25px] font-[500] py-1 bg-gradient-to-r from-[blue] to-[gray] mr-[5px] text-white rounded-md sm:rounded-lg " > SIGN IN </button>
 
                   </NavLink> 
                 </div>  
