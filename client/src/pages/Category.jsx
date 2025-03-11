@@ -177,9 +177,9 @@ const PostCard = ({ post }) => (
         {post.title}
       </div>
       <div className="flex items-center text-[14px] sm:text-[16px] font-[500] text-[#97989F]">
-       
+      <div className=" object-cover flex-shrink-0  ">
        <img className="w-[40px] h-[40px] object-cover rounded-[50%]" src={post.profilePicture} alt="profile" />
-       
+       </div>
         <div  className="flex justify-between w-full ">
 
         <div className="ml-[7px] sm:ml-[10px]">{post.username}</div>
