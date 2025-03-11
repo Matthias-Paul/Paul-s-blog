@@ -73,7 +73,7 @@ const SignIn = () => {
 
         <div className="md:mt-0 mt-5 md:text-lg">
           <form onSubmit={handleSubmission}>
-            <div className="flex flex-col mt-[12px]">
+            <div className="flex w-[500px] flex-col mt-[12px]">
               <label htmlFor="email">Your Email</label>
               <input
                 onChange={handleChange}
