@@ -118,7 +118,7 @@ export const getUsers = async (req, res, next) => {
     const limit = Math.max(parseInt(req.query.limit, 10) || 9, 1);
 
     const users = await User.find()
-      .sort({ createdAt: sortDirection })    
+      .sort({ updatedAt: sortDirection })    
       .skip(startIndex)
       .limit(limit);
 

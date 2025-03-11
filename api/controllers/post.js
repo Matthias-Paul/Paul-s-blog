@@ -76,7 +76,7 @@ export const getPosts = async (req, res, next) => {
 
     // Fetching posts with pagination
     const posts = await Post.find(filters)
-      .sort({ updatedAt: sortDirection })
+      .sort({ createdAt: sortDirection })
       .skip(startIndex)  // Using startIndex for pagination
       .limit(limit);     // Limiting the number of posts returned
 
